@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vdf on wborgeaud</title>
+    <link>https://wborgeaud.github.io/tags/vdf/</link>
+    <description>Recent content in vdf on wborgeaud</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 30 Nov 2019 13:57:25 -0700</lastBuildDate>
+    
+	<atom:link href="https://wborgeaud.github.io/tags/vdf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Understanding Verifiable Delay Functions (with a Rust implementation)</title>
+      <link>https://wborgeaud.github.io/posts/understanding-vdfs/</link>
+      <pubDate>Sat, 30 Nov 2019 13:57:25 -0700</pubDate>
+      
+      <guid>https://wborgeaud.github.io/posts/understanding-vdfs/</guid>
+      <description>I have been reading about Verifiable Delay Functions (VDF) recently and wanted to write a short post explaining what they are and what they can be used for. This post relies mainly on the papers: Efficient verifiable delay functions, Wesolowski and A Survey of Two Verifiable Delay Functions, Boneh et al. I also recommend this podcast with Joseph Bonneau.
+Definition A VDF is a function $f_T: \mathcal{X} \to \mathcal{Y}$ that takes a long time to compute but is fast to verify.</description>
+    </item>
+    
+  </channel>
+</rss>

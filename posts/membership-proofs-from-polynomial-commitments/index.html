@@ -173,7 +173,7 @@ The polynomial $g(X)$ is of degree $|S|$ and can be computed either by direct ca
 <h2 id="faster-membership-proofs-over-roots-of-unity">Faster membership proofs over roots of unity</h2>
 <p>The last protocol can be very expensive computationally if $|S|$ is large. In the last remark, we showed how to make it lighter on the Verifier (using a trusted third party), but it is unclear how to improve the Prover complexity. One solution is to use the nice properties of <strong>roots of unity</strong>.</p>
 <p>If $n=|S|$ divides $|\mathbb{F}|-1$, we can take $\omega\in \mathbb{F}^*$ a $n$-th root of unity, and define a public mapping $S\to {\omega^i \vert 0\leq i&lt;n}$. Then, $g(\alpha)=f(\alpha)^n - 1$ can computed in $O(\log n)$. This can be used to reduce the Prover and Verifier time in steps 3 and 4 of the protocol from $O(n)$ to $O(\log n)$.</p>
-<p>Step 1, however, still has time and space complexity $O(n)$ to compute $\com_f$ and $\com_h$. I don&rsquo;t know of a way to improve this at the moment.</p>
+<p>Step 1, however, still has time and space complexity $O(n)$ to compute $\com_h$. I don&rsquo;t know of a way to improve this at the moment (it might be impossible since $h(X)$ is of degree $n-1$).</p>
 <h1 id="the-derived-range-proof-protocol">The derived range proof protocol</h1>
 <p>Let $z=\sum_{i=0}^{l-1}z_i2^i\in [0, 2^l)$ with $z_i\in [0,2)$ for all $i$. Using the membership proof protocol above, we get the following protocol:</p>
 <ol>

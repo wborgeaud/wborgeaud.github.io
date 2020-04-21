@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="William Borgeaud">
+    <meta name="description" content="John Doe&#39;s personal website">
+    <meta name="keywords" content="blog,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Anomalous curves: don&#39;t try to be clever with your elliptic curve order"/>
+<meta name="twitter:description" content="$$ \def\F{\mathbb{F}} $$
+Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the exact opposite notation, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&hellip;
+What if I told you there are curves where $p=q=r$?"/>
+
+    <meta property="og:title" content="Anomalous curves: don&#39;t try to be clever with your elliptic curve order" />
+<meta property="og:description" content="$$ \def\F{\mathbb{F}} $$
+Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the exact opposite notation, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&hellip;
+What if I told you there are curves where $p=q=r$?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wborgeaud.github.io/posts/anomalous-curves/" />
+<meta property="article:published_time" content="2020-04-21T13:57:07-07:00" />
+<meta property="article:modified_time" content="2020-04-21T13:57:07-07:00" />
+
+
+    
+      <base href="https://wborgeaud.github.io/posts/anomalous-curves/">
+    
+    <title>
+  Anomalous curves: don&#39;t try to be clever with your elliptic curve order · wborgeaud
+</title>
+
+    
+      <link rel="canonical" href="https://wborgeaud.github.io/posts/anomalous-curves/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://wborgeaud.github.io/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://wborgeaud.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://wborgeaud.github.io/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.69.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://wborgeaud.github.io/">
+      wborgeaud
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wborgeaud.github.io/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wborgeaud.github.io/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wborgeaud.github.io/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Anomalous curves: don&#39;t try to be clever with your elliptic curve order</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-04-21T13:57:07-07:00'>
+                April 21, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://wborgeaud.github.io/tags/elliptic-curves/">elliptic curves</a>
+      <span class="separator">•</span>
+    <a href="https://wborgeaud.github.io/tags/cryptography/">cryptography</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>$$
+\def\F{\mathbb{F}}
+$$</p>
+<p>Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the <strong>exact opposite notation</strong>, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&hellip;</p>
+<p>What if I told you there are curves where $p=q=r$? We could decide to only use these curves and never have to go back on page 2 of a paper to see what are $p,q$ or $r$!</p>
+<p>Joke aside, these curves actually exist and go by the name of <strong>anomalous curves</strong>, that is, curves $E(\mathbb{F}_p)$ with $\# E(\F_p)=p$. If you know <a href="https://crypto.stanford.edu/pbc/notes/elliptic/count.html">Hasse&rsquo;s Theorem</a>, you&rsquo;ll understand why these curves are also called <em>curves of trace one</em>.</p>
+<p>Here is an example:</p>
+<pre><code>E: y^2 = x^3 + 425706413842211054102700238164133538302169176474*x + 203362936548826936673264444982866339953265530166
+p = 730750818665451459112596905638433048232067471723                                                                                                     
+</code></pre><p>Regardless of my rant on inconsistent notations for elliptic curves, using such curves could result in more elegant notation, or even a <em>Nothing up my sleeve</em> mechanism for choosing elliptic curves.</p>
+<p>It turns out that these curves are actually <strong>totally worthless for cryptography.</strong> Namely, the discrete logarithm problem can be solved in $O(\log p)$ on these curves. So these curves are secure only if their field arithmetic is intractable. Clearly not ideal.</p>
+<p>This was discovered independently by <a href="https://link.springer.com/article/10.1007/s001459900052">Smart</a> and <a href="https://www.ams.org/journals/mcom/1998-67-221/S0025-5718-98-00887-4/S0025-5718-98-00887-4.pdf">Semaev</a> in 1998-99.</p>
+<p>In a coming series of posts, I will try to explore how these attacks work. I think they use some interesting math that is not commonly used in current cryptographic schemes.</p>
+<p>For example, in pairing-based cryptography, we regularly use a field extension $\F_p \subset \F_{p^k}$ to, for example, capture the torsion points. In Smart&rsquo;s attack, we use a dual of some kind; we look at the map $\mathbb{Q}_p \to \F_p$ and  lift points in $E(\F_p)$ to $E(\mathbb{Q}_p)$. In the next post, I&rsquo;ll explain what this means and how to use it to break ECDLP.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

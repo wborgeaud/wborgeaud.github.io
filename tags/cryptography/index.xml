@@ -6,10 +6,21 @@
     <description>Recent content in cryptography on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 16 Apr 2020 13:57:25 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2020 13:57:07 -0700</lastBuildDate>
     
 	<atom:link href="https://wborgeaud.github.io/tags/cryptography/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Anomalous curves: don&#39;t try to be clever with your elliptic curve order</title>
+      <link>https://wborgeaud.github.io/posts/anomalous-curves/</link>
+      <pubDate>Tue, 21 Apr 2020 13:57:07 -0700</pubDate>
+      
+      <guid>https://wborgeaud.github.io/posts/anomalous-curves/</guid>
+      <description>$$ \def\F{\mathbb{F}} $$
+Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the exact opposite notation, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&amp;hellip;
+What if I told you there are curves where $p=q=r$?</description>
+    </item>
     
     <item>
       <title>Membership proofs from polynomial commitments</title>

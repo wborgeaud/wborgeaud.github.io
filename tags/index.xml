@@ -6,7 +6,7 @@
     <description>Recent content in Tags on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 16 Apr 2020 13:57:25 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2020 13:57:07 -0700</lastBuildDate>
     
 	<atom:link href="https://wborgeaud.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>cryptography</title>
       <link>https://wborgeaud.github.io/tags/cryptography/</link>
-      <pubDate>Thu, 16 Apr 2020 13:57:25 -0700</pubDate>
+      <pubDate>Tue, 21 Apr 2020 13:57:07 -0700</pubDate>
       
       <guid>https://wborgeaud.github.io/tags/cryptography/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elliptic curves</title>
+      <link>https://wborgeaud.github.io/tags/elliptic-curves/</link>
+      <pubDate>Tue, 21 Apr 2020 13:57:07 -0700</pubDate>
+      
+      <guid>https://wborgeaud.github.io/tags/elliptic-curves/</guid>
       <description></description>
     </item>
     

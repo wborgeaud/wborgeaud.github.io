@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="William Borgeaud">
+    <meta name="description" content="John Doe&#39;s personal website">
+    <meta name="keywords" content="blog,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Anomalous Curves Part 2: $p$-adic niceties"/>
+<meta name="twitter:description" content="$$ \def\F{\mathbb{F}} $$
+$$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} $$
+This is part two of the series on anomalous curves. Go here for part one.
+Today, I&rsquo;ll give a sketch of the construction of Smart&rsquo;s attack. This attack combines two elliptic curve tools:
+ The reduction map of an elliptic curve over a local field. The formal group of an elliptic curve.  I will focus on the first one, and leave the details of the second for another post."/>
+
+    <meta property="og:title" content="Anomalous Curves Part 2: $p$-adic niceties" />
+<meta property="og:description" content="$$ \def\F{\mathbb{F}} $$
+$$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} $$
+This is part two of the series on anomalous curves. Go here for part one.
+Today, I&rsquo;ll give a sketch of the construction of Smart&rsquo;s attack. This attack combines two elliptic curve tools:
+ The reduction map of an elliptic curve over a local field. The formal group of an elliptic curve.  I will focus on the first one, and leave the details of the second for another post." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wborgeaud.github.io/posts/anomalous-curves-2/" />
+<meta property="article:published_time" content="2020-04-22T13:57:07-07:00" />
+<meta property="article:modified_time" content="2020-04-22T13:57:07-07:00" />
+
+
+    
+      <base href="https://wborgeaud.github.io/posts/anomalous-curves-2/">
+    
+    <title>
+  Anomalous Curves Part 2: $p$-adic niceties · wborgeaud
+</title>
+
+    
+      <link rel="canonical" href="https://wborgeaud.github.io/posts/anomalous-curves-2/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://wborgeaud.github.io/css/coder.min.5347055d2d27f221a4a2027fb45cf8b19056ec7fdb697c4966329939c0cef45e.css" integrity="sha256-U0cFXS0n8iGkogJ/tFz4sZBW7H/baXxJZjKZOcDO9F4=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://wborgeaud.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://wborgeaud.github.io/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.69.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://wborgeaud.github.io/">
+      wborgeaud
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wborgeaud.github.io/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wborgeaud.github.io/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://wborgeaud.github.io/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Anomalous Curves Part 2: $p$-adic niceties</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-04-22T13:57:07-07:00'>
+                April 22, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              7-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://wborgeaud.github.io/tags/elliptic-curves/">elliptic curves</a>
+      <span class="separator">•</span>
+    <a href="https://wborgeaud.github.io/tags/cryptography/">cryptography</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>$$
+\def\F{\mathbb{F}}
+$$</p>
+<p>$$
+\def\Q{\mathbb{Q}}
+\def\F{\mathbb{F}}
+\def\Z{\mathbb{Z}}
+$$</p>
+<p>This is part two of the series on anomalous curves. Go <a href="https://wborgeaud.github.io/posts/anomalous-curves-1/">here</a> for part one.</p>
+<p>Today, I&rsquo;ll give a sketch of the construction of Smart&rsquo;s attack. This attack combines two elliptic curve tools:</p>
+<ul>
+<li>The <strong>reduction map</strong> of an elliptic curve over a local field.</li>
+<li>The <strong>formal group</strong> of an elliptic curve.</li>
+</ul>
+<p>I will focus on the first one, and leave the details of the second for another post.</p>
+<p>All the content is taken from these two sources:</p>
+<ul>
+<li><em>Silverman</em>, The Arithmetic of Elliptic Curves,</li>
+<li><em>Monnerat</em>, Computation of the discrete logarithm on elliptic curves of trace one.</li>
+</ul>
+<h1 id="elliptic-curves-over-slocal-fieldss-p-adic-numbers">Elliptic curves over <s>local fields</s> $p$-adic numbers</h1>
+<p>Let $K$ be a local field, $R$ its ring of integers, and $k$ its residue field. If you want to continue with this level of generality, you can read Chapter VII of Silverman&rsquo;s book. Otherwise, we&rsquo;ll continue with
+$$
+K = \Q_p, R = \Z_p, k = \F_p.
+$$
+In number theory and cryptography, we start with a curve $\tilde{E}(\F_p)$ (we&rsquo;ll see why the $\texttt{tilde}$ later). $\F_p$ is nice and all, but kind of restricted. $\Q_p$ on the other hand is a tractable field of characteristic $0$ with some nice properties. So it is natural to ask whether we can find a curve $E(\Q_p)$ with a way to go back and forth to $\tilde{E}(\F_p)$.</p>
+<p>It turns out there is a very simple way to do so! In particular, there exists an exact sequence of groups
+$$
+0 \to E_1(\Q_p) \to E(\Q_p) \xrightarrow{\pi} \tilde{E}(\F_p) \to 0.
+$$
+If $\tilde{E}: y^2 = x^3 + ax +b$, then $E: y^2 = x^3 + (a+O(p))x + (b+O(p))$. Now $\pi$ is rather simple. Given $[x:y:z]\in E(\Q_p)$, there exists $n$ such that $p^n x, p^n y, p^n z \in \Z_p$ and one of the three is not in $p\Z_p$. So without loss of generality, $P = [x:y:z]$ with $x,y,z\in \Z_p$ and one of them not in $p\Z_p$. Then, we use the canonical map $\Z_p\to\F_p$ to send $P$ to $\tilde{P}=[\tilde{x}, \tilde{y}, \tilde{z}]$, i.e., we just reduce all the coordinates modulo $p\Z_p$. It is easy to see that $\tilde{P} \in \tilde{E}$, and that $\pi\colon P \mapsto \tilde{P}$ is a group homomorphism.</p>
+<p>Next, we state Hensel&rsquo;s lifting lemma, a great tool to work with local fields.</p>
+<blockquote>
+<p><strong>Theorem (Hensel&rsquo;s lemma for $\Z_p$):</strong> Let $F(x)\in \Z_p[x]$, $n\geq 1, a\in \Z_p$ with $F(a)\in p^n\Z_p$ and  $F&rsquo;(a)\notin p\Z_p$.</p>
+<p>Then, there exists an (easily computable) $b\in \Z_p$ with $F(b)=0$ and $b - a \in p^n\Z_p$.</p>
+</blockquote>
+<p>This result can be thought of as an analogue of Newton&rsquo;s method on $\Z_p$, i.e., if we have a function $F$ that is close to zero on $a$, and has a non-zero derivative at that point, there is a root of $F$ close to $a$.</p>
+<p>We can now prove the main theorem of this part:</p>
+<blockquote>
+<p><strong>Theorem (VII.2.1 in Silverman):</strong> $\pi$ is surjective. It is called the <em>reduction map</em>.</p>
+<p><em>Proof</em>:  Let $\tilde{P}=(\tilde{x}, \tilde{y})\in \tilde{E}$. Let $y_0 = \tilde{y}$ seen as an element of $\Z_p$. Let $F(x) = x^3 + (a + O(p))x + (b+O(b)) - y_0^2\in Z_p[x]$ (this is just the equation for the curve $E$ at $y_0$). $F$ is close to zero (a.k.a in $p\Z_p$) at points $x_0$ with $\tilde{x}_0=\tilde{x}$, with a non-zero derivative (since $\tilde{E}$ is non-singular<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>). We can thus apply Hensel&rsquo;s lemma and find a point $\xi\in \Z_p$ with $F(\xi)=0$ and $\tilde{\xi}=\tilde{x}$. The point $P=(\xi, y_0)$ thus belongs to $E$ and maps to $\tilde{P}$ under $\pi$. Since $\tilde{P}$ was arbitrary, we conclude that $\pi$ is surjective.</p>
+</blockquote>
+<p>The nice thing about this proof is that it gives a simple way to actually lift $\tilde{P}$ to $P$. In Sage, it&rsquo;s as simple as:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tildeE <span style="color:#f92672">=</span> EllipticCurve(GF(p), [a, b]) <span style="color:#75715e"># Arbitrary curve over Fp</span>
+E <span style="color:#f92672">=</span> EllipticCurve(Qp(p), [a, b]) <span style="color:#75715e"># Lift of curve to Qp</span>
+tildeP <span style="color:#f92672">=</span> tildeE<span style="color:#f92672">.</span>random_point() <span style="color:#75715e"># tildeP = tildeE(209429384434035 : 167128638250862 : 1)</span>
+P <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>lift_x(ZZ(tildeP<span style="color:#f92672">.</span>xy()[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e"># P = E(209429384434035 : 167128638250862 + O(p) : 1)</span>
+</code></pre></div><h1 id="removing-the-geometry">Removing the geometry</h1>
+<p>With this lift in hand, we&rsquo;re close to the end of the construction!</p>
+<p>We define subgroups of $E(\Q_p)$ as follows:
+$$
+E_n(\Q_p) = \{ P \in E(\Q_p) \ \vert \ ord_p(x(P)) \leq -2n \} \cup \{\mathcal{O}\}
+$$
+These subgroups can be thought of as increasingly tight neighborhoods of $\{\mathcal{O}\}$, or as equivalents to $p^n\Z_p \subset \Z_p$. This last analogy can be made precise by observing that if $P=(x,y) = [x:y:1]\in E_n(\Q_p)$, then $\frac{x}{y}\in p^n\Z_p$<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.  In fact, this analogy can be made precise:</p>
+<blockquote>
+<p><strong>Theorem (VII.2.2 in Silverman):</strong> There is a group structure on $p\Z_p$ (that we denote $\hat{E}(p\Z_p)$) such that the map
+$$
+E_1(\Q_p) \to \hat{E}(p\Z_p): [x:y:1] \mapsto -\frac x y
+$$
+is a group isomorphism, that also induces isomorphisms $E_n(\Q_p)\to \hat{E}(p^n\Z_p)$.</p>
+</blockquote>
+<p>Finally, we can <em>remove the geometry</em> using the following result:</p>
+<blockquote>
+<p><strong>Theorem (IV.5.2 in Silverman):</strong> There is a isomorphism
+$$
+\log_\mathcal{F}\colon \hat{E}(p\Z_p)\to p\Z_p
+$$
+called the *formal logarithm*, where $p\Z_p$ on the right has the usual additive group structure. It also induces isomorphisms $\hat{E}(p^n\Z_p) \to p^n\Z_p$.</p>
+</blockquote>
+<p>We will explore and prove these last two results in a coming post.</p>
+<h1 id="putting-it-together">Putting it together</h1>
+<p>Let&rsquo;s recap. We have our original curve $\tilde{E}(\F_p)$, a lift $E(\Q_p)$, and subgroups $E_n(\Q_p)$ where the DLP can be reduced to $p\Z_p$. Moreover, the exact sequence we showed above induces an isomorphism
+$$
+E(\Q_p)/E_1(\Q_p) \to \tilde{E}(\F_p).
+$$
+Note that we haven&rsquo;t used the fact that $\#\tilde{E}(\F_p) = p$ yet, so all our previous constructions work for arbitrary curves.  We now make use of it to break the DLP on $\tilde{E}(\F_p)$!</p>
+<p>Since the DLP is simple in $E_1(\Q_p)$, we would win if we managed to lift points in $\tilde{E}(\F_p)$ to $E_1(\Q_p)$. But since $\#\tilde{E}(\F_p)=p$, we have $E(\Q_p)/E_1(\Q_p) \simeq \Z/p\Z$. Thus the <em>multiplication by $p$ map</em> $[p]$ sends $E(\Q_p)$ to $E_1(\Q_p)$.</p>
+<p>Therefore, we have the following homomorphism
+$$
+\phi\colon \tilde{E}(\F_p) \xrightarrow{\text{lift}} E(\Q_p) \xrightarrow{[p]} E_1(\Q_p) \to \hat{E}(p\Z_p)\xrightarrow{\log} p\Z_p \xrightarrow{\mod p^2}\Z/p\Z.
+$$
+Moreover, we also have $E_1(\Q_p)/E_2(\Q_p) \simeq p\Z_p/p^2\Z_p \simeq \Z/p\Z$. So $[p]$ maps $E_1(\Q_p)$ to $E_2(\Q_p)$.</p>
+<p>Therefore, $\phi$ restricted to $\mathcal{O}$ maps to $0\in \Z/p\Z$:
+$$
+\phi\colon \mathcal{O} \xrightarrow{\text{lift}} E_1(\Q_p) \xrightarrow{[p]} E_2(\Q_p) \to \hat{E}(p^2\Z_p)\xrightarrow{\log} p^2\Z_p \xrightarrow{\mod p^2}0.
+$$
+And its over! Concretely, for $\tilde{P}, \tilde{Q} \in \tilde{E}(\F_p)$, with $\tilde{Q}=[m]\tilde{P}$ for an unknown $m$, we have $Q-[m]P\in E_1(\Q_p)\ (=\ker(\pi))$, so $\phi(\tilde{Q})=m\phi(\tilde{P})$ and we can solve the DLP in $\Z/p\Z$!</p>
+<p>The nice thing is that it&rsquo;s also very easy to code (taken from this <a href="https://crypto.stackexchange.com/questions/70454/why-smarts-attack-doesnt-work-on-this-ecdlp">post</a>):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tildeE <span style="color:#f92672">=</span> EllipticCurve(GF(<span style="color:#ae81ff">1019</span>), [<span style="color:#ae81ff">373</span>, <span style="color:#ae81ff">837</span>]) <span style="color:#75715e"># Arbitrary curve over Fp</span>
+<span style="color:#66d9ef">assert</span> tildeE<span style="color:#f92672">.</span>order() <span style="color:#f92672">==</span> <span style="color:#ae81ff">1019</span> <span style="color:#75715e"># The curve is anomalous</span>
+E <span style="color:#f92672">=</span> EllipticCurve(Qp(<span style="color:#ae81ff">1019</span>), [<span style="color:#ae81ff">373</span>, <span style="color:#ae81ff">837</span>]) <span style="color:#75715e"># Lift of curve to Qp</span>
+tildeP <span style="color:#f92672">=</span> tildeE<span style="color:#f92672">.</span>gens()[<span style="color:#ae81ff">0</span>]
+tildeQ <span style="color:#f92672">=</span> <span style="color:#ae81ff">123</span> <span style="color:#f92672">*</span> tildeP
+P <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>lift_x(ZZ(tildeP<span style="color:#f92672">.</span>xy()[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e"># Might have to take the other lift. </span>
+Q <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>lift_x(ZZ(tildeQ<span style="color:#f92672">.</span>xy()[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e"># Might have to take the other lift.</span>
+p_times_P <span style="color:#f92672">=</span> p<span style="color:#f92672">*</span>P
+p_times_Q <span style="color:#f92672">=</span> p<span style="color:#f92672">*</span>Q
+x_P, y_P <span style="color:#f92672">=</span> p_times_P<span style="color:#f92672">.</span>xy()
+x_Q, y_Q <span style="color:#f92672">=</span> p_times_Q<span style="color:#f92672">.</span>xy()
+phi_P <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>(x_P<span style="color:#f92672">/</span>y_P) <span style="color:#75715e"># Map to Z/pZ</span>
+phi_Q <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>(x_Q<span style="color:#f92672">/</span>y_Q) <span style="color:#75715e"># Map to Z/pZ</span>
+k <span style="color:#f92672">=</span> phi_Q<span style="color:#f92672">/</span>phi_P <span style="color:#75715e"># Solve the discrete log in Z/pZ (aka do a division)</span>
+<span style="color:#66d9ef">print</span> Mod(k, <span style="color:#ae81ff">1019</span>) <span style="color:#75715e"># Prints 123</span>
+</code></pre></div><p>The most expensive operation is the multiplication by $p$, which takes $O(\log p)$ time.</p>
+<p>It is interesting to see where this attack fails for non-anomalous curves. The only place we used that $\#\tilde{E}(\F_p)=p$ was to show that $[p]$ maps $E(\Q_p)$ to $E_1(\Q_p)$. So this should be wrong in general<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tildeE <span style="color:#f92672">=</span> EllipticCurve(GF(<span style="color:#ae81ff">1019</span>), [<span style="color:#ae81ff">373</span>, <span style="color:#ae81ff">837</span>]) <span style="color:#75715e"># Anomalous curve over Fp</span>
+<span style="color:#66d9ef">assert</span> tildeE<span style="color:#f92672">.</span>order() <span style="color:#f92672">==</span> <span style="color:#ae81ff">1019</span> <span style="color:#75715e"># The curve is anomalous</span>
+E <span style="color:#f92672">=</span> EllipticCurve(Qp(<span style="color:#ae81ff">1019</span>), [<span style="color:#ae81ff">373</span>, <span style="color:#ae81ff">837</span>]) <span style="color:#75715e"># Lift of curve to Qp</span>
+P <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>lift_x(ZZ(randint(<span style="color:#ae81ff">1</span>, p))) <span style="color:#75715e"># Random point in E. Might fail.</span>
+<span style="color:#66d9ef">print</span> p<span style="color:#f92672">*</span>P <span style="color:#75715e"># (O(p^-2) : O(p^-3) : 1) in E_1(Q_p).</span>
+
+tildeE <span style="color:#f92672">=</span> EllipticCurve(GF(<span style="color:#ae81ff">1019</span>), [<span style="color:#ae81ff">373</span>, <span style="color:#ae81ff">839</span>]) <span style="color:#75715e"># Arbitrary curve over Fp</span>
+<span style="color:#66d9ef">assert</span> tildeE<span style="color:#f92672">.</span>order() <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1019</span> <span style="color:#75715e"># The curve is NOT anomalous</span>
+E <span style="color:#f92672">=</span> EllipticCurve(Qp(<span style="color:#ae81ff">1019</span>), [<span style="color:#ae81ff">373</span>, <span style="color:#ae81ff">839</span>]) <span style="color:#75715e"># Lift of curve to Qp</span>
+P <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>lift_x(ZZ(randint(<span style="color:#ae81ff">1</span>, p))) <span style="color:#75715e"># Random point in E. Might fail.</span>
+<span style="color:#66d9ef">print</span> p<span style="color:#f92672">*</span>P <span style="color:#75715e"># (O(1) : O(1) : 1) NOT in E_1(Q_p).</span>
+</code></pre></div><p>So most curves are safe against this attack.</p>
+<p>Next time, we&rsquo;ll explore the concept of <em>formal groups</em> and prove the two theorems we used to <em>remove the geometry</em> from the problem.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Actually, it could be that the derivative is zero, but then the partial derivate $\partial/\partial y$ is non-zero and we can change the proof by switching all $x$'s to $y$'s. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Here we use the fact that $[x:y:1]\in E(\Q_p)$ are of the form $[O(p^{-2n}), O(p^{-3n}), 1]$. <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>We note that $E_1(\Q_p)$ was also previously defined as the kernel of $\pi$. Using this remark, it is clear that the two definitions are equivalent. <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p>Note that $[p]: E_n(\Q_p) \to E_{n+1}(\Q_p)$ remains true for all curves since $E_n(\Q_p)/E_{n+1}(\Q_p) \simeq p^n\Z_p/p^{n+1}\Z_p \simeq \Z/p\Z$ is a general result. <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

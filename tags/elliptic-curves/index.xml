@@ -6,17 +6,30 @@
     <description>Recent content in elliptic curves on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 21 Apr 2020 13:57:07 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 22 Apr 2020 13:57:07 -0700</lastBuildDate>
     
 	<atom:link href="https://wborgeaud.github.io/tags/elliptic-curves/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Anomalous curves: don&#39;t try to be clever with your elliptic curve order</title>
-      <link>https://wborgeaud.github.io/posts/anomalous-curves/</link>
+      <title>Anomalous Curves Part 2: $p$-adic niceties</title>
+      <link>https://wborgeaud.github.io/posts/anomalous-curves-2/</link>
+      <pubDate>Wed, 22 Apr 2020 13:57:07 -0700</pubDate>
+      
+      <guid>https://wborgeaud.github.io/posts/anomalous-curves-2/</guid>
+      <description>$$ \def\F{\mathbb{F}} $$
+$$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} $$
+This is part two of the series on anomalous curves. Go here for part one.
+Today, I&amp;rsquo;ll give a sketch of the construction of Smart&amp;rsquo;s attack. This attack combines two elliptic curve tools:
+ The reduction map of an elliptic curve over a local field. The formal group of an elliptic curve.  I will focus on the first one, and leave the details of the second for another post.</description>
+    </item>
+    
+    <item>
+      <title>Anomalous Curves Part 1: Don&#39;t be clever with your elliptic curve order</title>
+      <link>https://wborgeaud.github.io/posts/anomalous-curves-1/</link>
       <pubDate>Tue, 21 Apr 2020 13:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/anomalous-curves/</guid>
+      <guid>https://wborgeaud.github.io/posts/anomalous-curves-1/</guid>
       <description>$$ \def\F{\mathbb{F}} $$
 Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the exact opposite notation, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&amp;hellip;
 What if I told you there are curves where $p=q=r$?</description>

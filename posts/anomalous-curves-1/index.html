@@ -139,7 +139,7 @@ $$</p>
 <p>Here is an example:</p>
 <pre><code>E: y^2 = x^3 + 425706413842211054102700238164133538302169176474*x + 203362936548826936673264444982866339953265530166
 p = 730750818665451459112596905638433048232067471723                                                                                                     
-</code></pre><p>Regardless of my rant on inconsistent notations for elliptic curves, using such curves could result in more elegant notation, or even a <em>Nothing up my sleeve</em> mechanism for choosing elliptic curves.</p>
+</code></pre><p>Regardless of my rant on inconsistent notations for elliptic curves, using such curves could result in more elegant notation, or even a <em>Nothing up my sleeve</em> mechanism for choosing elliptic curves. Moreover, they could be use to derive efficient <em>recursive proof systems</em> without having to use cycles of elliptic curves.</p>
 <p>It turns out that these curves are actually <strong>totally worthless for cryptography.</strong> Namely, the discrete logarithm problem can be solved in $O(\log p)$ on these curves. So these curves are secure only if their field arithmetic is intractable. Clearly not ideal.</p>
 <p>This was discovered independently by <a href="https://link.springer.com/article/10.1007/s001459900052">Smart</a> and <a href="https://www.ams.org/journals/mcom/1998-67-221/S0025-5718-98-00887-4/S0025-5718-98-00887-4.pdf">Semaev</a> in 1998-99.</p>
 <p>In a coming series of posts, I will try to explore how these attacks work. I think they use some interesting math that is not commonly used in current cryptographic schemes.</p>

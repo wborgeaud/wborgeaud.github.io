@@ -6,10 +6,23 @@
     <description>Recent content in Posts on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 22 Apr 2020 13:57:07 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 29 Apr 2020 08:57:07 -0700</lastBuildDate>
     
 	<atom:link href="https://wborgeaud.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Anomalous Curves Part 3: Formal groups</title>
+      <link>https://wborgeaud.github.io/posts/anomalous-curves-3/</link>
+      <pubDate>Wed, 29 Apr 2020 08:57:07 -0700</pubDate>
+      
+      <guid>https://wborgeaud.github.io/posts/anomalous-curves-3/</guid>
+      <description>$$ \def\F{\mathbb{F}} $$
+$$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} \def\M{\mathcal{M}} \def\G{\hat{\mathbb{G}}} \def\O{\mathcal{O}} $$
+This is part three of the series on anomalous curves. Go here for part one and here for part two.
+Today, I&amp;rsquo;ll prove the two missing results from the last post:
+ Theorem (VII.2.2 in Silverman): There is a group structure on $p\Z_p$ (that we denote $\hat{E}(p\Z_p)$) such that the map $$ E_1(\Q_p) \to \hat{E}(p\Z_p): [x:y:1] \mapsto -\frac x y $$ is a group isomorphism, that also induces isomorphisms $E_n(\Q_p)\to \hat{E}(p^n\Z_p)$.</description>
+    </item>
     
     <item>
       <title>Anomalous Curves Part 2: p-adic niceties</title>

@@ -47,7 +47,7 @@ Today, I&rsquo;ll prove the two missing results from the last post:
     
       
       
-      <link rel="stylesheet" href="https://wborgeaud.github.io/css/coder.min.5347055d2d27f221a4a2027fb45cf8b19056ec7fdb697c4966329939c0cef45e.css" integrity="sha256-U0cFXS0n8iGkogJ/tFz4sZBW7H/baXxJZjKZOcDO9F4=" crossorigin="anonymous" media="screen" />
+      <link rel="stylesheet" href="https://wborgeaud.github.io/css/coder.min.a4f332213a21ce8eb521670c614470c58923aaaf385e2a73982c31dd7642decb.css" integrity="sha256-pPMyITohzo61IWcMYURwxYkjqq84XipzmCwx3XZC3ss=" crossorigin="anonymous" media="screen" />
     
 
     
@@ -63,7 +63,7 @@ Today, I&rsquo;ll prove the two missing results from the last post:
     <link rel="icon" type="image/png" href="https://wborgeaud.github.io/img/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://wborgeaud.github.io/img/favicon-16x16.png" sizes="16x16">
 
-    <meta name="generator" content="Hugo 0.69.0" />
+    <meta name="generator" content="Hugo 0.74.3" />
   </head>
 
   
@@ -159,7 +159,7 @@ is a group isomorphism, that also induces isomorphisms $E_n(\Q_p)\to \hat{E}(p^n
 $$
 \log_\mathcal{F}\colon \hat{E}(p\Z_p)\to p\Z_p
 $$
-called the <i>formal logarithm</i>, where $p\Z_p$ on the right has the usual additive group structure. It also induces isomorphisms $\hat{E}(p^n\Z_p) \to p^n\Z_p$.</p>
+called the <!-- raw HTML omitted -->formal logarithm<!-- raw HTML omitted -->, where $p\Z_p$ on the right has the usual additive group structure. It also induces isomorphisms $\hat{E}(p^n\Z_p) \to p^n\Z_p$.</p>
 </blockquote>
 <p>The intuition behind the first result is that $E_1(\Q_p)$ somewhat represents points <em>close to $\mathcal{O}$</em> and that this space can be <em>linearized</em> into $p\Z_p$ with <em>some group structure</em>.</p>
 <p>The second result has little to do with geometry. It says that the group structure we put on $p\Z_p$ can always be mapped back to the usual additive group structure. We&rsquo;ll start by proving this second result using the notion of formal group laws.</p>
@@ -192,7 +192,7 @@ called the <i>formal logarithm</i>, where $p\Z_p$ on the right has the usual add
 </ol>
 <p>Later, we will see how to construct a formal group law from any elliptic curve!</p>
 <h2 id="formal-logarithm">Formal logarithm</h2>
-<p>From calculus, we know that the power series $\log(1+X) = \sum_{n=1}^\infty (-1)^{n-1} \frac {X^n}{n}$ has some nice properties. Namely, $\log((1+X)(1+Y))=\log(1+X+Y+XY)=\log(1+X) + \log(1+Y)$. This induces an <i>isomorphism</i> of formal group laws $\G_m \to \G_a$ over fields of characteristic zero.</p>
+<p>From calculus, we know that the power series $\log(1+X) = \sum_{n=1}^\infty (-1)^{n-1} \frac {X^n}{n}$ has some nice properties. Namely, $\log((1+X)(1+Y))=\log(1+X+Y+XY)=\log(1+X) + \log(1+Y)$. This induces an <!-- raw HTML omitted -->isomorphism<!-- raw HTML omitted --> of formal group laws $\G_m \to \G_a$ over fields of characteristic zero.</p>
 <p>A surprising and important result is that the formal logarithm generalizes to arbitrary formal group laws:</p>
 <blockquote>
 <p><strong>Theorem (IV.5.2 in Silverman):</strong> For any formal group law $F$, there is a formal logarithm $\log_F$ that induces an isomorphism of formal group laws $F \to \G_a$ over fields of characteristic zero.</p>
@@ -207,12 +207,12 @@ for all $r&gt;0$.</p>
 </blockquote>
 <h1 id="the-formal-group-law-of-an-elliptic-curve">The Formal group law of an elliptic curve</h1>
 <p>We now see how the group structure on elliptic curves induces formal group laws.</p>
-<p>Let $E: y^2 + a_1xy +a_3y = x^3 + a_2x^2 + a_4x + a_6$ be an elliptic curve over a field $K$. Let $K[E]_\mathcal{O}$  be the local ring without poles at $\O$. Let $\M_\O$ be the maximal ideal of $K[E]_\O$ given by functions vanishing at $\O$. Then $\M_\O=(z)$ for some <i>uniformizer</i> $z$ (which exists by properties of DVR). The completion of $K[E]_\O$ at $\M_\O$ is isomorphic to $K[[z]]$. We want to find a characterization of the group structure on $E$ inside this ring $K[[z]]$ in terms of a formal group law.</p>
+<p>Let $E: y^2 + a_1xy +a_3y = x^3 + a_2x^2 + a_4x + a_6$ be an elliptic curve over a field $K$. Let $K[E]_\mathcal{O}$  be the local ring without poles at $\O$. Let $\M_\O$ be the maximal ideal of $K[E]_\O$ given by functions vanishing at $\O$. Then $\M_\O=(z)$ for some <!-- raw HTML omitted -->uniformizer<!-- raw HTML omitted --> $z$ (which exists by properties of DVR). The completion of $K[E]_\O$ at $\M_\O$ is isomorphic to $K[[z]]$. We want to find a characterization of the group structure on $E$ inside this ring $K[[z]]$ in terms of a formal group law.</p>
 <p>We use the change of variable: $z = -\frac x y$, $w = -\frac 1 y$. In this coordinate system, $\O=(0,0)$ and $z$ is a uniformizer of $\M_\O$.  The Weierstrass equation becomes
 $$
 E: w = z^3 + a_1 zw + a_2 z^2w + a_3w^2 + a_4 zw^2 + a_6w^3 = f(z, w).
 $$
-The idea now is to recursively substitute the equation into itself, i.e., replace all occurrences of $w$ on the right-hand-side by the right-hand-side itself <i>ad infinitum</i>. This creates a power series $w(z) = z^3(1+&hellip;)\in \Z[a_1,&hellip;,a_6][[z]]$ satisfying $w(z) = f(z, w(z))$.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+The idea now is to recursively substitute the equation into itself, i.e., replace all occurrences of $w$ on the right-hand-side by the right-hand-side itself <!-- raw HTML omitted -->ad infinitum<!-- raw HTML omitted -->. This creates a power series $w(z) = z^3(1+&hellip;)\in \Z[a_1,&hellip;,a_6][[z]]$ satisfying $w(z) = f(z, w(z))$.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <p>Defining the formal group law on $K[[z]]$ is now a matter of technique. We take two points on $E$: $(z_1, w(z_1))$ and $(z_2, w(z_2))$ and formally define the line connecting them, find the intersection with the curve and invert it. This gives a power series $F(z_1, z_2)\in \Z[a_1,&hellip;,a_6][[z]] \subset K[[z]] $ that satisfies the formal group law axioms. We denote this formal group law $\hat{E}$.</p>
 <p>Now let&rsquo;s go back to the case $K=\Q_p$, $R=\Z_p$, $\M = p\Z_p$. The change of coordinates for $(z,w)$ implies $x =  \frac z w$ and $y = - \frac 1 w$, so we can define Laurent series $x(z) = \frac z {w(z)}$ and $y(z) = -\frac 1 {w(z)}$. A similar argument than one above shows that for $z\in \M$, $x(z)$ and $y(z)$ converge in $K$. Thus, we can define a map
 $$

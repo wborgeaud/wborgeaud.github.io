@@ -2,66 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on wborgeaud</title>
-    <link>https://wborgeaud.github.io/tags/</link>
+    <link>https://solvable.group/tags/</link>
     <description>Recent content in Tags on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 29 Apr 2020 08:57:07 -0700</lastBuildDate>
     
-	<atom:link href="https://wborgeaud.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>cryptography</title>
-      <link>https://wborgeaud.github.io/tags/cryptography/</link>
+      <link>https://solvable.group/tags/cryptography/</link>
       <pubDate>Wed, 29 Apr 2020 08:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/tags/cryptography/</guid>
+      <guid>https://solvable.group/tags/cryptography/</guid>
       <description></description>
     </item>
     
     <item>
       <title>elliptic curves</title>
-      <link>https://wborgeaud.github.io/tags/elliptic-curves/</link>
+      <link>https://solvable.group/tags/elliptic-curves/</link>
       <pubDate>Wed, 29 Apr 2020 08:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/tags/elliptic-curves/</guid>
+      <guid>https://solvable.group/tags/elliptic-curves/</guid>
       <description></description>
     </item>
     
     <item>
       <title>zero-knowledge proofs</title>
-      <link>https://wborgeaud.github.io/tags/zero-knowledge-proofs/</link>
+      <link>https://solvable.group/tags/zero-knowledge-proofs/</link>
       <pubDate>Thu, 16 Apr 2020 13:57:25 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/tags/zero-knowledge-proofs/</guid>
+      <guid>https://solvable.group/tags/zero-knowledge-proofs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>react-native</title>
-      <link>https://wborgeaud.github.io/tags/react-native/</link>
+      <link>https://solvable.group/tags/react-native/</link>
       <pubDate>Thu, 14 Nov 2019 13:57:25 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/tags/react-native/</guid>
+      <guid>https://solvable.group/tags/react-native/</guid>
       <description></description>
     </item>
     
     <item>
       <title>rust</title>
-      <link>https://wborgeaud.github.io/tags/rust/</link>
+      <link>https://solvable.group/tags/rust/</link>
       <pubDate>Thu, 14 Nov 2019 13:57:25 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/tags/rust/</guid>
+      <guid>https://solvable.group/tags/rust/</guid>
       <description></description>
     </item>
     
     <item>
       <title>webassembly</title>
-      <link>https://wborgeaud.github.io/tags/webassembly/</link>
+      <link>https://solvable.group/tags/webassembly/</link>
       <pubDate>Thu, 14 Nov 2019 13:57:25 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/tags/webassembly/</guid>
+      <guid>https://solvable.group/tags/webassembly/</guid>
       <description></description>
     </item>
     

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>wborgeaud</title>
-    <link>https://wborgeaud.github.io/</link>
+    <link>https://solvable.group/</link>
     <description>Recent content on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 29 Apr 2020 08:57:07 -0700</lastBuildDate>
     
-	<atom:link href="https://wborgeaud.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://solvable.group/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Anomalous Curves Part 3: Formal groups</title>
-      <link>https://wborgeaud.github.io/posts/anomalous-curves-3/</link>
+      <link>https://solvable.group/posts/anomalous-curves-3/</link>
       <pubDate>Wed, 29 Apr 2020 08:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/anomalous-curves-3/</guid>
+      <guid>https://solvable.group/posts/anomalous-curves-3/</guid>
       <description>$$ \def\F{\mathbb{F}} $$
 $$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} \def\M{\mathcal{M}} \def\G{\hat{\mathbb{G}}} \def\O{\mathcal{O}} $$
 This is part three of the series on anomalous curves. Go here for part one and here for part two.
@@ -26,10 +26,10 @@ Today, I&amp;rsquo;ll prove the two missing results from the last post:
     
     <item>
       <title>Anomalous Curves Part 2: p-adic niceties</title>
-      <link>https://wborgeaud.github.io/posts/anomalous-curves-2/</link>
+      <link>https://solvable.group/posts/anomalous-curves-2/</link>
       <pubDate>Wed, 22 Apr 2020 13:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/anomalous-curves-2/</guid>
+      <guid>https://solvable.group/posts/anomalous-curves-2/</guid>
       <description>$$ \def\F{\mathbb{F}} $$
 $$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} $$
 This is part two of the series on anomalous curves. Go here for part one.
@@ -39,10 +39,10 @@ Today, I&amp;rsquo;ll give a sketch of the construction of Smart&amp;rsquo;s att
     
     <item>
       <title>Anomalous Curves Part 1: Don&#39;t be clever with your elliptic curve order</title>
-      <link>https://wborgeaud.github.io/posts/anomalous-curves-1/</link>
+      <link>https://solvable.group/posts/anomalous-curves-1/</link>
       <pubDate>Tue, 21 Apr 2020 13:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/anomalous-curves-1/</guid>
+      <guid>https://solvable.group/posts/anomalous-curves-1/</guid>
       <description>$$ \def\F{\mathbb{F}} $$
 Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the exact opposite notation, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&amp;hellip;
 What if I told you there are curves where $p=q=r$?</description>
@@ -50,30 +50,30 @@ What if I told you there are curves where $p=q=r$?</description>
     
     <item>
       <title>Membership proofs from polynomial commitments</title>
-      <link>https://wborgeaud.github.io/posts/membership-proofs-from-polynomial-commitments/</link>
+      <link>https://solvable.group/posts/membership-proofs-from-polynomial-commitments/</link>
       <pubDate>Thu, 16 Apr 2020 13:57:25 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/membership-proofs-from-polynomial-commitments/</guid>
+      <guid>https://solvable.group/posts/membership-proofs-from-polynomial-commitments/</guid>
       <description>$$ \def\com{\mathbf{com}} $$
 Recently, Dan Boneh, Ben Fisch, Ariel Gabizon, and Zac Williamson (BFGW) published a writeup showing how to create range proofs from polynomial commitments. As a mental exercise, I wanted to see how to use polynomial commitments to create membership proofs instead. Membership proofs can be seen as a generalization of range proofs, if certain homomorphic properties hold (that&amp;rsquo;s something I learned first from this article). For example for Pedersen commitments, we have:</description>
     </item>
     
     <item>
       <title>Understanding Verifiable Delay Functions (with a Rust implementation)</title>
-      <link>https://wborgeaud.github.io/posts/understanding-vdfs/</link>
+      <link>https://solvable.group/posts/understanding-vdfs/</link>
       <pubDate>Sat, 30 Nov 2019 13:57:25 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/understanding-vdfs/</guid>
+      <guid>https://solvable.group/posts/understanding-vdfs/</guid>
       <description>I have been reading about Verifiable Delay Functions (VDF) recently and wanted to write a short post explaining what they are and what they can be used for. This post relies mainly on the papers: Efficient verifiable delay functions, Wesolowski and A Survey of Two Verifiable Delay Functions, Boneh et al. I also recommend this podcast with Joseph Bonneau.
 Definition A VDF is a function $f_T: \mathcal{X} \to \mathcal{Y}$ that takes a long time to compute but is fast to verify.</description>
     </item>
     
     <item>
       <title>Use Rust in React Native through WebAssembly</title>
-      <link>https://wborgeaud.github.io/posts/rust-wasm-react-native/</link>
+      <link>https://solvable.group/posts/rust-wasm-react-native/</link>
       <pubDate>Thu, 14 Nov 2019 13:57:25 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/rust-wasm-react-native/</guid>
+      <guid>https://solvable.group/posts/rust-wasm-react-native/</guid>
       <description>This post shows how to use Rust functions in a React Native project through WebAssembly. I struggled quite a bit to find an easy way to make it work, so I thought I&amp;rsquo;d share my findings. You can find the code for this post here.
 Here&amp;rsquo;s the TLDR:
  Create a wasm-pack project exposing the Rust functions you want to export. Serve a web page exposing these functions through message events.</description>
@@ -81,19 +81,19 @@ Here&amp;rsquo;s the TLDR:
     
     <item>
       <title>About me</title>
-      <link>https://wborgeaud.github.io/about/</link>
+      <link>https://solvable.group/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://wborgeaud.github.io/about/</guid>
+      <guid>https://solvable.group/about/</guid>
       <description>Not gonna say anything for now&amp;hellip;</description>
     </item>
     
     <item>
       <title>Contact</title>
-      <link>https://wborgeaud.github.io/contact/</link>
+      <link>https://solvable.group/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://wborgeaud.github.io/contact/</guid>
+      <guid>https://solvable.group/contact/</guid>
       <description>Mail: williamborgeaud@gmail.com
 Twitter: @williamborgeaud
 Github: @wborgeaud</description>

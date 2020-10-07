@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>elliptic curves on wborgeaud</title>
-    <link>https://wborgeaud.github.io/tags/elliptic-curves/</link>
+    <link>https://solvable.group/tags/elliptic-curves/</link>
     <description>Recent content in elliptic curves on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 29 Apr 2020 08:57:07 -0700</lastBuildDate>
     
-	<atom:link href="https://wborgeaud.github.io/tags/elliptic-curves/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://solvable.group/tags/elliptic-curves/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Anomalous Curves Part 3: Formal groups</title>
-      <link>https://wborgeaud.github.io/posts/anomalous-curves-3/</link>
+      <link>https://solvable.group/posts/anomalous-curves-3/</link>
       <pubDate>Wed, 29 Apr 2020 08:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/anomalous-curves-3/</guid>
+      <guid>https://solvable.group/posts/anomalous-curves-3/</guid>
       <description>$$ \def\F{\mathbb{F}} $$
 $$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} \def\M{\mathcal{M}} \def\G{\hat{\mathbb{G}}} \def\O{\mathcal{O}} $$
 This is part three of the series on anomalous curves. Go here for part one and here for part two.
@@ -26,10 +26,10 @@ Today, I&amp;rsquo;ll prove the two missing results from the last post:
     
     <item>
       <title>Anomalous Curves Part 2: p-adic niceties</title>
-      <link>https://wborgeaud.github.io/posts/anomalous-curves-2/</link>
+      <link>https://solvable.group/posts/anomalous-curves-2/</link>
       <pubDate>Wed, 22 Apr 2020 13:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/anomalous-curves-2/</guid>
+      <guid>https://solvable.group/posts/anomalous-curves-2/</guid>
       <description>$$ \def\F{\mathbb{F}} $$
 $$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} $$
 This is part two of the series on anomalous curves. Go here for part one.
@@ -39,10 +39,10 @@ Today, I&amp;rsquo;ll give a sketch of the construction of Smart&amp;rsquo;s att
     
     <item>
       <title>Anomalous Curves Part 1: Don&#39;t be clever with your elliptic curve order</title>
-      <link>https://wborgeaud.github.io/posts/anomalous-curves-1/</link>
+      <link>https://solvable.group/posts/anomalous-curves-1/</link>
       <pubDate>Tue, 21 Apr 2020 13:57:07 -0700</pubDate>
       
-      <guid>https://wborgeaud.github.io/posts/anomalous-curves-1/</guid>
+      <guid>https://solvable.group/posts/anomalous-curves-1/</guid>
       <description>$$ \def\F{\mathbb{F}} $$
 Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the exact opposite notation, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&amp;hellip;
 What if I told you there are curves where $p=q=r$?</description>

@@ -3,12 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://solvable.group/tags/cryptography/</loc>
+    <lastmod>2020-10-10T03:57:25-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://solvable.group/tags/elliptic-curves/</loc>
+    <lastmod>2020-10-10T03:57:25-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://solvable.group/tags/isogeny/</loc>
+    <lastmod>2020-10-10T03:57:25-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://solvable.group/posts/isobeg/</loc>
     <lastmod>2020-10-10T03:57:25-07:00</lastmod>
   </url>
   
   <url>
+    <loc>https://solvable.group/tags/post-quantum/</loc>
+    <lastmod>2020-10-10T03:57:25-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://solvable.group/posts/</loc>
+    <lastmod>2020-10-10T03:57:25-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://solvable.group/tags/</loc>
     <lastmod>2020-10-10T03:57:25-07:00</lastmod>
   </url>
   
@@ -19,21 +44,6 @@
   
   <url>
     <loc>https://solvable.group/posts/anomalous-curves-3/</loc>
-    <lastmod>2020-04-29T08:57:07-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://solvable.group/tags/cryptography/</loc>
-    <lastmod>2020-04-29T08:57:07-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://solvable.group/tags/elliptic-curves/</loc>
-    <lastmod>2020-04-29T08:57:07-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://solvable.group/tags/</loc>
     <lastmod>2020-04-29T08:57:07-07:00</lastmod>
   </url>
   

@@ -6,10 +6,21 @@
     <description>Recent content in cryptography on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 29 Apr 2020 08:57:07 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2020 03:57:25 -0700</lastBuildDate>
     
 	<atom:link href="https://solvable.group/tags/cryptography/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Isogeny-based crypto Part 1: The SIDH protocol</title>
+      <link>https://solvable.group/posts/isobeg/</link>
+      <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
+      
+      <guid>https://solvable.group/posts/isobeg/</guid>
+      <description>This is the first post in a series on isogeny-based crypto. Instead of writing yet another introduction, I redirect you instead to the great introduction to SIDH by Craig Costello: Supersingular isogeny key exchange for beginners.
+Today&amp;rsquo;s post will then be in the form of a Sage notebook walking through the examples in the paper. This also gives a good intro to how isogenies work in Sage.
+The notebook source is available here: github.</description>
+    </item>
     
     <item>
       <title>Anomalous Curves Part 3: Formal groups</title>

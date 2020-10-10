@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>isogeny on wborgeaud</title>
+    <link>https://solvable.group/tags/isogeny/</link>
+    <description>Recent content in isogeny on wborgeaud</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 10 Oct 2020 03:57:25 -0700</lastBuildDate>
+    
+	<atom:link href="https://solvable.group/tags/isogeny/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Isogeny-based crypto Part 1: The SIDH protocol</title>
+      <link>https://solvable.group/posts/isobeg/</link>
+      <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
+      
+      <guid>https://solvable.group/posts/isobeg/</guid>
+      <description>This is the first post in a series on isogeny-based crypto. Instead of writing yet another introduction, I redirect you instead to the great introduction to SIDH by Craig Costello: Supersingular isogeny key exchange for beginners.
+Today&amp;rsquo;s post will then be in the form of a Sage notebook walking through the examples in the paper. This also gives a good intro to how isogenies work in Sage.
+The notebook source is available here: github.</description>
+    </item>
+    
+  </channel>
+</rss>

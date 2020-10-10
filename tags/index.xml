@@ -6,7 +6,7 @@
     <description>Recent content in Tags on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 29 Apr 2020 08:57:07 -0700</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2020 03:57:25 -0700</lastBuildDate>
     
 	<atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>cryptography</title>
       <link>https://solvable.group/tags/cryptography/</link>
-      <pubDate>Wed, 29 Apr 2020 08:57:07 -0700</pubDate>
+      <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
       
       <guid>https://solvable.group/tags/cryptography/</guid>
       <description></description>
@@ -23,9 +23,27 @@
     <item>
       <title>elliptic curves</title>
       <link>https://solvable.group/tags/elliptic-curves/</link>
-      <pubDate>Wed, 29 Apr 2020 08:57:07 -0700</pubDate>
+      <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
       
       <guid>https://solvable.group/tags/elliptic-curves/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>isogeny</title>
+      <link>https://solvable.group/tags/isogeny/</link>
+      <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
+      
+      <guid>https://solvable.group/tags/isogeny/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>post-quantum</title>
+      <link>https://solvable.group/tags/post-quantum/</link>
+      <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
+      
+      <guid>https://solvable.group/tags/post-quantum/</guid>
       <description></description>
     </item>
     

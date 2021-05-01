@@ -6,11 +6,7 @@
     <description>Recent content in isogeny on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 10 Oct 2020 03:57:25 -0700</lastBuildDate>
-    
-	<atom:link href="https://solvable.group/tags/isogeny/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 10 Oct 2020 03:57:25 -0700</lastBuildDate><atom:link href="https://solvable.group/tags/isogeny/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Isogeny-based crypto Part 1: The SIDH protocol</title>
       <link>https://solvable.group/posts/isobeg/</link>

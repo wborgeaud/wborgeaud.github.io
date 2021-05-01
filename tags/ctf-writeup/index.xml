@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ctf-writeup on wborgeaud</title>
+    <link>https://solvable.group/tags/ctf-writeup/</link>
+    <description>Recent content in ctf-writeup on wborgeaud</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/ctf-writeup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cairo Games Vol 2: Solutions</title>
+      <link>https://solvable.group/posts/cairo-games-vol2/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/posts/cairo-games-vol2/</guid>
+      <description>Here are my solutions to the second edition of the Cairo Games.
+ Nu (Easy) Pakhet (Easy) Seth (Medium) Montu (Medium) Amun (Hard)  Nu This problem was pretty straightforward. We have to find to integers x,y&amp;lt;2^128 such that x*y=17 in the prime field used by Cairo. We can easily get such a pair as follows:
+from sympy import divisors P = 2**251 + 17 * 2**192 + 1 BOUND = 2**128 target = P + 17 for d in divisors(target): n = target // d if n &amp;lt; BOUND and d &amp;lt; BOUND: break ids.</description>
+    </item>
+    
+    <item>
+      <title>Donjon CTF Writup: Secret RNG</title>
+      <link>https://solvable.group/posts/secret-rng/</link>
+      <pubDate>Sat, 31 Oct 2020 03:57:25 -0700</pubDate>
+      
+      <guid>https://solvable.group/posts/secret-rng/</guid>
+      <description>TLDR This was a very nice challenge in the Donjon CTF. The goal was to reverse engineer the state of the PRNG math/rand in the Go standard library to guess the private key of a signature scheme and sign a given message. I solved this challenge by using the SMT solver Z3 to automagically recover the RNG state.
+Description Connecting to nc ots-sig.donjon-ctf.io 4001, we get:
+Public key: djX6vqVMj0fTZGIhJFgN1VHLgGgaBxWEhvxp1MzB09s= Enter signature: test You failed!</description>
+    </item>
+    
+  </channel>
+</rss>

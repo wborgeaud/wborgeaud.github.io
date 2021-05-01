@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="William Borgeaud">
+    <meta name="description" content="William Borgeaud&#39;s personal website">
+    <meta name="keywords" content="blog,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Donjon CTF Writup: Secret RNG"/>
+<meta name="twitter:description" content="TLDR This was a very nice challenge in the Donjon CTF. The goal was to reverse engineer the state of the PRNG math/rand in the Go standard library to guess the private key of a signature scheme and sign a given message. I solved this challenge by using the SMT solver Z3 to automagically recover the RNG state.
+Description Connecting to nc ots-sig.donjon-ctf.io 4001, we get:
+Public key: djX6vqVMj0fTZGIhJFgN1VHLgGgaBxWEhvxp1MzB09s= Enter signature: test You failed!"/>
+
+    <meta property="og:title" content="Donjon CTF Writup: Secret RNG" />
+<meta property="og:description" content="TLDR This was a very nice challenge in the Donjon CTF. The goal was to reverse engineer the state of the PRNG math/rand in the Go standard library to guess the private key of a signature scheme and sign a given message. I solved this challenge by using the SMT solver Z3 to automagically recover the RNG state.
+Description Connecting to nc ots-sig.donjon-ctf.io 4001, we get:
+Public key: djX6vqVMj0fTZGIhJFgN1VHLgGgaBxWEhvxp1MzB09s= Enter signature: test You failed!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://solvable.group/posts/secret-rng/" />
+<meta property="article:published_time" content="2020-10-31T03:57:25-07:00" />
+<meta property="article:modified_time" content="2020-10-31T03:57:25-07:00" />
+
+
+    
+      <base href="https://solvable.group/posts/secret-rng/">
+    
+    <title>
+  Donjon CTF Writup: Secret RNG · wborgeaud
+</title>
+
+    
+      <link rel="canonical" href="https://solvable.group/posts/secret-rng/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://solvable.group/css/coder.min.57c105950ffb5f7bad1bbb2761aba8ca5e15a346bce0abfcda4bedb73e21c15a.css" integrity="sha256-V8EFlQ/7X3utG7snYauoyl4Vo0a84Kv82kvttz4hwVo=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.79.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://solvable.group/">
+      wborgeaud
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Donjon CTF Writup: Secret RNG</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-10-31T03:57:25-07:00'>
+                October 31, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              9-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://solvable.group/tags/ctf-writeup/">ctf-writeup</a>
+      <span class="separator">•</span>
+    <a href="https://solvable.group/tags/cryptography/">cryptography</a>
+      <span class="separator">•</span>
+    <a href="https://solvable.group/tags/z3/">z3</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <h1 id="tldr">TLDR</h1>
+<p>This was a very nice challenge in the <a href="https://donjon-ctf.io/">Donjon CTF</a>. The goal was to reverse engineer the state of the PRNG <code>math/rand</code> in the Go standard library to guess the private key of a signature scheme and sign a given message. I solved this challenge by using the SMT solver <a href="https://github.com/Z3Prover/z3">Z3</a> to automagically recover the RNG state.</p>
+<h1 id="description">Description</h1>
+<p><img src="https://solvable.group/images/ctf-challs/srng.png" alt="Challenge description"></p>
+<p>Connecting to <code>nc ots-sig.donjon-ctf.io 4001</code>, we get:</p>
+<pre><code>Public key: djX6vqVMj0fTZGIhJFgN1VHLgGgaBxWEhvxp1MzB09s=
+Enter signature: test
+You failed! Private key was: 8GB6ClgHLz0nGU40Zwj8eKcH/CPl6sDKQEQX5cbiy1TPVf8ccI2yjr8HiOQwpwCj4VSQmS36+bIWBgkM3HO4Ny7pBvE0yGtJY9v3sVuaYeUU5h/rqYBpMjUAXBj5jfljRnVAXl50AKQvD5IYzU5IP6F5mJV/ZgT7MQ912/j/Q0+ug8Bj9q/+T6iO8tQfsui857XR/KIw85+EP5gRhUJi09Jjl36iFC2jyvqNQdjTpdJ4cQN8PO8RIAXCJlPT7upvD5uhQ0CiL+1KQRUPgWPK77SvNwUD++IboU4SBwP1DDFDrnqOZ7GmEncgT0VkLlQW9kWdfxM1HqQvSQmNqiUwK6Xps12qXi8ib07rnYkcV4eJ0QVGho6uuk8aGXhfJoArf2fGUzqhaNZIQGjsXBaoAfG7mka+SSlM4cGzvn5xA59yZ2H9H8C72ADiTtfF5cUSniT7QsMXWUjJrrsupUbOyapRH40DJ1fTeLgDZ1ly3CzN8dXKjItxcyuNONDCd5MvfdPIBsrApCY6Uu25rbG1q91C8t5YLVM0l90GoLdpJlJLfF/02jHNmkoYsc/Jyg8PyRuwBXj47mtbD/AViomNbkX2th9gUXfEVeMPzP1QqDJ6CC7sdkmdBspuyQtF6nX/pM5pXNDAOvFYuBdwfCPvCEAonXQqKUYXkqyZ82YACNhtmXgkBjkhO4b6RiOGKHVNQDqtCUmvSuk0VNebMGHrWmBSdjrM7FXVVI+f6Z7tik8ctxHYrJyU1XFervwlmAmbvhx1FOP8OwutpS9EViIne2HxN6dNaJTvVWfyPAOrdA9su7FKAh+HyrQfvlTwPEJEYW5Md9aX5jT1f2f76IiLyIG1S/gy8G/zb+WDsVVzspLV0aLw3Ce9jgJeBaMhGvZ93b+90xt86oKSDwueAM7JTjxgeNJOL0B3pr7QzlRhMRCxDl6veUfQ7o5q9YzOr1RI7cMINeyW7oQhqkyaoXa8Am4BH6LiWzmLOjMY4SiE5QPO4RVj95EhRVYFAtrrnUDMwZAftSjqhBq3qLXGNnLXm4QSwmgjaGOJ0wXqdH6BryXKALFB/hhUAFdW0YMdZzAOd27adHH2YDvDDeGvimJpAVmHDNDG1pLDHjlgXXc4QQP8TpmvhcSqJx7wgY8v/qcj00VREI+uI3F6CJScW2N8Bsa9mSzHpiyclCYkQyM4G8MEXGdfMm0CoLzeyZLf6P2sRtRjnGdbkdp3QP7frlDVOjUAe+8gsBu2K+PhyoZ6Rn+oNOMVWuftIEsy68KkEPwgy1AIwtWAEQKD3T+yRSNmRK1rznLr2HFTQJK0RI4OuBWDvmrlf4pSqC3Ri9uDcki/DOcTpVzwejOSSTrn1zYafTmeVN9JLzTHfIkdjQxSRJiOrgFxE0Rd/9iDeioj8VFBlvFkM5WX2Op2WKZefQVCuTs4ccnHt56V49yxukM0CeA=
+</code></pre><p>We also get a single Go script:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+        <span style="color:#e6db74">&#34;bufio&#34;</span>
+        <span style="color:#e6db74">&#34;crypto/sha256&#34;</span>
+        <span style="color:#e6db74">&#34;encoding/base64&#34;</span>
+        <span style="color:#e6db74">&#34;fmt&#34;</span>
+        <span style="color:#e6db74">&#34;io/ioutil&#34;</span>
+        <span style="color:#e6db74">&#34;os&#34;</span>
+        <span style="color:#e6db74">&#34;strings&#34;</span>
+        <span style="color:#e6db74">&#34;time&#34;</span>
+
+        <span style="color:#e6db74">&#34;./math/rand&#34;</span> <span style="color:#75715e">// same as default implementation, with different rngCooked array
+</span><span style="color:#75715e"></span>        <span style="color:#e6db74">&#34;github.com/dchest/wots&#34;</span>
+)
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">defaultFlag</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;CTF{xxx}&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">message</span> = []byte(<span style="color:#e6db74">&#34;Sign me if you can&#34;</span>)
+
+        <span style="color:#75715e">// Not so secure seed, but prng internals are secret
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">rng</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">NewSource</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>()))
+
+        <span style="color:#66d9ef">for</span> {
+                <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ots</span> = <span style="color:#a6e22e">wots</span>.<span style="color:#a6e22e">NewScheme</span>(<span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>, <span style="color:#a6e22e">rng</span>)
+                <span style="color:#a6e22e">priv</span>, <span style="color:#a6e22e">pub</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ots</span>.<span style="color:#a6e22e">GenerateKeyPair</span>()
+
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Public key:&#34;</span>, <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">pub</span>))
+
+                <span style="color:#a6e22e">reader</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdin</span>)
+                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Enter signature: &#34;</span>)
+                <span style="color:#a6e22e">text</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reader</span>.<span style="color:#a6e22e">ReadString</span>(<span style="color:#e6db74">&#39;\n&#39;</span>)
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error occurred. Please try again later.&#34;</span>)
+                        <span style="color:#66d9ef">return</span>
+                }
+
+                <span style="color:#a6e22e">text</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimSuffix</span>(<span style="color:#a6e22e">text</span>, <span style="color:#e6db74">&#34;\n&#34;</span>)
+                <span style="color:#a6e22e">signature</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">text</span>)
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                        <span style="color:#66d9ef">return</span>
+                }
+
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ots</span>.<span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">pub</span>, <span style="color:#a6e22e">message</span>, <span style="color:#a6e22e">signature</span>) {
+                        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Congratulations! Flag: &#34;</span>)
+
+                        <span style="color:#a6e22e">flag</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadFile</span>(<span style="color:#e6db74">&#34;secret&#34;</span>)
+                        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">defaultFlag</span>)
+                        } <span style="color:#66d9ef">else</span> {
+                                <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">flag</span>))
+                        }
+                } <span style="color:#66d9ef">else</span> {
+                        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;You failed! Private key was:&#34;</span>, <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">priv</span>))
+                        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+                }
+        }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>It is clear that the service on <code>ots-sig.donjon-ctf.io:4001</code> is the Go script. The goal of the challenge is then to find a valid signature of the message <code>Sign me if you can</code> given only the public key and possibly some previous private keys.</p>
+<p>The signature scheme is the <a href="https://en.wikipedia.org/wiki/Lamport_signature">Lamport signature scheme</a> implemented in the <a href="https://github.com/dchest/wots">wots</a> Go package. I assumed that this implementation is secure (it&rsquo;s a bit unethical to exploit a 0-day in an open-source project).</p>
+<h1 id="exploit">Exploit</h1>
+<p>To start, I looked at the code for generating a <code>PrivateKey</code> from a RNG. <a href="https://github.com/dchest/wots/blob/b19125f232231228ca68fda9dfe9dfde490cc3c0/wots.go#L86">The answer</a> is straightforward, the private key just holds the next $N$ bytes of the RNG, where $N=B*(B+2)$ is the size of the private key, and $B$ is the size of the hash function. This challenge uses SHA256, so we have $B=32$ and $N=1088$.</p>
+<p>So the challenge allows us to get as many subsequent private keys (from a single seed) as we want. As we have just seen, this is equivalent to being able to stream the RNG <code>rand.New(rand.NewSource(time.Now().UnixNano()))</code>. Therefore, if we break the RNG, meaning we&rsquo;re able to guess the following 1088 bytes given an arbitrary number or previous bytes, we win.</p>
+<p>At this point, it is worth looking back at the challenge description and also line 13 in the Go script:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;./math/rand&#34;</span> <span style="color:#75715e">// same as default implementation, with different rngCooked array
+</span></code></pre></td></tr></table>
+</div>
+</div><p>So the RNG used is the same as the standard <code>math/rand</code> but with different constants (otherwise the challenge would be straightforward since we could just bruteforce the seed). <code>rngCooked</code> and the RNG logic in general are defined <a href="https://github.com/golang/go/blob/master/src/math/rand/rng.go">here</a>.</p>
+<p>After staring at this file for a while, I found the potential vulnerability<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Here is the <a href="https://github.com/golang/go/blob/f2ee58b6bb3d8312dad2ed7826c1a0e67aea8483/src/math/rand/rng.go#L237">function</a> to generate <code>uint64</code> (which is used to generate random bytes):</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">237
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">238
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">239
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">240
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">241
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">242
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">243
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">244
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">245
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">246
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">247
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">248
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">249
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">250
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">251
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">252
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Uint64 returns a non-negative pseudo-random 64-bit integer as an uint64.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">rng</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rngSource</span>) <span style="color:#a6e22e">Uint64</span>() <span style="color:#66d9ef">uint64</span> {
+    <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">tap</span><span style="color:#f92672">--</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">tap</span> &lt; <span style="color:#ae81ff">0</span> {
+        <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">tap</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">rngLen</span>
+    }
+
+    <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">feed</span><span style="color:#f92672">--</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">feed</span> &lt; <span style="color:#ae81ff">0</span> {
+        <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">feed</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">rngLen</span>
+    }
+
+    <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">vec</span>[<span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">feed</span>] <span style="color:#f92672">+</span> <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">vec</span>[<span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">tap</span>]
+    <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">vec</span>[<span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">feed</span>] = <span style="color:#a6e22e">x</span>
+    <span style="color:#66d9ef">return</span> uint64(<span style="color:#a6e22e">x</span>)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>For some context, <code>rng.vec</code> is the RNG state represented by a vector of $\texttt{rngLen}=607$ <code>int64</code> elements. <code>rng.tap</code> and <code>rng.feed</code> are two counters ranging from 0 to <code>rngLen</code> and originally set at 333 and 606 respectively. The &ldquo;vulnerability&rdquo; is at line 250. Every time the function is called, the state element <code>rng.vec[rng.feed]</code> is replaced by the returned value<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. So after having observed <code>rngLen</code> calls to this function <code>Uint64</code>, we can deduce the RNG state and thus compute the RNG&rsquo;s next values, without knowing anything about the original state nor the seed.</p>
+<p>However, in this challenge we do not get raw <code>uint64</code> values from the RNG, but bytes. So, let&rsquo;s see how random bytes are generated from the RNG. This is implemented <a href="https://github.com/golang/go/blob/f2ee58b6bb3d8312dad2ed7826c1a0e67aea8483/src/math/rand/rand.go#L267">here</a>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">267
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">268
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">269
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">270
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">271
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">272
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">273
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">274
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">275
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">276
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">277
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">278
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">279
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">280
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">281
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">282
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">283
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">284
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">285
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">286
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">287
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">read</span>(<span style="color:#a6e22e">p</span> []<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">src</span> <span style="color:#a6e22e">Source</span>, <span style="color:#a6e22e">readVal</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">readPos</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int8</span>) (<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) {
+    <span style="color:#a6e22e">pos</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">readPos</span>
+    <span style="color:#a6e22e">val</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">readVal</span>
+    <span style="color:#a6e22e">rng</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">src</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">rngSource</span>)
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">n</span> = <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> &lt; len(<span style="color:#a6e22e">p</span>); <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span> {
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">pos</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">rng</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                <span style="color:#a6e22e">val</span> = <span style="color:#a6e22e">rng</span>.<span style="color:#a6e22e">Int63</span>()
+            } <span style="color:#66d9ef">else</span> {
+                <span style="color:#a6e22e">val</span> = <span style="color:#a6e22e">src</span>.<span style="color:#a6e22e">Int63</span>()
+            }
+            <span style="color:#a6e22e">pos</span> = <span style="color:#ae81ff">7</span>
+        }
+        <span style="color:#a6e22e">p</span>[<span style="color:#a6e22e">n</span>] = byte(<span style="color:#a6e22e">val</span>)
+        <span style="color:#a6e22e">val</span> <span style="color:#f92672">&gt;&gt;=</span> <span style="color:#ae81ff">8</span>
+        <span style="color:#a6e22e">pos</span><span style="color:#f92672">--</span>
+    }
+    <span style="color:#f92672">*</span><span style="color:#a6e22e">readPos</span> = <span style="color:#a6e22e">pos</span>
+    <span style="color:#f92672">*</span><span style="color:#a6e22e">readVal</span> = <span style="color:#a6e22e">val</span>
+    <span style="color:#66d9ef">return</span>
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>A few things to note:</p>
+<ul>
+<li><code>rng.Int63</code> is just the signed version of <code>rng.Uint64</code> that we analyzed above.</li>
+<li>The function <code>read</code> works by iteratively generating a <code>Int63</code>, and writing the first (little-endian) 7 bytes of this value to the buffer.</li>
+<li>After the 7 bytes have been written, the rest is discarded, a new <code>Int63</code> is generated and the process continues.</li>
+<li>This means that we get back the first $7*8=56$ bits of every value generated by the RNG.</li>
+</ul>
+<p>I think this is the appropriate time to introduce our good friend <a href="https://github.com/Z3Prover/z3">Z3</a>.</p>
+<h1 id="modelling-the-problem-with-z3">Modelling the problem with Z3</h1>
+<p>To recapitulate:</p>
+<ol>
+<li>After observing <code>7*rngLen</code> bytes, we can deduce the first 56 bits of every element of the RNG&rsquo;s state.</li>
+<li>Afterwards, we can observe 56 bits of an arbitrary number of linear combinations of state elements.</li>
+</ol>
+<p>The state is a vector of $\texttt{rngLen}$ <code>int64</code> elements. We can thus model them with a list of $\texttt{rngLen}$ <code>z3.BitVec('state_i', 65)</code> elements:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> [z3<span style="color:#f92672">.</span>BitVec(f<span style="color:#e6db74">&#39;state_{i}&#39;</span>, <span style="color:#ae81ff">65</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(rngLen)]
+</code></pre></div><p>Then, by 1., after observing <code>7*rngLen</code> bytes, I create a list <code>masked_state</code> of <code>rngLen</code> 56-bits integers and set the constraints:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s <span style="color:#f92672">=</span> z3<span style="color:#f92672">.</span>Solver()
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(rngLen):
+    s<span style="color:#f92672">.</span>add(state[i] <span style="color:#f92672">&amp;</span> mask <span style="color:#f92672">==</span> masked_state[i])
+</code></pre></div><p>where <code>mask = (1&lt;&lt;56)-1</code> is the 56 bits mask.
+Then, by 2., whenever we observe 7 bytes <code>seven_bytes</code>, we can create a (little-endian) 56-bits integer from them and do the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(seven_bytes, <span style="color:#e6db74">&#39;little&#39;</span>)
+y <span style="color:#f92672">=</span> state[feed] <span style="color:#f92672">+</span> state[tap]
+s<span style="color:#f92672">.</span>add((y <span style="color:#f92672">&amp;</span> mask) <span style="color:#f92672">==</span> x)
+state[feed] <span style="color:#f92672">=</span> y
+</code></pre></div><p>We can then repeat this process infinitely (by also decrementing the counters <code>tap</code> and <code>feed</code>).</p>
+<p>It turns out that after <code>2*rngLen*7</code> observed bytes, Z3 manages to correctly recover the state. After that, it&rsquo;s easy to solve the challenge by generating the next 1088 bytes from the RNG, give them to the <code>wots</code> Go package to sign the message and get the flag.</p>
+<h1 id="full-solution">Full solution</h1>
+<p>Here is the full solution in Python:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> remote
+<span style="color:#f92672">import</span> re
+<span style="color:#f92672">import</span> base64
+<span style="color:#f92672">import</span> z3
+<span style="color:#f92672">import</span> subprocess
+
+<span style="color:#75715e"># Open socket and recover 13 private keys.</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">open_socket</span>():
+    private_keys <span style="color:#f92672">=</span> []
+    r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;ots-sig.donjon-ctf.io&#39;</span>, <span style="color:#ae81ff">4001</span>)
+    r<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Public key&#34;</span>)
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">13</span>):
+        r<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#39;bG9sCg==&#39;</span>)
+        s <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Public key&#34;</span>)
+        sk <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;.*Private key was:\s*(.*)&#39;</span>, s)[<span style="color:#ae81ff">0</span>]
+        private_keys<span style="color:#f92672">.</span>append(base64<span style="color:#f92672">.</span>b64decode(sk))
+
+    <span style="color:#66d9ef">return</span> private_keys, r
+
+<span style="color:#75715e"># Reverse the RNG state given only the RNG&#39;s first N raw bytes.</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reverse_rng</span>(raw_bytes):
+    blockSize <span style="color:#f92672">=</span> <span style="color:#ae81ff">1088</span>
+    rngLen <span style="color:#f92672">=</span> <span style="color:#ae81ff">607</span>
+    rngTap <span style="color:#f92672">=</span> <span style="color:#ae81ff">273</span>
+
+    mask <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> (<span style="color:#ae81ff">7</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>)) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+
+    masked_state <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(rngLen)]
+    feed <span style="color:#f92672">=</span> rngLen <span style="color:#f92672">-</span> rngTap <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+    tap <span style="color:#f92672">=</span> rngLen <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(rngLen):
+        x <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(raw_bytes[i <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span>:(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span>], <span style="color:#e6db74">&#39;little&#39;</span>)
+        masked_state[feed] <span style="color:#f92672">=</span> x
+        feed <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">if</span> feed <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+            feed <span style="color:#f92672">+=</span> rngLen
+
+    s <span style="color:#f92672">=</span> z3<span style="color:#f92672">.</span>Solver()
+    state <span style="color:#f92672">=</span> [z3<span style="color:#f92672">.</span>BitVec(f<span style="color:#e6db74">&#39;v_{i}&#39;</span>, <span style="color:#ae81ff">65</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(rngLen)]
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(rngLen):
+        s<span style="color:#f92672">.</span>add(state[i] <span style="color:#f92672">&amp;</span> mask <span style="color:#f92672">==</span> masked_state[i])
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(rngLen, <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> rngLen):
+        x <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(raw_bytes[i <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span>:(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span>], <span style="color:#e6db74">&#39;little&#39;</span>)
+        y <span style="color:#f92672">=</span> state[feed] <span style="color:#f92672">+</span> state[tap]
+        s<span style="color:#f92672">.</span>add((y <span style="color:#f92672">&amp;</span> mask) <span style="color:#f92672">==</span> x)
+        state[feed] <span style="color:#f92672">=</span> y
+        feed <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">if</span> feed <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+            feed <span style="color:#f92672">+=</span> rngLen
+        tap <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">if</span> tap <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+            tap <span style="color:#f92672">+=</span> rngLen
+
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;The Z3 model is: &#34;</span>, s<span style="color:#f92672">.</span>check())
+    model <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>model()
+    further_bytes <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&#39;</span>
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> rngLen, <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> rngLen):
+        x <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(raw_bytes[i <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span>:(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">7</span>], <span style="color:#e6db74">&#39;little&#39;</span>)
+        y <span style="color:#f92672">=</span> state[feed] <span style="color:#f92672">+</span> state[tap]
+        yl <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>eval(state[feed] <span style="color:#f92672">+</span> state[tap])<span style="color:#f92672">.</span>as_long()
+        further_bytes <span style="color:#f92672">+=</span> int<span style="color:#f92672">.</span>to_bytes(yl <span style="color:#f92672">&amp;</span> mask, <span style="color:#ae81ff">7</span>, <span style="color:#e6db74">&#39;little&#39;</span>)
+        state[feed] <span style="color:#f92672">=</span> y
+        feed <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">if</span> feed <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+            feed <span style="color:#f92672">+=</span> rngLen
+        tap <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">if</span> tap <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+            tap <span style="color:#f92672">+=</span> rngLen
+    <span style="color:#66d9ef">return</span> further_bytes[<span style="color:#ae81ff">13</span> <span style="color:#f92672">*</span> blockSize <span style="color:#f92672">-</span> <span style="color:#ae81ff">21</span> <span style="color:#f92672">*</span> rngLen:<span style="color:#ae81ff">14</span> <span style="color:#f92672">*</span> blockSize <span style="color:#f92672">-</span>
+                         <span style="color:#ae81ff">21</span> <span style="color:#f92672">*</span> rngLen]
+
+private_keys, socket <span style="color:#f92672">=</span> open_socket()
+raw_bytes <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(private_keys)
+next_private_key <span style="color:#f92672">=</span> reverse_rng(raw_bytes)
+signature <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>check_output(
+    [<span style="color:#e6db74">&#34;../go/bin/go&#34;</span>, <span style="color:#e6db74">&#34;run&#34;</span>, <span style="color:#e6db74">&#34;sol.go&#34;</span>,
+     base64<span style="color:#f92672">.</span>b64encode(next_private_key)])
+
+socket<span style="color:#f92672">.</span>sendline(signature<span style="color:#f92672">.</span>strip())
+socket<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Enter signature: &#34;</span>)
+<span style="color:#66d9ef">print</span>(socket<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>decode())
+</code></pre></td></tr></table>
+</div>
+</div><p>I call the following Go script on line 75 to generate the signature:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+        <span style="color:#e6db74">&#34;crypto/sha256&#34;</span>
+        <span style="color:#e6db74">&#34;encoding/base64&#34;</span>
+        <span style="color:#e6db74">&#34;fmt&#34;</span>
+        <span style="color:#e6db74">&#34;github.com/dchest/wots&#34;</span>
+        <span style="color:#e6db74">&#34;math/rand&#34;</span>
+        <span style="color:#e6db74">&#34;os&#34;</span>
+        <span style="color:#e6db74">&#34;time&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">message</span> = []byte(<span style="color:#e6db74">&#34;Sign me if you can&#34;</span>)
+        <span style="color:#a6e22e">rng</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">NewSource</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>()))
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ots</span> = <span style="color:#a6e22e">wots</span>.<span style="color:#a6e22e">NewScheme</span>(<span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>, <span style="color:#a6e22e">rng</span>)
+        <span style="color:#a6e22e">priv</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">1</span>])
+        <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ots</span>.<span style="color:#a6e22e">Sign</span>(<span style="color:#a6e22e">priv</span>, <span style="color:#a6e22e">message</span>)
+        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">s</span>))
+}
+</code></pre></div><p>Running the Python script then outputs the flag:</p>
+<pre><code>The Z3 model is:  sat
+Congratulations! Flag: CTF{m4th_RanD_1s_s0_pr3d1cT4bl3}
+</code></pre><h1 id="conclusion">Conclusion</h1>
+<p>This was a really nice challenge, especially when seen as a Z3 exercise. It&rsquo;s also cool to reverse a real-world RNG that can probably be found in the wild if people forget to use <code>crypto/rand</code>. Also during the challenge, googling for variations of &ldquo;reversing golang math/rand&rdquo; didn&rsquo;t get me anything, so solving this challenge kind of felt like finding a 0-day, which was nice :)</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Of course this isn&rsquo;t a vulnerability <em>per se</em>, as the <code>math/rand</code> RNG does not pretend to be cryptographically secure. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Well, that last sentence isn&rsquo;t totally true, since we get back the <code>uint64</code>-casted value of this state element. But as we&rsquo;ll see, it doesn&rsquo;t matter. <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

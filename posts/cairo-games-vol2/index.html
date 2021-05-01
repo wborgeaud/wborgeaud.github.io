@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="William Borgeaud">
+    <meta name="description" content="William Borgeaud&#39;s personal website">
+    <meta name="keywords" content="blog,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cairo Games Vol 2: Solutions"/>
+<meta name="twitter:description" content="Here are my solutions to the second edition of the Cairo Games.
+ Nu (Easy) Pakhet (Easy) Seth (Medium) Montu (Medium) Amun (Hard)  Nu This problem was pretty straightforward. We have to find to integers x,y&lt;2^128 such that x*y=17 in the prime field used by Cairo. We can easily get such a pair as follows:
+from sympy import divisors P = 2**251 &#43; 17 * 2**192 &#43; 1 BOUND = 2**128 target = P &#43; 17 for d in divisors(target): n = target // d if n &lt; BOUND and d &lt; BOUND: break ids."/>
+
+    <meta property="og:title" content="Cairo Games Vol 2: Solutions" />
+<meta property="og:description" content="Here are my solutions to the second edition of the Cairo Games.
+ Nu (Easy) Pakhet (Easy) Seth (Medium) Montu (Medium) Amun (Hard)  Nu This problem was pretty straightforward. We have to find to integers x,y&lt;2^128 such that x*y=17 in the prime field used by Cairo. We can easily get such a pair as follows:
+from sympy import divisors P = 2**251 &#43; 17 * 2**192 &#43; 1 BOUND = 2**128 target = P &#43; 17 for d in divisors(target): n = target // d if n &lt; BOUND and d &lt; BOUND: break ids." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://solvable.group/posts/cairo-games-vol2/" />
+<meta property="article:published_time" content="2021-04-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-04-19T00:00:00+00:00" />
+
+
+    
+      <base href="https://solvable.group/posts/cairo-games-vol2/">
+    
+    <title>
+  Cairo Games Vol 2: Solutions · wborgeaud
+</title>
+
+    
+      <link rel="canonical" href="https://solvable.group/posts/cairo-games-vol2/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://solvable.group/css/coder.min.57c105950ffb5f7bad1bbb2761aba8ca5e15a346bce0abfcda4bedb73e21c15a.css" integrity="sha256-V8EFlQ/7X3utG7snYauoyl4Vo0a84Kv82kvttz4hwVo=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.79.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://solvable.group/">
+      wborgeaud
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Cairo Games Vol 2: Solutions</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2021-04-19T00:00:00Z'>
+                April 19, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              8-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://solvable.group/tags/ctf-writeup/">ctf-writeup</a>
+      <span class="separator">•</span>
+    <a href="https://solvable.group/tags/cryptography/">cryptography</a>
+      <span class="separator">•</span>
+    <a href="https://solvable.group/tags/stark/">stark</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>Here are my solutions to the second edition of the <a href="https://www.cairo-lang.org/the-cairo-games/">Cairo Games</a>.</p>
+<ul>
+<li><a href="#nu">Nu (Easy)</a></li>
+<li><a href="#pakhet">Pakhet (Easy)</a></li>
+<li><a href="#seth">Seth (Medium)</a></li>
+<li><a href="#montu">Montu (Medium)</a></li>
+<li><a href="#amun">Amun (Hard)</a></li>
+</ul>
+<h1 id="nu">Nu</h1>
+<p>This problem was pretty straightforward. We have to find to integers <code>x,y&lt;2^128</code> such that <code>x*y=17</code> in the prime field used by Cairo. We can easily get such a pair as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sympy <span style="color:#f92672">import</span> divisors
+    P <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span><span style="color:#ae81ff">251</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">17</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span><span style="color:#ae81ff">192</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+    BOUND <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span><span style="color:#ae81ff">128</span>
+    target <span style="color:#f92672">=</span> P <span style="color:#f92672">+</span> <span style="color:#ae81ff">17</span>
+
+    <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> divisors(target):
+        n <span style="color:#f92672">=</span> target <span style="color:#f92672">//</span> d
+        <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> BOUND <span style="color:#f92672">and</span> d <span style="color:#f92672">&lt;</span> BOUND:
+            <span style="color:#66d9ef">break</span>
+    ids<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> n
+    ids<span style="color:#f92672">.</span>y <span style="color:#f92672">=</span> d
+</code></pre></div><h1 id="pakhet">Pakhet</h1>
+<p>We get a graph on 18 vertices as an adjacency matrix. We then have to find a path of length 18 <code>path</code> in this graph such that</p>
+<ul>
+<li><code>assert [path] = [path + N_VERTICES]</code>: The path is a cycle,</li>
+<li><code>check(path, aux=aux, graph=graph, n=N_VERTICES)</code>: This function takes the path as well as an auxiliary array <code>aux</code> and checks that <code>path</code> is a permutation of <code>[0, 1, ..., 17]</code>.</li>
+</ul>
+<p>These two checks imply that <code>path</code> is a <strong>Hamiltonian cycle</strong> of the graph. Finding an Hamiltonian cycle is hard in general, but for such a small graph we can find one easily. I used <a href="https://www.geeksforgeeks.org/hamiltonian-cycle-backtracking-6/">this implementation</a> to find the cycle:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> hamiltonian <span style="color:#f92672">import</span> Graph
+
+N <span style="color:#f92672">=</span> <span style="color:#ae81ff">18</span>
+graph <span style="color:#f92672">=</span> list(
+    reversed(
+        list(
+            map(
+                int,
+                bin(<span style="color:#ae81ff">904711815024524574246580775193158565348810842345109828206640</span>)[
+                    <span style="color:#ae81ff">2</span>:
+                ]<span style="color:#f92672">.</span>zfill(<span style="color:#ae81ff">200</span>),
+            )
+        )
+    )
+)
+graph <span style="color:#f92672">+=</span> list(
+    reversed(
+        list(
+            map(int, bin(<span style="color:#ae81ff">1662189419663012728075783146332749833</span>)[<span style="color:#ae81ff">2</span>:]<span style="color:#f92672">.</span>zfill(N <span style="color:#f92672">*</span> N <span style="color:#f92672">-</span> <span style="color:#ae81ff">200</span>))
+        )
+    )
+)
+
+g <span style="color:#f92672">=</span> Graph(N)
+g<span style="color:#f92672">.</span>graph <span style="color:#f92672">=</span> [graph[i <span style="color:#f92672">*</span> N : i <span style="color:#f92672">*</span> N <span style="color:#f92672">+</span> N] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N)]
+
+path <span style="color:#f92672">=</span> g<span style="color:#f92672">.</span>hamCycle()
+aux <span style="color:#f92672">=</span> [<span style="color:#ae81ff">18</span> <span style="color:#f92672">-</span> path<span style="color:#f92672">.</span>index(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">18</span>)]
+<span style="color:#66d9ef">print</span>(graph)
+<span style="color:#66d9ef">print</span>(path <span style="color:#f92672">+</span> [path[<span style="color:#ae81ff">0</span>]])
+<span style="color:#66d9ef">print</span>(aux)
+</code></pre></div><p>Note that this problem shows that STARKs contain NP, as finding Hamiltonian cycles is an NP problem.</p>
+<h1 id="seth">Seth</h1>
+<p>Let $H: \mathbb{F}\times \mathbb{F} \to \mathbb{F}$ be the Pedersen hash function and for an array $A$ of size $N$, let $H^*(A)=H(N, H(A_0,H(A_1,&hellip;)))$ be the hash chain function.</p>
+<p>In this problem, we have to find an array $D$ of size 100, such that if we let $S_0 = H^*(D)$, we have for $i=0,1,&hellip;,99$:
+$$D_{r_i} = 0 \text{ if } 2|i  \text{ else } H(x_i,x_i),$$</p>
+<p>$$S_{i+1} = H(H(S_i, x_i), D_{r_i}),$$
+where $r_i = S_i \wedge  (2^{128}-1) \mod 100$, $\wedge$ being the bitwise AND.</p>
+<p>My strategy to find such an array was the following:</p>
+<ol>
+<li>Set $D_0 = H(c,c)$ and $D_i=0$ for $0&lt;i&lt;100$, with any $c$ such that $r_0\ne 0$. Setting $c=0$ works.</li>
+<li>Find $x_i$ such that $r_{i+1}=0$.</li>
+<li>Set $x_{i+1} = c$. Then $D_{r_{i+1}}=D_0=H(x_{i+1},x_{i+1})=H(c,c)$ holds, and $S_{i+2}=H(H(S_{i+1}, c), D_0)$. Go to step 2.</li>
+</ol>
+<p>Note that in Step 3, if the new seed $S_{i+2}$ is such that $r_{i+2}=0$, the process fails. In this case, we can just try another initial seed $c$. If setting $c=0$, this never occurs though.</p>
+<p>Here is the code to find the $x_i$&rsquo;s:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> fast_pedersen_hash <span style="color:#f92672">import</span> pedersen_hash <span style="color:#66d9ef">as</span> H
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hash_chain</span>(length, l):
+    <span style="color:#66d9ef">if</span> length <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        <span style="color:#66d9ef">return</span> H(length, l[<span style="color:#ae81ff">0</span>])
+    h <span style="color:#f92672">=</span> H(l[<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>], l[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>, length <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+        h <span style="color:#f92672">=</span> H(l[<span style="color:#f92672">-</span>i], h)
+    h <span style="color:#f92672">=</span> H(length, h)
+    <span style="color:#66d9ef">return</span> h
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_seed</span>(s):
+    low <span style="color:#f92672">=</span> s <span style="color:#f92672">&amp;</span> ((<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">128</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+    r <span style="color:#f92672">=</span> low <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span>
+    <span style="color:#66d9ef">if</span> r <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;Bad intial seed&#34;</span>)
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span> <span style="color:#f92672">**</span> <span style="color:#ae81ff">10</span>):
+        ns <span style="color:#f92672">=</span> H(s, j)
+        ns <span style="color:#f92672">=</span> H(ns, <span style="color:#ae81ff">0</span>)
+        nlow <span style="color:#f92672">=</span> ns <span style="color:#f92672">&amp;</span> ((<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">128</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+        nr <span style="color:#f92672">=</span> nlow <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span>
+        <span style="color:#66d9ef">if</span> nr <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            s <span style="color:#f92672">=</span> ns
+            <span style="color:#66d9ef">return</span> s, j
+
+SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(c):
+    data <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(SIZE)]
+    h <span style="color:#f92672">=</span> H(c, c)
+    data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> h
+
+    s <span style="color:#f92672">=</span> hash_chain(SIZE, data)
+    preims <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">while</span> True:
+        s, j <span style="color:#f92672">=</span> get_seed(s)
+        preims<span style="color:#f92672">.</span>append(j)
+        preims<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
+        <span style="color:#66d9ef">if</span> len(preims) <span style="color:#f92672">==</span> SIZE:
+            <span style="color:#66d9ef">break</span>
+        s <span style="color:#f92672">=</span> H(s, <span style="color:#ae81ff">0</span>)
+        s <span style="color:#f92672">=</span> H(s, h)
+
+    <span style="color:#66d9ef">return</span> data, preims
+
+c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">while</span> True:
+    <span style="color:#66d9ef">try</span>:
+        <span style="color:#66d9ef">print</span>(get(c))
+        <span style="color:#66d9ef">break</span>
+    <span style="color:#66d9ef">except</span>:
+        <span style="color:#66d9ef">pass</span>
+    c <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><h1 id="montu">Montu</h1>
+<p>This problem was very easy if you knew about FRI, but probably quite hard otherwise. I&rsquo;ll assume knowledge of FRI. A good introduction can be found <a href="https://starkware.co/developers-community/stark101-onlinecourse/">here</a>.</p>
+<p>We get an array $A_0$ of 8 field elements and a field element $G$ of multiplicative order 8.
+We then have to come up with a modified array $A$ such that the Hamming distance $d(A_0, A)=3$, i.e., $A$ is equal to $A_0$, except at 3 points, and such that $A$ is constant after two FRI reduction steps.
+Unless we&rsquo;re cosmically lucky, the easiest way to achieve this is to set $A$ to be a low-degree extension of a degree 3 polynomial. In FRI jargon, we would say that we need to prove that $A_0$ is $\frac{3}{8}$-far from $RS[\langle G \rangle, \frac{1}{2}]$.</p>
+<p>To find $A$, we iterate over all combinations of $A_0$ minus 3 points, and stop when we find one that interpolates a degree 3 polynomial:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sage" data-lang="sage">P <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span><span style="color:#ae81ff">251</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">17</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span><span style="color:#ae81ff">192</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+F <span style="color:#f92672">=</span> GF(P)
+G <span style="color:#f92672">=</span> F(<span style="color:#ae81ff">2804690217475462062143361339624939640984649667966511418446363596075299761851</span>)
+domain <span style="color:#f92672">=</span> [pow(G, i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">8</span>)]
+
+L <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2760163267763136926307712447289333015931143661720962520709479367174330989984</span>,
+<span style="color:#ae81ff">620345510678501588305616341951109830750033614090225920347864657883483407165</span>,
+<span style="color:#ae81ff">3181959697776337130511545402257206919343979808211484609881516936335798865334</span>,
+<span style="color:#ae81ff">1830152343057623004121086982129442788610913917055044983876581372969127139593</span>,
+<span style="color:#ae81ff">3553572895696142252358926310847411672039878792883770142922873977486098926969</span>,
+<span style="color:#ae81ff">2462248735454554379268841047904517280521029943202779759148500485193601548624</span>,
+<span style="color:#ae81ff">792090413233267968557021563731724001464889355006703125688313681478453789157</span>,
+<span style="color:#ae81ff">1348005446214778757482455457529115254152067928062775094282398020688141612139</span>]
+
+R<span style="color:#f92672">.&lt;</span>x<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> F[]
+
+<span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> combinations(range(<span style="color:#ae81ff">8</span>), <span style="color:#ae81ff">5</span>):
+    l <span style="color:#f92672">=</span> [A[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> t]
+    d <span style="color:#f92672">=</span> [domain[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> t]
+    P <span style="color:#f92672">=</span> R<span style="color:#f92672">.</span>lagrange_polynomial(zip(d, l))
+    <span style="color:#66d9ef">if</span> P<span style="color:#f92672">.</span>degree()<span style="color:#f92672">==</span><span style="color:#ae81ff">3</span>:
+        LDE <span style="color:#f92672">=</span> [P(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> domain]
+        <span style="color:#66d9ef">print</span>(LDE)
+        <span style="color:#66d9ef">break</span>
+</code></pre></div><h1 id="amun">Amun</h1>
+<p>This problem was harder and more contrived than the others. The gist of it is as follows:</p>
+<ol>
+<li>We are given six 48-permutations $\sigma_0,&hellip;,\sigma_5\in S_{48}$.</li>
+<li>We have to find an array $A$ of length 48 that satisfies some checks $H^* (A[i_0:i_1]) = h_i$, where $H^*$ is the hash chain function already seen in Seth, and $i_0, i_1, h_i$ are given indices and hashes.</li>
+<li>We have to find a word in $\sigma \in \langle \sigma_0, &hellip;, \sigma_5\rangle$ (taken as a monoid, so inverse permutations are not allowed) such that $\sigma \cdot A = [0,&hellip;,0,1,&hellip;,1,&hellip;,5,&hellip;,5]$, i.e., the array $B$ of size 48 with $B_i = \left\lfloor{i/8}\right \rfloor$.</li>
+</ol>
+<p>Step 2 can be solved by brute-forcing some of the hashes $h_i$ and using the fact that $A$ must be a permutation of $B$.</p>
+<p>My solution to Step 3 is very brute-forcy, so I guess that there probably is a much cleaner way. Here it is anyway.
+We note that $\sigma_i^4=1$ for all $0\leq i&lt;6$ and that $\sigma_0\sigma_5=\sigma_5\sigma_0$, $\sigma_1\sigma_3=\sigma_3\sigma_1$, $\sigma_2\sigma_4=\sigma_4\sigma_2$. These relations mean that when searching for $\sigma$, we can add the following rules:</p>
+<ul>
+<li>No $\sigma_i$ appears more than three time,</li>
+<li>$\sigma_0$ always appear before $\sigma_5$,</li>
+<li>$\sigma_1$ always appear before $\sigma_3$,</li>
+<li>$\sigma_2$ always appear before $\sigma_4$.
+These reduce the search space quite substantially. Then I used an $A^ * $-search using the following heuristic
+$$h(\sigma) = d(\sigma\cdot A, B) - \alpha |\sigma|,$$
+where $d$ is the Hamming distance, $|\sigma|$ is the word length of $\sigma$, i.e., the number of $\sigma_i$&rsquo;s in the product to get $\sigma$, and $\alpha\in \mathbb{R^+}$ is an hyperparameter. The idea is to optimize for distance to the desired array $B$, while trying to keep the words small.</li>
+</ul>
+<p>Using a grid-search on $\alpha$, I finally found a valid $\sigma$ of word length 74.</p>
+<p>Here is my uncleaned $A^*$-search code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">use</span> std::collections::BinaryHeap;
+
+<span style="color:#66d9ef">const</span> DATA: [<span style="color:#66d9ef">usize</span>; <span style="color:#ae81ff">120</span>] <span style="color:#f92672">=</span> [
+    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">33</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">27</span>,
+    <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">44</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">39</span>, <span style="color:#ae81ff">43</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">38</span>, <span style="color:#ae81ff">42</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">23</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">42</span>,
+    <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">41</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">36</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">23</span>, <span style="color:#ae81ff">47</span>, <span style="color:#ae81ff">35</span>,
+    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">36</span>, <span style="color:#ae81ff">38</span>, <span style="color:#ae81ff">33</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">39</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">45</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">44</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">40</span>,
+    <span style="color:#ae81ff">42</span>, <span style="color:#ae81ff">44</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">41</span>, <span style="color:#ae81ff">43</span>, <span style="color:#ae81ff">45</span>, <span style="color:#ae81ff">47</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">38</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">36</span>, <span style="color:#ae81ff">12</span>,
+];
+
+<span style="color:#66d9ef">const</span> RES: [<span style="color:#66d9ef">usize</span>; <span style="color:#ae81ff">48</span>] <span style="color:#f92672">=</span> [
+    <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>,
+    <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>,
+];
+
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">trans</span>(s: [<span style="color:#66d9ef">usize</span>; <span style="color:#ae81ff">48</span>], se: [<span style="color:#66d9ef">usize</span>; <span style="color:#ae81ff">48</span>], x: <span style="color:#66d9ef">usize</span>) -&gt; ([<span style="color:#66d9ef">usize</span>; <span style="color:#ae81ff">48</span>], [<span style="color:#66d9ef">usize</span>; <span style="color:#ae81ff">48</span>]) {
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> state <span style="color:#f92672">=</span> s;
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> seen <span style="color:#f92672">=</span> se;
+    <span style="color:#66d9ef">for</span> inc <span style="color:#66d9ef">in</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">16</span>].iter() {
+        <span style="color:#66d9ef">let</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> inc;
+        <span style="color:#66d9ef">let</span> ds <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>DATA[i..i <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>];
+        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> nstate <span style="color:#f92672">=</span> state;
+        <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span>..<span style="color:#ae81ff">4</span> {
+            seen[ds[j]] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+            nstate[ds[j]] <span style="color:#f92672">=</span> state[ds[(j <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">4</span>]];
+        }
+        state <span style="color:#f92672">=</span> nstate;
+    }
+    (state, seen)
+}
+
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">ev</span>(s: [<span style="color:#66d9ef">usize</span>; <span style="color:#ae81ff">48</span>], seen: [<span style="color:#66d9ef">usize</span>; <span style="color:#ae81ff">48</span>]) -&gt; <span style="color:#66d9ef">usize</span> {
+    (<span style="color:#ae81ff">0</span>..<span style="color:#ae81ff">48</span>).filter(<span style="color:#f92672">|&amp;</span>i<span style="color:#f92672">|</span> seen[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&amp;&amp;</span> s[i] <span style="color:#f92672">==</span> (i <span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>)).count()
+}
+
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">astar</span>(scale_len: <span style="color:#66d9ef">usize</span>) {
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> best <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">let</span> init <span style="color:#f92672">=</span> RES;
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> q <span style="color:#f92672">=</span> BinaryHeap::new();
+    q.push((ev(init, [<span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">48</span>]), init, [<span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">48</span>], vec<span style="color:#f92672">!</span>[]));
+
+    <span style="color:#66d9ef">loop</span> {
+        <span style="color:#66d9ef">let</span> (_e, s, seen, l) <span style="color:#f92672">=</span> q.pop().unwrap();
+        <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span>..<span style="color:#ae81ff">6</span> {
+            <span style="color:#66d9ef">if</span> l.len() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> {
+                <span style="color:#66d9ef">let</span> ll <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>l.last().unwrap();
+                <span style="color:#66d9ef">if</span> ll <span style="color:#f92672">==</span> i {
+                    <span style="color:#66d9ef">continue</span>;
+                }
+                <span style="color:#66d9ef">if</span> ll <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> {
+                    <span style="color:#66d9ef">continue</span>;
+                }
+                <span style="color:#66d9ef">if</span> ll <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> {
+                    <span style="color:#66d9ef">continue</span>;
+                }
+                <span style="color:#66d9ef">if</span> ll <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">&amp;&amp;</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+                    <span style="color:#66d9ef">continue</span>;
+                }
+            }
+            <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> ns <span style="color:#f92672">=</span> s;
+            <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> nseen <span style="color:#f92672">=</span> seen;
+            <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>..<span style="color:#ae81ff">4</span> {
+                <span style="color:#66d9ef">let</span> r <span style="color:#f92672">=</span> trans(ns, nseen, i);
+                ns <span style="color:#f92672">=</span> r.<span style="color:#ae81ff">0</span>;
+                nseen <span style="color:#f92672">=</span> r.<span style="color:#ae81ff">1</span>;
+                <span style="color:#66d9ef">let</span> ee <span style="color:#f92672">=</span> ev(ns, nseen);
+                <span style="color:#66d9ef">if</span> best <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">30</span> <span style="color:#f92672">&amp;&amp;</span> ee <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">25</span> {
+                    <span style="color:#66d9ef">continue</span>;
+                }
+                <span style="color:#66d9ef">if</span> best <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">40</span> <span style="color:#f92672">&amp;&amp;</span> ee <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">27</span> {
+                    <span style="color:#66d9ef">continue</span>;
+                }
+                <span style="color:#66d9ef">let</span> e <span style="color:#f92672">=</span> ee <span style="color:#f92672">-</span> (scale_len <span style="color:#f92672">*</span> l.len()) <span style="color:#f92672">/</span> <span style="color:#ae81ff">10</span>;
+                <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> nl <span style="color:#f92672">=</span> l.clone();
+                <span style="color:#66d9ef">for</span> _ <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span>..j {
+                    nl.push(i);
+                }
+                <span style="color:#66d9ef">if</span> ee <span style="color:#f92672">==</span> <span style="color:#ae81ff">48</span> {
+                    println<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#34;Sols is: {:?}&#34;</span>, nl);
+                    <span style="color:#66d9ef">return</span>;
+                }
+                <span style="color:#66d9ef">if</span> ee <span style="color:#f92672">&gt;</span> best {
+                    best <span style="color:#f92672">=</span> ee;
+                }
+                q.push((e, ns, nseen, nl));
+            }
+        }
+    }
+}
+
+<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+    astar(<span style="color:#ae81ff">13</span>);
+}
+</code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

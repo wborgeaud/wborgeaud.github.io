@@ -6,17 +6,40 @@
     <description>Recent content in Tags on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 10 Oct 2020 03:57:25 -0700</lastBuildDate>
-    
-	<atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cryptography</title>
       <link>https://solvable.group/tags/cryptography/</link>
-      <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://solvable.group/tags/cryptography/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ctf-writeup</title>
+      <link>https://solvable.group/tags/ctf-writeup/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/ctf-writeup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>stark</title>
+      <link>https://solvable.group/tags/stark/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/stark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>z3</title>
+      <link>https://solvable.group/tags/z3/</link>
+      <pubDate>Sat, 31 Oct 2020 03:57:25 -0700</pubDate>
+      
+      <guid>https://solvable.group/tags/z3/</guid>
       <description></description>
     </item>
     

@@ -8,7 +8,7 @@
     <language>en</language>
     <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/cryptography/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Cairo Games Vol 2: Solutions</title>
+      <title>Cairo Games Vol 2: Writeup</title>
       <link>https://solvable.group/posts/cairo-games-vol2/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       
@@ -19,7 +19,7 @@ from sympy import divisors P = 2**251 + 17 * 2**192 + 1 BOUND = 2**128 target = 
     </item>
     
     <item>
-      <title>Donjon CTF Writup: Secret RNG</title>
+      <title>Donjon CTF Writeup: Secret RNG</title>
       <link>https://solvable.group/posts/secret-rng/</link>
       <pubDate>Sat, 31 Oct 2020 03:57:25 -0700</pubDate>
       

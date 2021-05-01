@@ -10,12 +10,12 @@
     <meta name="keywords" content="blog,personal">
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Cairo Games Vol 2: Solutions"/>
+<meta name="twitter:title" content="Cairo Games Vol 2: Writeup"/>
 <meta name="twitter:description" content="Here are my solutions to the second edition of the Cairo Games.
  Nu (Easy) Pakhet (Easy) Seth (Medium) Montu (Medium) Amun (Hard)  Nu This problem was pretty straightforward. We have to find to integers x,y&lt;2^128 such that x*y=17 in the prime field used by Cairo. We can easily get such a pair as follows:
 from sympy import divisors P = 2**251 &#43; 17 * 2**192 &#43; 1 BOUND = 2**128 target = P &#43; 17 for d in divisors(target): n = target // d if n &lt; BOUND and d &lt; BOUND: break ids."/>
 
-    <meta property="og:title" content="Cairo Games Vol 2: Solutions" />
+    <meta property="og:title" content="Cairo Games Vol 2: Writeup" />
 <meta property="og:description" content="Here are my solutions to the second edition of the Cairo Games.
  Nu (Easy) Pakhet (Easy) Seth (Medium) Montu (Medium) Amun (Hard)  Nu This problem was pretty straightforward. We have to find to integers x,y&lt;2^128 such that x*y=17 in the prime field used by Cairo. We can easily get such a pair as follows:
 from sympy import divisors P = 2**251 &#43; 17 * 2**192 &#43; 1 BOUND = 2**128 target = P &#43; 17 for d in divisors(target): n = target // d if n &lt; BOUND and d &lt; BOUND: break ids." />
@@ -29,7 +29,7 @@ from sympy import divisors P = 2**251 &#43; 17 * 2**192 &#43; 1 BOUND = 2**128 t
       <base href="https://solvable.group/posts/cairo-games-vol2/">
     
     <title>
-  Cairo Games Vol 2: Solutions · wborgeaud
+  Cairo Games Vol 2: Writeup · wborgeaud
 </title>
 
     
@@ -105,7 +105,7 @@ from sympy import divisors P = 2**251 &#43; 17 * 2**192 &#43; 1 BOUND = 2**128 t
     <article>
       <header>
         <div class="post-title">
-          <h1 class="title">Cairo Games Vol 2: Solutions</h1>
+          <h1 class="title">Cairo Games Vol 2: Writeup</h1>
         </div>
         <div class="post-meta">
           <div class="date">

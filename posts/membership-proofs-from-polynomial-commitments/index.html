@@ -173,6 +173,7 @@ The polynomial $g(X)$ is of degree $|S|$ and can be computed either by direct ca
 <li>The proof length is $4l$ group elements and $2l$ field elements. This is very bad. In comparison, the BFGW scheme has constant proof length and Bulletproofs have logarithmic proof length. There is maybe a way to reduce the proof length to logarithmic size, but I think constant size is impossible without adding more structure (as BFGW does with roots of unity).</li>
 <li>The naive protocol of proving $z\in [0,u)$ by performing a membership proof on the set $[0,u)$ has constant size but very bad Prover and Verifier time. Nevertheless, if $u$ is small this might be a viable succinct range proof (but still worse than BFGW).</li>
 </ul>
+<p><em>Thanks to Alin Tomescu for spotting a typo in an earlier version of this post.</em></p>
 
       </div>
 

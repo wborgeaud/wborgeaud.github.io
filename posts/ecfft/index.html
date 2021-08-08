@@ -270,7 +270,6 @@ since we have to call EXTEND in the recursion step. Therefore the running time $
 The cool thing about these algorithms is that for a given field $\F_p$, we can precompute all the necessary data in Sage: all the sets $L, S, S'$ and the (inverse) matrices used in the EXTEND algorithm.<br>
 Once we have these precomputed data, the algorithms only use basic operations on $\F_p$, i.e., additions and multiplications.</p>
 <p>Therefore, the actual algorithms can easily be implemeneted in fast languages like C++ or Rust, without having to implement all the elliptic curve and isogenies machinery in these languages.</p>
-<p>If I find the time, I&rsquo;ll try doing exactly that in Rust.</p>
 <section class="footnotes" role="doc-endnotes">
 <hr>
 <ol>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>algorithms on wborgeaud</title>
+    <link>https://solvable.group/tags/algorithms/</link>
+    <description>Recent content in algorithms on wborgeaud</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Aug 2021 00:57:25 -0700</lastBuildDate><atom:link href="https://solvable.group/tags/algorithms/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The ECFFT algorithm</title>
+      <link>https://solvable.group/posts/ecfft/</link>
+      <pubDate>Sat, 07 Aug 2021 00:57:25 -0700</pubDate>
+      
+      <guid>https://solvable.group/posts/ecfft/</guid>
+      <description>$$ \def\F{\mathbb{F}} $$
+The ECFFT algorithm This post is about a recent paper by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.</description>
+    </item>
+    
+  </channel>
+</rss>

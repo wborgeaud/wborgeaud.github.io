@@ -115,7 +115,7 @@ The ECFFT algorithm This post is about a recent paper by Eli Ben-Sasson, Dan Car
             </span>
             <span class="reading-time">
               <i class="fas fa-clock"></i>
-              8-minute read
+              10-minute read
             </span>
           </div>
           
@@ -136,11 +136,11 @@ $$</p>
 <h1 id="the-ecfft-algorithm">The ECFFT algorithm</h1>
 <p>This post is about <a href="https://arxiv.org/abs/2107.08473">a recent paper</a> by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.</p>
 <h2 id="the-classic-fft-algorithm">The classic FFT algorithm</h2>
-<p>Let $p$ be a prime number, $n=2^k$ with $n \mid p-1$, $\langle w \rangle = H &lt; \F_p^*$ a subgroup of size $n$. The classic FFT algorithm can be used to interpolate a polynomial $P(X)=\sum_{i=0}^n a_i X^i$ of degree $&lt;n$ on $H$ in $O(n\log n)$. Note that the naive algorithm of evaluating $P$ at every point of $H$ takes $O(n^2)$ operations.<br>
+<p>Let $p$ be a prime number, $n=2^k$ with $n \mid p-1$, $\langle w \rangle = H &lt; \F_p^*$ a subgroup of size $n$. The classic FFT algorithm can be used to evaluate a polynomial $P(X)=\sum_{i=0}^n a_i X^i$ of degree $&lt;n$ on $H$ in $O(n\log n)$. Note that the naive algorithm of evaluating $P$ at every point of $H$ takes $O(n^2)$ operations.<br>
 The FFT works by writing $P$ as
 $$P(X) = P_0(X^2) + XP_1(X^2)$$
 where $P_0, P_1$ are the polynomials of degree $&lt; n/2$ of even and odd coefficients of $P$.<br>
-Thus, given the interpolation of $P_0$ and $P_1$ on $H^2$, we can recover the interpolation of $P$ on $H$ with $O(n)$ operations.</p>
+Thus, given the evaluation of $P_0$ and $P_1$ on $H^2$, we can recover the evaluation of $P$ on $H$ with $O(n)$ operations.</p>
 <p>Now the crucial thing to note is that $H^2$ has half the size of $H$ since $H = -H$. Therefore, if we denote by $F$ the running time of the FFT, we have the following recurrence relation</p>
 <p>$$ F(n) = 2F(n/2) + O(n)$$
 from which we can deduce that $F(n) = O(n\log n)$.</p>
@@ -167,8 +167,7 @@ F <span style="color:#f92672">=</span> GF(p)
         <span style="color:#66d9ef">return</span> E
 n <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">12</span>
 E <span style="color:#f92672">=</span> find_curve(n)
-</code></pre></div><p>It can find a curve for $n=2^{12}$ in around an hour. (If someone know a faster implementation of Schoof&rsquo;s algorithm, please let me know!)<br>
-Here&rsquo;s the curve I found</p>
+</code></pre></div><p>It can find a curve for $n=2^{12}$ in around an hour. Here&rsquo;s the curve I found</p>
 <p>$$
 E: y^2 = x^3 + x + 641632526086088189863104799840287255425991771106608433941469413117059106896
 $$</p>
@@ -192,13 +191,15 @@ phi <span style="color:#f92672">=</span> find_isogeny(E, H)
 u, v <span style="color:#f92672">=</span> psi<span style="color:#f92672">.</span>numerator(), psi<span style="color:#f92672">.</span>denominator()
 </code></pre></div><p>From this we can get a new elliptic curve $E'$, which is the codomain of $\phi$, a new coset $\phi(H)$, and a new subset of $\F_p$ given by $\psi(L)$.</p>
 <h3 id="decomposing-polynomials-on-l">Decomposing polynomials on $L$</h3>
+<p>In the classic FFT, we were able to write the evaluation of $P$ on $H$ in terms of the evaluations of the two smaller polynomials $P_0,P_1$ on the smaller set $H^2$.<br>
+We now want to do the same by replacing $H$ with $L$, $H^2$ with $\psi(L)$, and the squaring operation with $\psi$.</p>
 <p>Let $P$ be a polynomial of degree $&lt;n$. Then there exist polynomials $P_0, P_1$ of degree $&lt; n/2$ such that</p>
 <p>$$
 P(X) = (P_0(\psi(X)) + XP_1(\psi(X)))v(X)^{n/2-1}
 $$
-See Appendix A of the paper for a proof. The idea is to prove that the linear map $(P_0, P_1) \mapsto P$ from pairs of polynomials of degree $&lt;n/2$ to polynomials of degree $&lt;n$ is injective, and thus bijective since its domain and codomain have the same dimension as $\F_p$-vector spaces.</p>
-<p>Computing the polynomials $P_0,P_1$ is not as straightforward as in the classic FFT. However, it is easy to go from the interpolation of $P$ on $L$ to the interpolations of $P_0$ and $P_1$ on $\psi(L)$, and vice versa.<br>
-Indeed, given $s_0, s_1\in L$ with $\psi(s_0)=\psi(s_1)=t\in \psi(L)$, we have the following linear relation (letting $q=n/2 -1$)</p>
+See Appendix A of the paper for a proof. The idea of the proof is that the linear map $(P_0, P_1) \mapsto P$ from pairs of polynomials of degree $&lt;n/2$ to polynomials of degree $&lt;n$ is injective, and thus bijective since its domain and codomain have the same dimension as $\F_p$-vector spaces.</p>
+<p>Computing the polynomials $P_0,P_1$ is not as straightforward as in the classic FFT. However, it is easy to go from the evaluation of $P$ on $L$ to the evaluations of $P_0$ and $P_1$ on $\psi(L)$, and vice versa.<br>
+Indeed, given $s_0, s_1\in L$ with $\psi(s_0)=\psi(s_1)=t\in \psi(L)$, by writing the above formula for $P(X)$ at $X=s_0,s_1$ we get the following linear relation (letting $q=n/2 -1$)</p>
 <p>$$
 \begin{bmatrix}
 P(s_0) \\\<br>
@@ -213,8 +214,8 @@ P_0(t) \\\<br>
 P_1(t)
 \end{bmatrix}
 $$
-The matrix can be seen to be inversible, therefore we can easily go from $(P(s_0),P(s_1))$ to $(P_0(t), P_1(t))$ and back. This gives the following efficient correspondance that we&rsquo;ll use later:</p>
-<p>$$\text{Interpolation of $P$ on $L$ $\longleftrightarrow$ Interpolations of $P_0, P_1$ on $\psi(L)$.}$$</p>
+The matrix can be seen to be inversible, therefore we can easily go from $(P(s_0),P(s_1))$ to $(P_0(t), P_1(t))$ and back. This gives the following efficient correspondence that we&rsquo;ll use later:</p>
+<p>$$\text{Evaluation of $P$ on $L$ $\longleftrightarrow$ Evaluations of $P_0, P_1$ on $\psi(L)$.}$$</p>
 <p>What&rsquo;s more, the matrix doesn&rsquo;t depend on $P$, so we can precompute it and reuse it for all instantiations of the ECFFT.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sage" data-lang="sage">inverse_matrices <span style="color:#f92672">=</span> []
 nn <span style="color:#f92672">=</span> n <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
@@ -228,10 +229,10 @@ q <span style="color:#f92672">=</span> nn <span style="color:#f92672">-</span> <
 <p>The final piece of the puzzle is the EXTEND operation. Let $S, S'$ be the elements of $L$ at even and odd indices respectively, so that $L = S \cup S'$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sage" data-lang="sage">S <span style="color:#f92672">=</span> [L[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, n, <span style="color:#ae81ff">2</span>)]
 S_prime <span style="color:#f92672">=</span> [L[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, n, <span style="color:#ae81ff">2</span>)]
-</code></pre></div><p>Given the interpolation of a polynomial $Q$ of degree $&lt;n/2 -1$ on $S$, the EXTEND operation computes the interpolation of $Q$ on $S'$. The main result of the paper is that there is an $O(n\log n)$ algorithm for EXTEND. Note that a naive algorithm that would recover the coefficients of $Q$ by Lagrange interpolation on $S$ and then evaluate on $S'$ takes $O(n^2)$.</p>
+</code></pre></div><p>Given the evaluation of a polynomial $Q$ of degree $&lt;n/2$ on $S$, the EXTEND operation computes the evaluation of $Q$ on $S'$. The main result of the paper is that there is an $O(n\log n)$ algorithm for EXTEND. Note that a naive algorithm that would recover the coefficients of $Q$ by Lagrange interpolation on $S$ and then evaluate on $S'$ takes $O(n^2)$.</p>
 <p>The algorithm works as follows.<br>
-If $\#S = \#S' = 1$, $Q$ is constant and the interpolation of $Q$ on $S$ and $S'$ is the same.<br>
-Otherwise, deduce from the interpolation of $Q$ on $S$ the interpolations of $Q_0,Q_1$ on $\psi(S)$, as in the previous section. Then apply the EXTEND operation twice to get the interpolations of $Q_0,Q_1$ on $\psi(S')$. Finally, recover the interpolation of $Q$ on $S'$ as in the previous section.</p>
+If $\#S = \#S' = 1$, $Q$ is constant and the evaluation of $Q$ on $S$ and $S'$ is the same.<br>
+Otherwise, deduce from the evaluation of $Q$ on $S$ the evaluations of $Q_0,Q_1$ on $\psi(S)$, as in the previous section. Then apply the EXTEND operation twice to get the evaluations of $Q_0,Q_1$ on $\psi(S')$. Finally, recover the evaluation of $Q$ on $S'$ as in the previous section.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sage" data-lang="sage"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extend</span>(Q_evals, S, S_prime, matrices, inverse_matrices):
   n <span style="color:#f92672">=</span> len(Q_evals)
   nn <span style="color:#f92672">=</span> n <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
@@ -256,21 +257,121 @@ Otherwise, deduce from the interpolation of $Q$ on $S$ the interpolations of $Q_
      <span style="color:#66d9ef">for</span> M, q0, q1 <span style="color:#f92672">in</span> zip(matrices[n], Q0_evals_prime, Q1_evals_prime)
     ]
 </code></pre></div><p>The recurrence relation for the running time is the same as in the classic FFT and gives a running time of $O(n\log n)$.</p>
-<h3 id="interpolating-polynomials-on-l">Interpolating polynomials on $L$</h3>
+<h3 id="evaluating-polynomials-on-l">Evaluating polynomials on $L$</h3>
 <p>The algorithm for the EXTEND operation given in the last section is the building block for many efficient algorithms given in the paper.<br>
-One of them is an algorithm for the ENTER operation, which computes the interpolation of a polynomial $P$ of degree $&lt;n$ on $L$. This is analogous to what we did in the classic FFT.</p>
-<p>The algorithm is very simple. Decompose $P(X)$ into its low and high coefficient $U(X) + X^{n/2}V(X)$. Call ENTER on $U$ and $V$ on $S$ to get the interpolations of $U,V$ on $S$. Then call EXTEND twice to get the interpolations of $U,V$ on $S'$. Since $L = S \cup S'$, we have the interpolation of $U,V$ on $L$ and can deduce the interpolation of $P$ on $L$.</p>
+One of them is an algorithm for the ENTER operation, which computes the evaluation of a polynomial $P$ of degree $&lt;n$ on $L$. This is analogous to what we did in the classic FFT.</p>
+<p>The algorithm is very simple. Decompose $P(X)$ into its low and high coefficient $U(X) + X^{n/2}V(X)$. Call ENTER on $U$ and $V$ on $S$ to get the evaluations of $U,V$ on $S$. Then call EXTEND twice to get the evaluations of $U,V$ on $S'$. Since $L = S \cup S'$, we have the evaluation of $U,V$ on $L$ and can deduce the evaluation of $P$ on $L$.</p>
 <p>Note that the recurrence relation for the running time is now</p>
 <p>$$
 F(n) = 2F(n/2) + O(n\log n)
 $$
 since we have to call EXTEND in the recursion step. Therefore the running time $F(n) = O(n\log^2 n)$ is slightly worse than for the classic FFT.</p>
 <h2 id="running-it-outside-of-sage">Running it outside of Sage</h2>
-<p>As this post (hopefully) shows, these algorithms are very simple to implement in a computer algebra system like Sage. However, Sage being awfully slow, these quick implementations are far from fast.<br>
+<p>As this post (hopefully) shows, these algorithms are very simple to implement in a computer algebra system like Sage. However, Sage being awfully slow, these implementations are far from fast.<br>
 The cool thing about these algorithms is that for a given field $\F_p$, we can precompute all the necessary data in Sage: all the sets $L, S, S'$ and the (inverse) matrices used in the EXTEND algorithm.<br>
 Once we have these precomputed data, the algorithms only use basic operations on $\F_p$, i.e., additions and multiplications.</p>
-<p>Therefore, the actual algorithms can easily be implemeneted in fast languages like C++ or Rust, without having to implement all the elliptic curve and isogenies machinery in these languages.</p>
-<section class="footnotes" role="doc-endnotes">
+<p>Therefore, the actual algorithms can easily be implemeneted in fast languages like C++ or Rust, without having to implement all the elliptic curve and isogeny machinery in these languages.</p>
+<h2 id="final-code">Final code</h2>
+<p>Here is the final code that computes EXTEND for our choice of $\F_p$. It can also be found <a href="https://github.com/wborgeaud/ecfft-post/blob/master/ecfft.sage">here</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sage" data-lang="sage"><span style="color:#75715e"># p is the size of the base field of the curve Secp256k1</span>
+p <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F</span>
+F <span style="color:#f92672">=</span> GF(p)
+<span style="color:#75715e"># See the post on how to find a and b such that 2^12 divides the order of E.</span>
+a, b <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">641632526086088189863104799840287255425991771106608433941469413117059106896</span>
+E <span style="color:#f92672">=</span> EllipticCurve(F, [a,b])
+
+log_n <span style="color:#f92672">=</span> <span style="color:#ae81ff">12</span>
+n <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span>log_n
+<span style="color:#66d9ef">assert</span> E<span style="color:#f92672">.</span>order() <span style="color:#f92672">%</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+g <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>gens()[<span style="color:#ae81ff">0</span>]
+G <span style="color:#f92672">=</span> (g<span style="color:#f92672">.</span>order()<span style="color:#f92672">//</span>n) <span style="color:#f92672">*</span> g
+<span style="color:#66d9ef">assert</span> G<span style="color:#f92672">.</span>order() <span style="color:#f92672">==</span> n
+
+
+R <span style="color:#f92672">=</span> E<span style="color:#f92672">.</span>random_element()
+H <span style="color:#f92672">=</span> [R <span style="color:#f92672">+</span> i<span style="color:#f92672">*</span>G <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span>log_n)]
+L <span style="color:#f92672">=</span> [h<span style="color:#f92672">.</span>xy()[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> h <span style="color:#f92672">in</span> H]
+S <span style="color:#f92672">=</span> [L[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, n, <span style="color:#ae81ff">2</span>)]
+S_prime <span style="color:#f92672">=</span> [L[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, n, <span style="color:#ae81ff">2</span>)]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">precompute</span>(log_n, S, S_prime, E):
+    Ss <span style="color:#f92672">=</span> {}
+    Ss_prime <span style="color:#f92672">=</span> {}
+    matrices <span style="color:#f92672">=</span> {}
+    inverse_matrices <span style="color:#f92672">=</span> {}
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(log_n, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+        n <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> i
+        nn <span style="color:#f92672">=</span> n <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+
+        Ss[n] <span style="color:#f92672">=</span> S
+        Ss_prime[n] <span style="color:#f92672">=</span> S_prime
+        matrices[n] <span style="color:#f92672">=</span> []
+        inverse_matrices[n] <span style="color:#f92672">=</span> []
+
+        <span style="color:#66d9ef">for</span> iso <span style="color:#f92672">in</span> E<span style="color:#f92672">.</span>isogenies_prime_degree(<span style="color:#ae81ff">2</span>):
+            psi <span style="color:#f92672">=</span> iso<span style="color:#f92672">.</span>x_rational_map()
+            <span style="color:#66d9ef">if</span> len(set([psi(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> S]))<span style="color:#f92672">==</span>nn:
+                <span style="color:#66d9ef">break</span>
+        v <span style="color:#f92672">=</span> psi<span style="color:#f92672">.</span>denominator()
+        q <span style="color:#f92672">=</span> nn <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(nn):
+            s0, s1 <span style="color:#f92672">=</span> S[j], S[j <span style="color:#f92672">+</span> nn]
+            <span style="color:#66d9ef">assert</span> psi(s0) <span style="color:#f92672">==</span> psi(s1)
+            M <span style="color:#f92672">=</span> Matrix(F, [[v(s0)<span style="color:#f92672">^</span>q,s0<span style="color:#f92672">*</span>v(s0)<span style="color:#f92672">^</span>q],[v(s1)<span style="color:#f92672">^</span>q, s1<span style="color:#f92672">*</span>v(s1)<span style="color:#f92672">^</span>q]])
+            inverse_matrices[n]<span style="color:#f92672">.</span>append(M<span style="color:#f92672">.</span>inverse())
+
+            s0, s1 <span style="color:#f92672">=</span> S_prime[j], S_prime[j <span style="color:#f92672">+</span> nn]
+            <span style="color:#66d9ef">assert</span> psi(s0) <span style="color:#f92672">==</span> psi(s1)
+            M <span style="color:#f92672">=</span> Matrix(F, [[v(s0)<span style="color:#f92672">^</span>q,s0<span style="color:#f92672">*</span>v(s0)<span style="color:#f92672">^</span>q],[v(s1)<span style="color:#f92672">^</span>q, s1<span style="color:#f92672">*</span>v(s1)<span style="color:#f92672">^</span>q]])
+            matrices[n]<span style="color:#f92672">.</span>append(M)
+
+        S <span style="color:#f92672">=</span> [psi(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> S[:nn]]
+        S_prime <span style="color:#f92672">=</span> [psi(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> S_prime[:nn]]
+        E <span style="color:#f92672">=</span> iso<span style="color:#f92672">.</span>codomain()
+
+    <span style="color:#66d9ef">return</span> Ss, Ss_prime, matrices, inverse_matrices
+
+<span style="color:#75715e"># Precompute the data needed to compute EXTEND_S,S&#39;</span>
+Ss, Ss_prime, matrices, inverse_matrices <span style="color:#f92672">=</span> precompute(log_n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, S, S_prime, E)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extend</span>(P_evals):
+    n <span style="color:#f92672">=</span> len(P_evals)
+    nn <span style="color:#f92672">=</span> n <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        <span style="color:#66d9ef">return</span> P_evals
+    S <span style="color:#f92672">=</span> Ss[n]
+    S_prime <span style="color:#f92672">=</span> Ss_prime[n]
+    P0_evals <span style="color:#f92672">=</span> []
+    P1_evals <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(nn):
+        s0, s1 <span style="color:#f92672">=</span> S[j], S[j <span style="color:#f92672">+</span> nn]
+        y0, y1 <span style="color:#f92672">=</span> P_evals[j], P_evals[j <span style="color:#f92672">+</span> nn]
+        Mi <span style="color:#f92672">=</span> inverse_matrices[n][j]
+        p0, p1 <span style="color:#f92672">=</span> Mi <span style="color:#f92672">*</span> vector([y0, y1])
+        P0_evals<span style="color:#f92672">.</span>append(p0)
+        P1_evals<span style="color:#f92672">.</span>append(p1)
+
+    P0_evals_prime <span style="color:#f92672">=</span> extend(P0_evals)
+    P1_evals_prime <span style="color:#f92672">=</span> extend(P1_evals)
+
+    ansL <span style="color:#f92672">=</span> []
+    ansR <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> M, p0, p1 <span style="color:#f92672">in</span> zip(matrices[n], P0_evals_prime, P1_evals_prime):
+        v <span style="color:#f92672">=</span> M <span style="color:#f92672">*</span> vector([p0, p1])
+        ansL<span style="color:#f92672">.</span>append(v[<span style="color:#ae81ff">0</span>])
+        ansR<span style="color:#f92672">.</span>append(v[<span style="color:#ae81ff">1</span>])
+    <span style="color:#66d9ef">return</span> ansL <span style="color:#f92672">+</span> ansR
+
+<span style="color:#75715e"># Generate a random polynomial for testing</span>
+R<span style="color:#f92672">.&lt;</span>X<span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> F[]
+P <span style="color:#f92672">=</span> sum(F<span style="color:#f92672">.</span>random_element() <span style="color:#f92672">*</span> X<span style="color:#f92672">^</span>i  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span><span style="color:#f92672">&lt;&lt;</span>(log_n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)))
+
+<span style="color:#75715e"># Evaluate P on S</span>
+P_evals <span style="color:#f92672">=</span> [P(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> S]
+<span style="color:#75715e"># result holds the evaluation of P on S&#39;</span>
+result <span style="color:#f92672">=</span> extend(P_evals)
+<span style="color:#66d9ef">assert</span> result <span style="color:#f92672">==</span> [P(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> S_prime]
+</code></pre></div><section class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">

@@ -14,7 +14,8 @@
       
       <guid>https://solvable.group/posts/ecfft/</guid>
       <description>$$ \def\F{\mathbb{F}} $$
-The ECFFT algorithm This post is about a recent paper by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.</description>
+This post is about a recent paper by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.
+The classic FFT algorithm Let $p$ be a prime number, $n=2^k$ with $n \mid p-1$, $\langle w \rangle = H &amp;lt; \F_p^*$ a subgroup of size $n$.</description>
     </item>
     
   </channel>

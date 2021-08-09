@@ -12,11 +12,13 @@
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="The ECFFT algorithm"/>
 <meta name="twitter:description" content="$$ \def\F{\mathbb{F}} $$
-The ECFFT algorithm This post is about a recent paper by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background."/>
+This post is about a recent paper by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.
+The classic FFT algorithm Let $p$ be a prime number, $n=2^k$ with $n \mid p-1$, $\langle w \rangle = H &lt; \F_p^*$ a subgroup of size $n$."/>
 
     <meta property="og:title" content="The ECFFT algorithm" />
 <meta property="og:description" content="$$ \def\F{\mathbb{F}} $$
-The ECFFT algorithm This post is about a recent paper by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background." />
+This post is about a recent paper by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.
+The classic FFT algorithm Let $p$ be a prime number, $n=2^k$ with $n \mid p-1$, $\langle w \rangle = H &lt; \F_p^*$ a subgroup of size $n$." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://solvable.group/posts/ecfft/" />
 <meta property="article:published_time" content="2021-08-07T00:57:25-07:00" />
@@ -133,7 +135,6 @@ The ECFFT algorithm This post is about a recent paper by Eli Ben-Sasson, Dan Car
         <p>$$
 \def\F{\mathbb{F}}
 $$</p>
-<h1 id="the-ecfft-algorithm">The ECFFT algorithm</h1>
 <p>This post is about <a href="https://arxiv.org/abs/2107.08473">a recent paper</a> by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.</p>
 <h2 id="the-classic-fft-algorithm">The classic FFT algorithm</h2>
 <p>Let $p$ be a prime number, $n=2^k$ with $n \mid p-1$, $\langle w \rangle = H &lt; \F_p^*$ a subgroup of size $n$. The classic FFT algorithm can be used to evaluate a polynomial $P(X)=\sum_{i=0}^n a_i X^i$ of degree $&lt;n$ on $H$ in $O(n\log n)$. Note that the naive algorithm of evaluating $P$ at every point of $H$ takes $O(n^2)$ operations.<br>
@@ -144,7 +145,7 @@ Thus, given the evaluation of $P_0$ and $P_1$ on $H^2$, we can recover the evalu
 <p>Now the crucial thing to note is that $H^2$ has half the size of $H$ since $H = -H$. Therefore, if we denote by $F$ the running time of the FFT, we have the following recurrence relation</p>
 <p>$$ F(n) = 2F(n/2) + O(n)$$
 from which we can deduce that $F(n) = O(n\log n)$.</p>
-<h2 id="the-ecfft-algorithm-1">The ECFFT algorithm</h2>
+<h2 id="the-ecfft-algorithm">The ECFFT algorithm</h2>
 <p>The goal of the ECFFT algorithm is to generalize the FFT algorithm for finite fields that do not have a multiplicative subgroup of size $n$, i.e., fields $\F_p$ with $n \nmid p-1$.</p>
 <p>The idea is both brillant and simple. Here&rsquo;s an overview:</p>
 <ol>

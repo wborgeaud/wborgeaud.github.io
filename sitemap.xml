@@ -4,31 +4,41 @@
   
   <url>
     <loc>https://solvable.group/tags/algorithms/</loc>
-    <lastmod>2021-08-07T00:57:25-07:00</lastmod>
+    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://solvable.group/posts/ecfft-bn254/</loc>
+    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://solvable.group/tags/math/</loc>
-    <lastmod>2021-08-07T00:57:25-07:00</lastmod>
+    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://solvable.group/posts/</loc>
-    <lastmod>2021-08-07T00:57:25-07:00</lastmod>
+    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://solvable.group/tags/rust/</loc>
+    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://solvable.group/tags/</loc>
-    <lastmod>2021-08-07T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://solvable.group/posts/ecfft/</loc>
-    <lastmod>2021-08-07T00:57:25-07:00</lastmod>
+    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://solvable.group/</loc>
+    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://solvable.group/posts/ecfft/</loc>
     <lastmod>2021-08-07T00:57:25-07:00</lastmod>
   </url>
   
@@ -114,11 +124,6 @@
   
   <url>
     <loc>https://solvable.group/tags/react-native/</loc>
-    <lastmod>2019-11-14T13:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://solvable.group/tags/rust/</loc>
     <lastmod>2019-11-14T13:57:25-07:00</lastmod>
   </url>
   

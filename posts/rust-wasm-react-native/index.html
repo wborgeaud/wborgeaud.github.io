@@ -20,9 +20,10 @@ Here&rsquo;s the TLDR:
 Here&rsquo;s the TLDR:
  Create a wasm-pack project exposing the Rust functions you want to export. Serve a web page exposing these functions through message events." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://solvable.group/posts/rust-wasm-react-native/" />
+<meta property="og:url" content="https://solvable.group/posts/rust-wasm-react-native/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-11-14T13:57:25-07:00" />
 <meta property="article:modified_time" content="2019-11-14T13:57:25-07:00" />
+
 
 
     
@@ -61,7 +62,7 @@ Here&rsquo;s the TLDR:
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
 
-    <meta name="generator" content="Hugo 0.79.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
   </head>
 
   
@@ -159,14 +160,14 @@ Here&rsquo;s the TLDR:
 <p>This gives an example of this structure with a simple Rust function that adds two numbers.</p>
 <h3 id="rust">Rust</h3>
 <p>Create a <code>wasm-pack</code> project following the instructions given <a href="https://rustwasm.github.io/docs/book/game-of-life/hello-world.html">here</a>. The <code>src/lib.rs</code> exposes the functions you want to export. Here&rsquo;s ours:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">use</span> wasm_bindgen::prelude::<span style="color:#f92672">*</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">use</span> wasm_bindgen::prelude::<span style="color:#f92672">*</span>;
 
 <span style="color:#75715e">#[wasm_bindgen]</span>
 <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">add</span>(a: <span style="color:#66d9ef">u32</span>, b: <span style="color:#66d9ef">u32</span>) -&gt; <span style="color:#66d9ef">u32</span> {
 	a <span style="color:#f92672">+</span> b
 }
 </code></pre></div><p>Then, build the package with <code>wasm-pack build</code> and create a web directory with <code>package.json</code> like:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/* -------- SNIP -------- */</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/* -------- SNIP -------- */</span>
 <span style="color:#e6db74">&#34;devDependencies&#34;</span><span style="color:#f92672">:</span> {
     <span style="color:#e6db74">&#34;rust&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;file:../pkg&#34;</span>,
     <span style="color:#e6db74">&#34;webpack&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;^4.29.3&#34;</span>,
@@ -176,7 +177,7 @@ Here&rsquo;s the TLDR:
   }
 <span style="color:#75715e">/* -------- SNIP -------- */</span>
 </code></pre></div><p>The WebAssembly functions can be called from Javascript using <code>message</code> events. Here&rsquo;s our <code>index.js</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">wasm</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;rust&#34;</span>; <span style="color:#75715e">// Import the wasm package
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">wasm</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;rust&#34;</span>; <span style="color:#75715e">// Import the wasm package
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">sum</span>;
 document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;message&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">event</span>) { <span style="color:#75715e">// Receive parameters in a message
@@ -187,7 +188,7 @@ document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:
 </code></pre></div><p>Now, serve this web directory on a web server. For this prototype, we serve it on <code>localhost:8080</code>.</p>
 <h3 id="react-native">React Native</h3>
 <p>Create a React Native project with <code>react-native-webview</code> linked. Here is our <code>App.js</code> that shows the basic way to call the WebAssembly functions served by our web server:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span>, { <span style="color:#a6e22e">Component</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">React</span>, { <span style="color:#a6e22e">Component</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react&#39;</span>;
 <span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">View</span>, <span style="color:#a6e22e">Button</span>, <span style="color:#a6e22e">TextInput</span>, <span style="color:#a6e22e">Text</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react-native&#39;</span>;
 <span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">WebView</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;react-native-webview&#39;</span>;
 

@@ -20,9 +20,10 @@ What if I told you there are curves where $p=q=r$?"/>
 Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the exact opposite notation, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&hellip;
 What if I told you there are curves where $p=q=r$?" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://solvable.group/posts/anomalous-curves-1/" />
+<meta property="og:url" content="https://solvable.group/posts/anomalous-curves-1/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-04-21T13:57:07-07:00" />
 <meta property="article:modified_time" content="2020-04-21T13:57:07-07:00" />
+
 
 
     
@@ -61,7 +62,7 @@ What if I told you there are curves where $p=q=r$?" />
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
 
-    <meta name="generator" content="Hugo 0.79.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
   </head>
 
   
@@ -139,7 +140,7 @@ $$</p>
 <p>What if I told you there are curves where $p=q=r$? We could decide to only use these curves and never have to go back on page 2 of a paper to see what are $p,q$ or $r$!</p>
 <p>Joke aside, these curves actually exist and go by the name of <strong>anomalous curves</strong>, that is, curves $E(\mathbb{F}_p)$ with $\# E(\F_p)=p$. If you know <a href="https://crypto.stanford.edu/pbc/notes/elliptic/count.html">Hasse&rsquo;s Theorem</a>, you&rsquo;ll understand why these curves are also called <em>curves of trace one</em>.</p>
 <p>Here is an example:</p>
-<pre><code>E: y^2 = x^3 + 425706413842211054102700238164133538302169176474*x + 203362936548826936673264444982866339953265530166
+<pre tabindex="0"><code>E: y^2 = x^3 + 425706413842211054102700238164133538302169176474*x + 203362936548826936673264444982866339953265530166
 p = 730750818665451459112596905638433048232067471723                                                                                                     
 </code></pre><p>Regardless of my rant on inconsistent notations for elliptic curves, using such curves could result in more elegant notation, or even a <em>Nothing up my sleeve</em> mechanism for choosing elliptic curves. Moreover, they could be use to derive efficient <em>recursive proof systems</em> without having to use cycles of elliptic curves.</p>
 <p>It turns out that these curves are actually <strong>totally worthless for cryptography.</strong> Namely, the discrete logarithm problem can be solved in $O(\log p)$ on these curves. So these curves are secure only if their field arithmetic is intractable. Clearly not ideal.</p>

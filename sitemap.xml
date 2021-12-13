@@ -1,152 +1,92 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://solvable.group/tags/algorithms/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/ecfft-bn254/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/math/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/rust/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/ecfft/</loc>
     <lastmod>2021-08-07T00:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/cairo-games-vol2/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/cryptography/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/ctf-writeup/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/stark/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/secret-rng/</loc>
     <lastmod>2020-10-31T03:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/z3/</loc>
     <lastmod>2020-10-31T03:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/elliptic-curves/</loc>
     <lastmod>2020-10-10T03:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/isogeny/</loc>
     <lastmod>2020-10-10T03:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/isobeg/</loc>
     <lastmod>2020-10-10T03:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/post-quantum/</loc>
     <lastmod>2020-10-10T03:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/anomalous-curves-3/</loc>
     <lastmod>2020-04-29T08:57:07-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/anomalous-curves-2/</loc>
     <lastmod>2020-04-22T13:57:07-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/anomalous-curves-1/</loc>
     <lastmod>2020-04-21T13:57:07-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/membership-proofs-from-polynomial-commitments/</loc>
     <lastmod>2020-04-16T13:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/zero-knowledge-proofs/</loc>
     <lastmod>2020-04-16T13:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/understanding-vdfs/</loc>
     <lastmod>2019-11-30T13:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/react-native/</loc>
     <lastmod>2019-11-14T13:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/posts/rust-wasm-react-native/</loc>
     <lastmod>2019-11-14T13:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/tags/webassembly/</loc>
     <lastmod>2019-11-14T13:57:25-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/about/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://solvable.group/contact/</loc>
   </url>
-  
 </urlset>

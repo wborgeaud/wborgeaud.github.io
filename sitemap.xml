@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://solvable.group/posts/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/tags/rollups/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/tags/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/posts/centralized-rollups/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://solvable.group/tags/algorithms/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
   </url><url>
@@ -11,16 +26,7 @@
     <loc>https://solvable.group/tags/math/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
   </url><url>
-    <loc>https://solvable.group/posts/</loc>
-    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url><url>
     <loc>https://solvable.group/tags/rust/</loc>
-    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url><url>
-    <loc>https://solvable.group/tags/</loc>
-    <lastmod>2021-10-16T00:57:25-07:00</lastmod>
-  </url><url>
-    <loc>https://solvable.group/</loc>
     <lastmod>2021-10-16T00:57:25-07:00</lastmod>
   </url><url>
     <loc>https://solvable.group/posts/ecfft/</loc>

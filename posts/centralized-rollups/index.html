@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="William Borgeaud">
+    <meta name="description" content="William Borgeaud&#39;s personal website">
+    <meta name="keywords" content="blog,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="The case for centralized rollups"/>
+<meta name="twitter:description" content="Common wisdom is that rollups should be decentralized. In fact, most rollups have decentralization of sequencers/validators/provers on their roadmap. In this post, I argue that fully centralized rollups are viable and secure.
+What does a centralized rollup look like? In a centralized rollup, a single actor controls sequencing and block production. Users send transactions directly to this actor, i.e, there is no public mempool. This actor then constructs a block with some of the transactions it has received and pushes them to L1, along with a state transition validity proof in the case of a zk-rollup."/>
+
+    <meta property="og:title" content="The case for centralized rollups" />
+<meta property="og:description" content="Common wisdom is that rollups should be decentralized. In fact, most rollups have decentralization of sequencers/validators/provers on their roadmap. In this post, I argue that fully centralized rollups are viable and secure.
+What does a centralized rollup look like? In a centralized rollup, a single actor controls sequencing and block production. Users send transactions directly to this actor, i.e, there is no public mempool. This actor then constructs a block with some of the transactions it has received and pushes them to L1, along with a state transition validity proof in the case of a zk-rollup." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://solvable.group/posts/centralized-rollups/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-04-25T00:00:00+00:00" />
+
+
+
+    
+      <base href="https://solvable.group/posts/centralized-rollups/">
+    
+    <title>
+  The case for centralized rollups · wborgeaud
+</title>
+
+    
+      <link rel="canonical" href="https://solvable.group/posts/centralized-rollups/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://solvable.group/css/coder.min.ba0e0ae90bc419873e58e4c2f15333118109ce931630cf1579821e56f19b79f0.css" integrity="sha256-ug4K6QvEGYc&#43;WOTC8VMzEYEJzpMWMM8VeYIeVvGbefA=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.92.2" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://solvable.group/">
+      wborgeaud
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">The case for centralized rollups</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2022-04-25T00:00:00Z'>
+                April 25, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://solvable.group/tags/rollups/">rollups</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>Common wisdom is that rollups should be decentralized. In fact, most rollups have decentralization of sequencers/validators/provers on their roadmap. In this post, I argue that fully centralized rollups are viable and secure.</p>
+<h2 id="what-does-a-centralized-rollup-look-like">What does a centralized rollup look like?</h2>
+<p>In a centralized rollup, a single actor controls sequencing and block production. Users send transactions directly to this actor, i.e, there is no public mempool. This actor then constructs a block with some of the transactions it has received and pushes them to L1, along with a state transition validity proof in the case of a zk-rollup.</p>
+<h3 id="security">Security</h3>
+<p>The security of a centralized rollup looks pretty bad at first sight, since only a single actor controls every step of the transaction lifecycle. This can be fixed by using an escape hatch, i.e., a mechanism for users to push transactions directly to L1. Then if the centralized actor goes down or acts maliciously, users can simply withdraw their funds to L1. Note that the escape hatch should allow users to make L2 transactions before withdrawal to, e.g., recover funds locked in a liquidity pool.</p>
+<p>I will also assume that the L1 is decentralized and secure, otherwise talking about L2 security doesn’t make much sense.</p>
+<h2 id="criticisms">Criticisms</h2>
+<p>Here are some criticisms I’ve heard about centralized rollups.</p>
+<h3 id="censorship-resistance">Censorship resistance</h3>
+<p>The main criticism of centralized systems is the lack of censorship resistance. In the case of a centralized rollup, the central actor could refuse to process transactions coming from a specific address. I don’t think this argument holds since censorship is also possible in decentralized systems. For example, good luck making an ETH transaction if the top mining pools want to censor you.</p>
+<p>The solution to censorship is reputation, not decentralization. If a centralized rollup starts censoring an address, it would be easy to prove it and tell the world about it. Users that care about censorship resistance (most of them hopefully) would then be able to flee the rollup using the escape hatch. Most applications building on the rollup would probably do the same which would lead to the rollup’s death. It is thus very unlikely that a centralized rollup would sacrifice its reputation and community by censoring addresses. And even if this were to happen, no funds would be lost in the process thanks to the escape hatch.</p>
+<h3 id="regulatory-issues">Regulatory issues</h3>
+<p>A centralized rollup would be more vulnerable to regulatory pressure than a decentralized system. IANAL so I don’t have clear insight on how serious this concern is. My first thought is that regulators should have enough work with all the scammy things going on in crypto before attacking legitimate use cases like rollups. In any case, centralized rollups are not bound to a given server. In case of regulatory issues, it is trivial to just change the location of the rollup server.</p>
+<h3 id="downtime">Downtime</h3>
+<p>It is inevitable that any centralized system will experience downtime at some point. Many precautions can be taken to reduce the frequency and length of such downtimes, but it wouldn’t be realistic to claim they will never happen. To me this is the only issue with centralized rollups that can’t be fixed without adding some significant overhead. Note that downtimes aren’t particularly risky for users since, as long as the L1 is up, the escape hatch would allow them to leave the L2.</p>
+<h2 id="advantages">Advantages</h2>
+<h3 id="performance">Performance</h3>
+<p>There are lots of performance benefits to centralization. For example, every message needs to only be passed once, i.e., there’s no need for any gossiping. In the case of a zk-rollup, the whole sequencing-proving pipeline can be performed by a single server which makes it more efficient and parallelizable.</p>
+<p>Importantly, no decentralization means no need for incentives and thus no need for slashing either. So there wouldn&rsquo;t be any consensus- or slashing-related downtimes in a centralized rollup.</p>
+<h3 id="no-need-for-a-token">No need for a token</h3>
+<p>Sorry VCs but a centralized rollup doesn’t need a token. Case in point, no rollups that are live now have a token. We touched on the reason why above, i.e., there’s no need for incentives in a centralized system. The only incentive is for the centralized actor to keep things running smoothly in order to collect fees and other revenues (see below).</p>
+<p>If you really want a token, you can always have a governance token to vote on new features for the rollup. But the fact that a token is not inherently needed is definitely a plus.</p>
+<h3 id="benevolent-sequencer">Benevolent sequencer</h3>
+<p>The centralized rollup could vow to not extract malicious MEV, like sandwich attacks, from users. It would be easy to detect if the sequencer does perform such extraction and, as with censoring, we’d see users leave the rollup if that were the case. This is obviously not possible in a decentralized system.
+Therefore a centralized rollup could have much better UX for users, in the form of better DEX prices.</p>
+<p>Note that this is not only a theoretical argument, as we see users on Ethereum do similar things by sending their transactions to centralized relayers (e.g. Flashbots) to avoid getting sandwiched.</p>
+<h3 id="for-profit-rollup">For-profit rollup</h3>
+<p>The last section was about malicious MEV and how a centralized rollup solves it. What about beneficial MEV like arbitrages (keeping prices efficient on the network) and liquidations (helping borrowing platforms stay solvent)?</p>
+<p>A centralized sequencer could easily extract such MEV and make a profit along the way. These profits wouldn’t be made on the back of users, and would actually help the network.</p>
+<p>Moreover, the rollups could reinvest the profits into the network by: reducing fees, public good funding, buyback+burn of tokens (if the rollup has a token), or airdropping users. How the profits are used could be decided using some governance system.</p>
+<p>Now this MEV extraction would be totally optional. Some users might be uneasy with the rollup performing arbitrages and liquidations, and the rollup would function perfectly well without performing such extractions. It is, however, interesting to ask if the value behind such extractions would not be better used by the rollup than by some profit-seeking MEV searchers. I would argue that the average user, who probably doesn’t run an arbitrage or liquidation bot, would benefit more from the centralized actor extracting this kind of MEV and reinvesting it in the network.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>It is kind of easy to just sweep every issue with centralized rollups under the escape hatch rug. In practice, having to leave a malicious centralized rollup would be a massive annoyance (note that it would also be easy to fork the rollup in such cases). But I think the upsides are significant and cannot be ignored.</p>
+<p>Anyway, I think this is an interesting avenue to explore and I wouldn’t be surprised if a centralized rollup ends up winning the coming rollup wars.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

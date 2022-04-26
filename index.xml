@@ -6,7 +6,17 @@
     <description>Recent content on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 16 Oct 2021 00:57:25 -0700</lastBuildDate><atom:link href="https://solvable.group/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The case for centralized rollups</title>
+      <link>https://solvable.group/posts/centralized-rollups/</link>
+      <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/posts/centralized-rollups/</guid>
+      <description>Common wisdom is that rollups should be decentralized. In fact, most rollups have decentralization of sequencers/validators/provers on their roadmap. In this post, I argue that fully centralized rollups are viable and secure.
+What does a centralized rollup look like? In a centralized rollup, a single actor controls sequencing and block production. Users send transactions directly to this actor, i.e, there is no public mempool. This actor then constructs a block with some of the transactions it has received and pushes them to L1, along with a state transition validity proof in the case of a zk-rollup.</description>
+    </item>
+    
     <item>
       <title>ECFFT on the BN254 base field in Rust</title>
       <link>https://solvable.group/posts/ecfft-bn254/</link>

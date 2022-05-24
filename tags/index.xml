@@ -6,7 +6,25 @@
     <description>Recent content in Tags on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 25 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cryptography</title>
+      <link>https://solvable.group/tags/cryptography/</link>
+      <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/cryptography/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zero-knowledge proofs</title>
+      <link>https://solvable.group/tags/zero-knowledge-proofs/</link>
+      <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/zero-knowledge-proofs/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>rollups</title>
       <link>https://solvable.group/tags/rollups/</link>
@@ -40,15 +58,6 @@
       <pubDate>Sat, 16 Oct 2021 00:57:25 -0700</pubDate>
       
       <guid>https://solvable.group/tags/rust/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>cryptography</title>
-      <link>https://solvable.group/tags/cryptography/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://solvable.group/tags/cryptography/</guid>
       <description></description>
     </item>
     
@@ -103,15 +112,6 @@
       <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
       
       <guid>https://solvable.group/tags/post-quantum/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>zero-knowledge proofs</title>
-      <link>https://solvable.group/tags/zero-knowledge-proofs/</link>
-      <pubDate>Thu, 16 Apr 2020 13:57:25 -0700</pubDate>
-      
-      <guid>https://solvable.group/tags/zero-knowledge-proofs/</guid>
       <description></description>
     </item>
     

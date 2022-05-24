@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="William Borgeaud">
+    <meta name="description" content="William Borgeaud&#39;s personal website">
+    <meta name="keywords" content="blog,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Proving AIRs with multivariate sumchecks"/>
+<meta name="twitter:description" content="Algebraic Intermediate Representation (AIR) is a powerful arithmetization that can be extended to Randomized Air with Preprocessing (RAP), which includes popular systems like PLONK. See this great note by Ariel Gabizon for descriptions of these arithmetizations.
+Another popular arithmetization is given by R1CS. Two categories of proving systems based on R1CS are those using multivariate techniques (e.g. Spartan) and those using univariate techniques (e.g. Marlin).
+To the best of my knowledge, every current AIR-based proving system uses univariate techniques."/>
+
+    <meta property="og:title" content="Proving AIRs with multivariate sumchecks" />
+<meta property="og:description" content="Algebraic Intermediate Representation (AIR) is a powerful arithmetization that can be extended to Randomized Air with Preprocessing (RAP), which includes popular systems like PLONK. See this great note by Ariel Gabizon for descriptions of these arithmetizations.
+Another popular arithmetization is given by R1CS. Two categories of proving systems based on R1CS are those using multivariate techniques (e.g. Spartan) and those using univariate techniques (e.g. Marlin).
+To the best of my knowledge, every current AIR-based proving system uses univariate techniques." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://solvable.group/posts/air-multivariate-sumcheck/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-05-21T00:00:00+00:00" />
+
+
+
+    
+      <base href="https://solvable.group/posts/air-multivariate-sumcheck/">
+    
+    <title>
+  Proving AIRs with multivariate sumchecks · wborgeaud
+</title>
+
+    
+      <link rel="canonical" href="https://solvable.group/posts/air-multivariate-sumcheck/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://solvable.group/css/coder.min.a532260a04e0832fdc330247a2458b829a83fe33dc1c8750cf6bffb4234efab4.css" integrity="sha256-pTImCgTggy/cMwJHokWLgpqD/jPcHIdQz2v/tCNO&#43;rQ=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.92.2" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://solvable.group/">
+      wborgeaud
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Proving AIRs with multivariate sumchecks</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2022-05-21T00:00:00Z'>
+                May 21, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              9-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://solvable.group/tags/cryptography/">cryptography</a>
+      <span class="separator">•</span>
+    <a href="https://solvable.group/tags/zero-knowledge-proofs/">zero-knowledge proofs</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p><em>Algebraic Intermediate Representation</em> (AIR) is a powerful arithmetization that can be extended to <em>Randomized Air with Preprocessing</em> (RAP), which includes popular systems like PLONK. See <a href="https://hackmd.io/@aztec-network/plonk-arithmetiization-air">this great note</a> by Ariel Gabizon for descriptions of these arithmetizations.</p>
+<p>Another popular arithmetization is given by R1CS. Two categories of proving systems based on R1CS are those using multivariate techniques (e.g. <a href="https://eprint.iacr.org/2019/550">Spartan</a>) and those using univariate techniques (e.g. <a href="https://eprint.iacr.org/2019/1047">Marlin</a>).</p>
+<p>To the best of my knowledge, every current AIR-based proving system uses univariate techniques. In this note, I&rsquo;ll discuss what a multivariate AIR-based proving system could look like.</p>
+<h2 id="differences-between-univariate-and-multivariate-techniques">Differences between univariate and multivariate techniques</h2>
+<p>Before discussing AIR, let&rsquo;s focus on the restricted arithmetization <em>Trivial Air Representation</em> (TAR) where the next row values are not used in the constraint.</p>
+<p>Let $C \in \mathbb{F}[X_1,\dots,X_w]$ be a constraint polynomial, and assume we have $w$ columns of length $n$ (a power of 2) $f_1,\dots,f_w \in \mathbb{F}^n$. Every row satisfies $C\left(f_1[j],\dots,f_w[j]\right)=0$ and we want a succint proof of this fact.  Here are examples of how one could do this using univariate or multivariate techniques.</p>
+<h6 id="univariate-techniques">Univariate techniques</h6>
+<p>Let $H &lt; \mathbb{F}^*$ be a subgroup of order $n$. Look at the columns as functions $f_i: H \to \mathbb{F}$. Using the FFT, interpolate these functions to get polynomials $\hat{f}_i: \mathbb{F}[X]^{&lt;n}$ and compute the polynomial $C(\hat{f}_1,\dots,\hat{f}_w)\in \mathbb{F}[X]^{&lt;deg(C)n}$. This latter polynomial evaluates to $0$ on $H$, so we can compute its quotient $Q(X)$ with the vanishing polynomial on $H$: $Z_H(X) = X^n - 1$.</p>
+<p>Compute commitments of the polynomials $\hat{f}_1,\dots,\hat{f}_w,Q$ using your favorite univariate polynomial commitment scheme. Send these commitments to the verifier and receive a challenge $z \in \mathbb{F}$ in return. Send the evaluations $\hat{f}_1(z),\dots,\hat{f}_w(z),Q(z)$, along with their opening proofs, to the verifier. Finally, the verifier verifies the opening proofs and checks the equality
+$$
+C\left(\hat{f}_1(z),\dots,\hat{f}_w(z)\right)\stackrel{?}{=} Q(z)Z_H(z).
+$$</p>
+<h6 id="multivariate-techniques">Multivariate techniques</h6>
+<p>Let $v = \log n$, look at the columns as functions $f_i: \{0,1\}^v \to \mathbb{F}$ and compute the multilinear extensions $\tilde{f}_1,\dots,\tilde{f}_w \in \mathbb{F}[X_1,&hellip;,X_v]$. Let $F(x) = C\left(\tilde{f}_1(x),\dots,\tilde{f}_w(x)\right)$, by assumption the equality $F(x)=0$ holds for all $x \in \{0,1\}^v$. Define the polynomial</p>
+<p>$$
+P(t) = \sum_{x \in \{0,1\}^v} F(x) \beta(t, x),
+$$
+where $\beta(t,x) = \prod _{i=1}^v (t_i x_i + (1-t_i)(1-x_i))$ is the multilinear polynomial such that $\beta(t,x)\ne 0$ iff $t=x$. $P(t)$ is a multilinear polynomial that evaluates to $0$ on $\{0,1\}^v$ and is therefore the zero polynomial. This is something we can prove to the verifier using the multivariate sumcheck protocol.</p>
+<p>Commit to the polynomials $\tilde{f}_1,\dots, \tilde{f}_w$ using your favorite multivariate polynomial commitment scheme and send the commitments to the verifier. Then perform the multivariate sumcheck protocol to prove that $P(r)=0$ for a random $r\in \mathbb{F}^v$ chosen by the verifier (which implies that $P$ is the zero polynomial with high probability). In the last step of the sumcheck protocol, the verifier has to evaluate $F(z)\beta(r,z)$ for some random $z \in \mathbb{F}^v$. $\beta(r,z)$ can be evaluated in $O(v)$ and to evaluate $F(z)$, the prover opens $\tilde{f}_1(z),\dots, \tilde{f}_w(z)$ with which the verifier can compute $F(z) = C(\tilde{f}_1(z),\dots, \tilde{f}_w(z))$.</p>
+<p>To summarize, the main differences between the univariate and multivariate techniques are</p>
+<ol>
+<li>The columns are seen as functions from $H \subset \mathbb{F}^*$ in the univariate case and as functions from $\{0,1\}^v \subset \mathbb{F}^v$ in the multivariate case.</li>
+<li>The columns are interpolated to polynomials of degree $&lt;n$ in the univariate case and to multilinear polynomials in the multivariate case.</li>
+<li>To check that the constraint $C$ evaluates to $0$ on every row, a quotient polynomial argument is used in the univariate case, whereas the multivariate sumcheck protocol, along with the $\beta(t,x)$ trick, is used in the multivariate case.</li>
+</ol>
+<h2 id="introducing-next-row-values">Introducing <em>next row values</em></h2>
+<p>To go from TAR to AIR, we just need to change the constraint $C$ to a $2w$-variate polynomial taking as inputs the $j$-th and $j+1$-th rows
+$$
+C\left(f_1[j],\dots,f_w[j], f_1[j+1],\dots,f_w[j+1]\right)=0, \forall \ 0\leq j &lt; n,
+$$
+where $j+1$ is taken modulo $n$.</p>
+<p>In the univariate setting, the proof system for TARs can be extended to AIRs as follows. Let $g\in H$ be a generator of $H$ and let the correspondance between rows and $H$ be given by $j$-th row $\leftrightarrow$ $g^j$, i.e., $f_i[j] = \hat{f}_i(g^j)$. Then, for every $h\in H$, the next row value of $\hat{f}_i(h)$ is $\hat{f}_i(gh)$.</p>
+<p>With that, we can modify the univariate proof system for TAR to accommodate for the next row values. The polynomial $Q(X)$ is now computed as the quotient of $C\left(\hat{f}_1(X),\dots,\hat{f}_w(X),\hat{f}_1(gX),\dots,\hat{f}_w(gX)\right)$ and $Z_H(X)$, and the column polynomials are opened at $z$ and $gz$, so that the verifier can check
+$$
+C\left(\hat{f}_1(z),\dots,\hat{f}_w(z),\hat{f}_1(gz),\dots,\hat{f}_w(gz)\right)\stackrel{?}{=} Q(z)Z_H(z).
+$$</p>
+<h2 id="generalizing-airs-using-endomorphisms">Generalizing AIRs using endomorphisms</h2>
+<p>Let $R$ be the set of rows in a TAR and let $\sigma: R \to R$ be an function. We can extend TARs by using the constraint
+$$
+C\left(f_1(r),\dots,f_w(r), f_1(\sigma r),\dots,f_w(\sigma r)\right)=0, \forall  r \in R.
+$$
+We&rsquo;ll call this arithmetization an <em>Endomorphism AIR Representation</em> (EAR).</p>
+<p>The endomorphim $\sigma$ on $R$ induces another endomorphism, that we also call $\sigma$, on functions $f: R \to \mathbb{F}$ by setting $(\sigma f)r = f(\sigma r)$ for all $r\in R$. This endomorphism can further be extended to polynomials using interpolation on $R$, i.e., $\sigma \hat{f} = \widehat{\sigma f}$.</p>
+<p>AIRs can be recovered in this context by setting $R = H = \langle g \rangle$ and $\sigma = \mu_g$, the multiplication by $g$. Going through the previous section with this viewpoint, we observe that the only property of $\sigma$ used in the proving system for AIR is that there is an extension $\bar{\sigma} : \mathbb{F} \to \mathbb{F}$ of $\sigma$ that is efficient to compute and such that $(\sigma \hat{f})z = \hat{f}(\bar{\sigma} z)$ for all $z\in \mathbb{F}$. In the univariate context, $\bar{\sigma}$ is also $\mu_g$, the multiplication by $g$ with domain $\mathbb{F}$.</p>
+<p>Note that, similarly to how AIRs can also be extended to also use the $j+2$-th row values in $C$ (or in general any shifted row values), EARs can be extended to use more than one endomorphism in the definition of $C$.</p>
+<p>Furthermore, note that this construction can also be generalized to extend RAPs.</p>
+<h6 id="how-to-choose-sigma">How to choose $\sigma$?</h6>
+<p>The choice of $\sigma$ can dramatically impact the expressiveness of the arithmetization. For example, setting $\sigma = \mathrm{id}_R$ gives a TAR, a rather useless arithmetization, and as seen previously setting $R = H, \sigma = \mu_g$ gives a regular AIR, a very powerful arithmetization.</p>
+<p>Assuming for the moment that $\sigma$ is a permutation, a measure of expressiveness is the size of the largest cycle of $\sigma$, when seeing the permutation as a <a href="https://en.wikipedia.org/wiki/Permutation#Cycle_notation">product of cycles</a>. Interpreting an AIR as the repeated application of a function, the size of the largest cycle gives the maximum number of times the function can be applied.</p>
+<h2 id="back-to-the-multivariate-setting">Back to the multivariate setting</h2>
+<p>In the multivariate setting, the row domain is $R = \{0, 1\}^v$. So to get an EAR, we first need to set an endomorphism $\sigma : \{0, 1\}^v \to \{0, 1\}^v$. As noted previously, to make the proving system work, we need a $\sigma$ that can be extended to some $\bar{\sigma}: \mathbb{F}^v \to \mathbb{F}^v$ such that $(\sigma \tilde{f})z = \tilde{f}(\bar{\sigma} z)$ for all $z \in \mathbb{F}^v$ and functions $f: \{0, 1\}^v \to \mathbb{F}$.</p>
+<p>A set of endomorphisms of $\mathbb{F}^v$ (which are actually permutations) satifying this condition is given by compositions of bit-flips and coordinate permutations. Formally, they are given by
+$$
+L_v = \{ \tau \theta \ \mid \ \tau \in S_v, \ \theta \in (\mathbb{Z}/2\mathbb{Z})^v \},
+$$
+where $S_v$ is the symmetric group on $v$ elements acting on $\mathbb{F}^v$ by permuting coordinates and $\theta = (\theta_1,\dots,\theta_v)$ acts on $x = (x_1, \dots, x_v)$ coordinate-wise by sending $x_i$ to $x_i$ if $\theta_i = 0$ and to $1-x_i$ if $\theta_i = 1$. It is clear that every element of $L_v$ restricts to a permutation on $\{0, 1\}^v$ and can be efficiently computed in $O(v)$ time.</p>
+<p>The main &ldquo;result&rdquo; of this note can thus be stated as follows</p>
+<blockquote>
+<p>For every $\sigma \in L_v$ and $C\in \mathbb{F}[X_1,\dots,X_{2w}]$, there is an efficient proving system based on the multivariate sumcheck protocol for the EAR on $n = 2^v$ rows, $w$ columns, endomorphism $\sigma$, and constraint $C$.</p>
+</blockquote>
+<p>Here is a description of the full protocol, using the same notations as before:</p>
+<ol>
+<li>Commit to the multilinear polynomials $\tilde{f}_1,\dots,\tilde{f}_w$ and send the commitments to the verifier.</li>
+<li>Let $F(x) = C(\tilde{f}_1(x),\dots,\tilde{f}_w(x),\sigma\tilde{f}_1(x),\dots,\sigma\tilde{f}_w(x))$ and let $r\in \mathbb{F}^v$ be a random challenge sent by the verifier. Run the sumcheck argument for $P(r) = 0$, with $P(t) = \sum_{x \in \{0,1\}^v} F(x) \beta(t, x)$.</li>
+<li>In the last step of the sumcheck protocol, the verifier has to compute $F(z)$. The prover sends the openings $\tilde{f}_1(z),\dots, \tilde{f}_w(z), \tilde{f}_1(\sigma z),\dots,\tilde{f}_w(\sigma z)$ along with their opening proofs. The verifier then verifies the opening proofs and computes the value of
+$$
+F(z) = C(\tilde{f}_1(z),\dots,\tilde{f}_w(z),\sigma\tilde{f}_1(z),\dots,\sigma\tilde{f}_w(z)) = C(\tilde{f}_1(z),\dots,\tilde{f}_w(z),\tilde{f}_1(\sigma z),\dots,\tilde{f}_w(\sigma z))
+$$
+to conclude the sumcheck protocol.</li>
+<li>The sumcheck protocol shows that (up to reasonable soundness) $P(t)$ is the zero polynomial, which implies that $F(x)=0$ for all $x\in \{0,1\}^v$, which is equivalent to the EAR statement.</li>
+</ol>
+<h6 id="how-good-are-these-permutations">How good are these permutations?</h6>
+<p>The sad thing is that the permutations in $L_v$ are not very good, measured in terms of their maximum cycle length. Denote by $M(v)$ the maximum cycle length over elements of $L_v$ and denote by $N(v)$ the number of length $M(v)$ cycles in a permutation achieving this maximum. Experiments give the following values of $M$ and $N$:</p>
+
+
+
+
+
+<table class="table table-striped table-bordered nohead">
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th> </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$v$</td>
+<td>10</td>
+<td>11</td>
+<td>12</td>
+<td>13</td>
+<td>14</td>
+<td>15</td>
+<td>16</td>
+<td>17</td>
+<td>18</td>
+<td>19</td>
+<td></td>
+</tr>
+<tr>
+<td>$M(v)$</td>
+<td>60</td>
+<td>60</td>
+<td>120</td>
+<td>120</td>
+<td>168</td>
+<td>210</td>
+<td>280</td>
+<td>420</td>
+<td>420</td>
+<td>840</td>
+<td></td>
+</tr>
+<tr>
+<td>$N(v)$</td>
+<td>12</td>
+<td>30</td>
+<td>24</td>
+<td>48</td>
+<td>72</td>
+<td>108</td>
+<td>216</td>
+<td>216</td>
+<td>540</td>
+<td>432</td>
+<td></td>
+</tr>
+<tr>
+<td>$M(v)\cdot N(v)$</td>
+<td>720</td>
+<td>1800</td>
+<td>2880</td>
+<td>5760</td>
+<td>12096</td>
+<td>22680</td>
+<td>60480</td>
+<td>90720</td>
+<td>226800</td>
+<td>362880</td>
+<td></td>
+</tr>
+<tr>
+<td>$n=2^v$</td>
+<td>1024</td>
+<td>2048</td>
+<td>4096</td>
+<td>8192</td>
+<td>16384</td>
+<td>32768</td>
+<td>65536</td>
+<td>131072</td>
+<td>263144</td>
+<td>524288</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>So the bad news is that $M(v)$ is much smaller than $n$. The silver lining is that there are a lot of cycles achvieving $M(v)$ and so the number of elements in such cycles $M(v)\cdot N(v)$ is reasonably close to $n$.</p>
+<h6 id="ears-as-parallel-airs">EARs as &ldquo;parallel&rdquo; AIRs?</h6>
+<p>This suggests the following construction. Let $\sigma$ be a permutation with largest cycle of length $\mu = M(v)$ and $\eta = N(v)$ such cycles with supports $\Pi_1,\dots,\Pi_\eta \subset \{0,1\}^v$.</p>
+<p>Then, the EAR with endomorphism $\sigma$ and constraint $C$ contains $\eta$ copies of an AIR with $\mu$ rows and constraint $C$. It can thus be used to compute $\eta$ AIR on the row sets $\Pi_1,\dots,\Pi_\eta$ in parallel.</p>
+<p>There are a few issues with this construction:</p>
+<ul>
+<li>The constraint $C$ must also hold outside $\bigcup \Pi_i$. The cycles outside this set do not have length $\mu$ which can be problematic. One solution is to add a preprocessed selector polynomial $\mathbb{1}_{\bigcup \Pi_i}$ and multiply $C$ by this polynomial to filter out smaller cycles.</li>
+<li>One might want to use different constraints $C_1,\dots,C_\eta$ on the different row sets $\Pi_1,\dots,\Pi_\eta$. This can also be solved by adding preprocessed polynomials. Either $\eta$ selector polynomials taking binary values or one polynomial taking values $1$ to $\eta$.</li>
+<li>Public inputs should be a bit annoying to work with in this model.</li>
+<li>If implementing PLONK in this model, only rows belonging to the same cycle can be wired together.</li>
+</ul>
+<h6 id="implementation">Implementation</h6>
+<p>Coming soon.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

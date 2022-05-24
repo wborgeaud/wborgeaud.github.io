@@ -6,14 +6,25 @@
     <description>Recent content on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 25 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Proving AIRs with multivariate sumchecks</title>
+      <link>https://solvable.group/posts/air-multivariate-sumcheck/</link>
+      <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/posts/air-multivariate-sumcheck/</guid>
+      <description>Algebraic Intermediate Representation (AIR) is a powerful arithmetization that can be extended to Randomized Air with Preprocessing (RAP), which includes popular systems like PLONK. See this great note by Ariel Gabizon for descriptions of these arithmetizations.
+Another popular arithmetization is given by R1CS. Two categories of proving systems based on R1CS are those using multivariate techniques (e.g. Spartan) and those using univariate techniques (e.g. Marlin).
+To the best of my knowledge, every current AIR-based proving system uses univariate techniques.</description>
+    </item>
+    
     <item>
       <title>The case for centralized rollups</title>
       <link>https://solvable.group/posts/centralized-rollups/</link>
       <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://solvable.group/posts/centralized-rollups/</guid>
-      <description>Conventional wisdom is that rollups should be decentralized. In fact, most rollups have decentralization of sequencers/validators/provers on their roadmap. In this post, I argue that fully centralized rollups are viable and secure.
+      <description>Conventional wisdom is that rollups should be decentralized. In fact, most rollups have decentralization of sequencers/validators/provers on their roadmaps. In this post, I argue that fully centralized rollups are viable and secure.
 What does a centralized rollup look like? In a centralized rollup, a single actor controls sequencing and block production. Users send transactions directly to this actor, i.e, there is no public mempool. This actor then constructs a block with some of the transactions it has received and pushes them to L1, along with a state transition validity proof in the case of a zk-rollup.</description>
     </item>
     

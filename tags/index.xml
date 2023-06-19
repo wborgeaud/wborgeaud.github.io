@@ -6,13 +6,31 @@
     <description>Recent content in Tags on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 21 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cryptography</title>
       <link>https://solvable.group/tags/cryptography/</link>
-      <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 15 Feb 2023 00:00:00 +0000</pubDate>
       
       <guid>https://solvable.group/tags/cryptography/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elliptic curves</title>
+      <link>https://solvable.group/tags/elliptic-curves/</link>
+      <pubDate>Wed, 15 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/elliptic-curves/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>math</title>
+      <link>https://solvable.group/tags/math/</link>
+      <pubDate>Wed, 15 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/math/</guid>
       <description></description>
     </item>
     
@@ -40,15 +58,6 @@
       <pubDate>Sat, 16 Oct 2021 00:57:25 -0700</pubDate>
       
       <guid>https://solvable.group/tags/algorithms/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>math</title>
-      <link>https://solvable.group/tags/math/</link>
-      <pubDate>Sat, 16 Oct 2021 00:57:25 -0700</pubDate>
-      
-      <guid>https://solvable.group/tags/math/</guid>
       <description></description>
     </item>
     
@@ -85,15 +94,6 @@
       <pubDate>Sat, 31 Oct 2020 03:57:25 -0700</pubDate>
       
       <guid>https://solvable.group/tags/z3/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>elliptic curves</title>
-      <link>https://solvable.group/tags/elliptic-curves/</link>
-      <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
-      
-      <guid>https://solvable.group/tags/elliptic-curves/</guid>
       <description></description>
     </item>
     

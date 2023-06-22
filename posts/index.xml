@@ -6,7 +6,18 @@
     <description>Recent content in Posts on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 15 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 22 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A simple multivariate AIR argument inspired by SuperSpartan</title>
+      <link>https://solvable.group/posts/super-air/</link>
+      <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/posts/super-air/</guid>
+      <description>PDF version here and HackMD here.
+We will consider the following basic version of AIR. Let $\mathbb{F}$ be a finite field and let $F \in \mathbb{F}[X_0,\dots,X_{2C-1}]$ be a constraint polynomial. An AIR witness for this instance is a table of $C$ columns $z_0,\dots,z_{C-1}$ of size $n=2^v$ such that for all $i=0,\dots,n-2$, $$ F(z_0[i],\dots,z_{C-1}[i],z_0[i+1],\dots,z_{C-1}[i+1])=0. $$
+Multi-columns CCS (MCCCS) CCS is a constraint system introduced in [STW23]1 that generalizes common constraint systems such as R1CS, AIR, and Plonk.</description>
+    </item>
+    
     <item>
       <title>Applications of Riemann-Roch in cryptography</title>
       <link>https://solvable.group/posts/riemann-roch-crypto/</link>

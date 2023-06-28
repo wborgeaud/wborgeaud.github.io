@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>polynomials on wborgeaud</title>
+    <link>https://solvable.group/tags/polynomials/</link>
+    <description>Recent content in polynomials on wborgeaud</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 27 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/polynomials/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Walsh–Hadamard transform</title>
+      <link>https://solvable.group/posts/walshhadamard-transform/</link>
+      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/posts/walshhadamard-transform/</guid>
+      <description>In the ZKP world, we often use the Fast Fourier Transform (FFT) to go from univariate polynomials to their evaluations on a subgroup. The FFT has a less notorious analogue for multilinear polynomials: the Walsh–Hadamard transform (WHT). In this post, I&amp;rsquo;ll describe the WHT and explore its applications.
+Univariate polynomials Let $\mathbb{F}$ be a finite field and let $H&amp;lt;\mathbb{F}^*$ be a multiplicative subgroup of size $n=2^v$. Given a polynomial $f\in \mathbb{F}[X]^{&amp;lt;n}$ of degree less than $n$, we can use the FFT to compute its evaluation on $H$:</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,25 @@
     <description>Recent content in Tags on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 22 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>math</title>
+      <link>https://solvable.group/tags/math/</link>
+      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/math/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>polynomials</title>
+      <link>https://solvable.group/tags/polynomials/</link>
+      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/polynomials/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>cryptography</title>
       <link>https://solvable.group/tags/cryptography/</link>
@@ -31,15 +49,6 @@
       <pubDate>Wed, 15 Feb 2023 00:00:00 +0000</pubDate>
       
       <guid>https://solvable.group/tags/elliptic-curves/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>math</title>
-      <link>https://solvable.group/tags/math/</link>
-      <pubDate>Wed, 15 Feb 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://solvable.group/tags/math/</guid>
       <description></description>
     </item>
     

@@ -6,7 +6,19 @@
     <description>Recent content in Posts on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 27 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Grand product arguments</title>
+      <link>https://solvable.group/posts/grand-product-arguments/</link>
+      <pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/posts/grand-product-arguments/</guid>
+      <description>$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
+HackMD version here.
+Grand product arguments Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$. Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.
+In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso.</description>
+    </item>
+    
     <item>
       <title>The Walsh–Hadamard transform</title>
       <link>https://solvable.group/posts/walshhadamard-transform/</link>

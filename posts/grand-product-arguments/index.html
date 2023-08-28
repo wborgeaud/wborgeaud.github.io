@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="William Borgeaud">
+    <meta name="description" content="William Borgeaud&#39;s personal website">
+    <meta name="keywords" content="blog,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Grand product arguments"/>
+<meta name="twitter:description" content="$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
+HackMD version here.
+Grand product arguments Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$. Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.
+In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso."/>
+
+    <meta property="og:title" content="Grand product arguments" />
+<meta property="og:description" content="$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
+HackMD version here.
+Grand product arguments Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$. Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.
+In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://solvable.group/posts/grand-product-arguments/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-08-28T00:00:00+00:00" />
+
+
+
+    
+      <base href="https://solvable.group/posts/grand-product-arguments/">
+    
+    <title>
+  Grand product arguments · wborgeaud
+</title>
+
+    
+      <link rel="canonical" href="https://solvable.group/posts/grand-product-arguments/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://solvable.group/css/coder.min.a532260a04e0832fdc330247a2458b829a83fe33dc1c8750cf6bffb4234efab4.css" integrity="sha256-pTImCgTggy/cMwJHokWLgpqD/jPcHIdQz2v/tCNO&#43;rQ=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.92.2" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://solvable.group/">
+      wborgeaud
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://solvable.group/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Grand product arguments</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2023-08-28T00:00:00Z'>
+                August 28, 2023
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://solvable.group/tags/cryptography/">cryptography</a>
+      <span class="separator">•</span>
+    <a href="https://solvable.group/tags/zero-knowledge-proofs/">zero-knowledge proofs</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$</p>
+<p><em>HackMD version <a href="https://hackmd.io/@wborgeaud/rk-gp0222">here</a>.</em></p>
+<h1 id="grand-product-arguments">Grand product arguments</h1>
+<p>Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$.
+Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.</p>
+<p>In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso.</p>
+<h2 id="using-air-constraints">Using AIR constraints</h2>
+<p>This problem can be solved using univariate polynomials and AIR constraints. This is the approach taken in Plonk<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>Let $c_i=\prod_{j\leq i}f_j$ be the vector of cumulative products of $f$. The equality $\prod f_i = y$ is equivalent to $c_{n-1}=y$. Therefore, a protocol to prove this equality is to commit to both $f$ and $c$ and check the following AIR constraints</p>
+<ul>
+<li>$c_0 = f_0$,</li>
+<li>$c_{i+1}=c_i \cdot f_{i+1}$ for all $i&lt;n-1$,</li>
+<li>$c_{n-1} = y$.</li>
+</ul>
+<h2 id="using-gkr">Using GKR</h2>
+<p>This is the approach of [Tha13, 5.3.1]<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<p>For $0\leq k \leq v$, we consider the vector $g_k$ of size $2^k$ given by
+$$
+g_{k,i} = \prod_{i\cdot 2^{v-k}\leq j &lt; (i+1)\cdot 2^{v-k}} f_j.
+$$
+Note that $g_v=f$ and $g_0$ is the constant $y$. The vector $g_k$ can be seen as the $k$-th layer in the binary multiplication tree with leaves $f$.
+These  vectors satisfy the relations
+$$
+g_{k,i} = g_{k+1, 2i} \cdot g_{k+1, 2i+1}.
+$$
+Seeing $g_k$ as a function $\{0,1\}^k \to \F$ instead, the relations become</p>
+<p>$$
+g _k(\i) = g _{k+1}(\i, 0) \cdot g _{k+1}(\i,1).
+$$</p>
+<p>Therefore, the MLEs $\tilde{g} _k$ satisfy</p>
+<p>$$
+\tilde{g} _k(\i) = \tilde{g} _{k+1}(\i, 0) \cdot \tilde{g} _{k+1}(\i,1).
+$$</p>
+<p>and thus for any $\z \in \F^k$ we have</p>
+<p>$$
+\tilde{g} _k(\z) = \sum _{\i \in {0,1}^k} \eq(\z, \i) \cdot \tilde{g} _{k+1}(\i, 0) \cdot \tilde{g} _{k+1}(\i,1).
+$$</p>
+<p>The evaluation of this sum can be proved using the sumcheck protocol. At the end of the protocol, the verifier needs to evaluate $\tilde{g}_{k+1}$ at $(\r,0)$ and $(\r, 1)$ for a random $\r \in \F^k$.</p>
+<p>The trick to do so efficiently is to consider the degree one univariate polynomial $h(t)=\tilde{g} _{k+1}(\r, t)$ for $t\in \F$. We have</p>
+<p>$$
+h(0) = \tilde{g} _{k+1}(\r, 0) \ \text{ and } \ h(1) = \tilde{g} _{k+1}(\r, 1)
+$$</p>
+<p>therefore to send $h$ it is sufficient to send $\tilde{g} _{k+1}(\r, 0)$ and $\tilde{g} _{k+1}(\r, 1)$ (which are anyways required by the verifier). Then the verifier sends a random $u\in \F$ and uses the sumcheck protocol to check that</p>
+<p>$$
+h(u) = \tilde{g} _{k+1}(\r, u).
+$$</p>
+<p>Therefore, proving an opening $\tilde{g} _k(\z)$ can be reduced to a sumcheck argument and an opening $\tilde{g} _{k+1}(\r, u)$.</p>
+<p>The strategy to prove $\prod f_i = g_0 = y$ is then clear:</p>
+<ul>
+<li>Reduce the evalutation proof $g_0 = y$ to a sumcheck argument and an evaluation $\tilde{g} _1(\r_1)$.</li>
+<li>For $k=1,\dots, v-1$, reduce the evalutation proof $\tilde{g} _k(\r_k)$ to a sumcheck argument and an evaluation $\tilde{g} _{k+1}(\r _{k+1})$.</li>
+<li>The last evaluation $\tilde{g} _v(\r _v)=\tilde{f}(\r _v)$ is proved using the commitment to $f$.</li>
+</ul>
+<h3 id="costs">Costs</h3>
+<ul>
+<li><strong>Prover</strong>: A sumcheck argument costing $O(2^k)$ for $k=0\dots v-1$ and an evaluation proof for $f$, so in total $O(n) + \text{ prover cost of evaluation proof}$. The commited polynomial is $f$ of size $n$.</li>
+<li><strong>Verifier</strong>: A sumcheck argument costing $O(k)$ for $k=0\dots v-1$ and an evaluation proof for $f$, so in total $O(v^2) + \text{ verifier cost of evaluation proof}$.</li>
+<li><strong>Proof size</strong>: A sumcheck argument of size $O(k)$ for $k=0\dots v-1$ and an evaluation proof for $f$, so in total $O(v^2) + \text{ size of evaluation proof}$.</li>
+</ul>
+<h2 id="quarks">Quarks</h2>
+<p>This is the approach of [SL20, Section 5]<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+<p>Instead of using $v+1$ different functions $\{g _k: \{0,1\}^k \to \F \} _{k=0}^v$, we can pack them into a single function $g: \{0,1\}^{v+1} \to \F$ given by</p>
+<p>$$
+g(1^l, 0, x) = g _{v-l}(x) \text{  for } x\in \{0,1\}^{v-l},
+$$</p>
+<p>and $g(\mathbf{1})=0$. Note that $g(0, x) = g_v(x) = f(x)$ for $x\in \{0,1\}^v$ and $g(1^v, 0) = g_0 = y$. Furthermore, the relation between the adjacent functions $g_k$ and $g_{k+1}$ becomes
+$$
+g(1, x) = g(x,0)\cdot g(x, 1) \text{ for } x\in \{0,1\}^v.
+$$
+Let $h(x) = g(1,x)-g(x,0)\cdot g(x, 1)$ for $x\in {0,1}^v$, then $\tilde{h}$ is the zero polynomial, which we can check with the usual zero-check
+$$
+0 = h(\tau) = \sum_{x\in \{0,1\}^v} \eq(\tau, x) \left(g(1,x)-g(x,0)\cdot g(x, 1)\right),
+$$
+where $\tau$ is a random verifier challenge, which is proved with a sumche
+Therefore, the product $\prod f = y$ can be proved by commiting to $\tilde{g}$ and</p>
+<ul>
+<li>using the sumcheck argument to prove $h(\tau)=0$,</li>
+<li>prove $g(0, x) = f(x)$ by checking $\tilde{g}(0,\gamma)=\tilde{f}(\gamma)$ for a random $\gamma$,</li>
+<li>open $\tilde{g}(1^v, 0)= \prod f = y$.</li>
+</ul>
+<h3 id="costs-1">Costs</h3>
+<ul>
+<li><strong>Prover</strong>: A sumcheck argument costing $O(n)$ and evaluation proofs for $g$ and $f$, so in total $O(n) + \text{ prover cost of evaluation proofs}$. The commited polynomials are $f$ of size $n$ and $g$ of size $2n$.</li>
+<li><strong>Verifier</strong>: A sumcheck argument costing $O(v+1)$ and evaluation proofs for $g$ and $f$, so in total $O(v) + \text{ verifier cost of evaluation proofs}$.</li>
+<li><strong>Proof size</strong>: A sumcheck argument of size $O(v)$ and evaluation proofs for $g$ and $f$, so in total $O(v) + \text{ size of evaluation proofs}$.</li>
+</ul>
+<p>Note that compared to GKR, the verifier cost and proof size go from quadratic in $v$ to linear in $v$, at the cost of more and larger evaluation proofs.</p>
+<h2 id="hybrid-approach">Hybrid approach</h2>
+<p>This is the approach of [SL20, Section 6]<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, also used in Lasso<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
+<p>We can get the best of both approaches by combining them. Fix a number $1\leq \ell \leq v$, we use the Quarks approach for the first $\ell+1$ layers ${g _k} _{k=0}^{\ell}$ and the GKR approach for the last $v-l$ layers ${g _k} _{k=\ell+1}^{v}$. Concretely, this means that in the Quarks protocol, we instead have $g(0,x)=g _{\ell}(x)$ for all $x\in \{0,1\}^{\ell}$, which we check by evalutating at a random value $\gamma$, $\tilde{g}(0,\gamma)=\tilde{g} _{\ell}(\gamma)$.</p>
+<p>The evaluation $\tilde{g} _{\ell}(\gamma)$ is computed using the GKR protocol, by reducing it to a sumcheck argument and an evaluation of $\tilde{g} _{\ell +1}$, and so on until an evaluation of $\tilde{g} _v = \tilde{f}$.</p>
+<h3 id="costs-2">Costs</h3>
+<ul>
+<li><strong>Prover</strong>: $O(2^\ell)$ for Quarks + $O(\sum_{k=\ell+1}^v 2^k)$ for GKR, so $O(n)$ in total, plus commitments to $f$ of size $n$ and $g$ of size $2^{\ell+1}$.</li>
+<li><strong>Verifier</strong>: $O(\ell)$ for Quarks + $O(\sum_{k=\ell+1}^v k)=O((v-\ell)\cdot v)$, so $O(\ell + (v-\ell)\cdot v)$ in total, plus cost of evaluation proofs.</li>
+<li><strong>Proof size</strong>: Similarly to the verifier costs, $O(\ell + (v-\ell)\cdot v)$ in total, plus size of evaluation proofs.</li>
+</ul>
+<p>For example, setting $\ell = v - 3\log v$, the proof size is $O(v - 3\log v +3v \log v) = O(3v \log v)$ which is better than the proof size of $O(v^2)$ when using only GKR for large enough $v$. This comes at the cost of commiting to $g$ of size $2^{v - 3\log v + 1} = \frac{2n}{v^3}$, which is much smaller than $2n$, the corresponding size of $g$ when using only Quarks.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://eprint.iacr.org/2019/953">https://eprint.iacr.org/2019/953</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://eprint.iacr.org/2013/351">https://eprint.iacr.org/2013/351</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p><a href="https://eprint.iacr.org/2020/1275">https://eprint.iacr.org/2020/1275</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p><a href="https://eprint.iacr.org/2023/1216">https://eprint.iacr.org/2023/1216</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

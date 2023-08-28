@@ -6,7 +6,25 @@
     <description>Recent content in Tags on wborgeaud</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 27 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cryptography</title>
+      <link>https://solvable.group/tags/cryptography/</link>
+      <pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/cryptography/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zero-knowledge proofs</title>
+      <link>https://solvable.group/tags/zero-knowledge-proofs/</link>
+      <pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://solvable.group/tags/zero-knowledge-proofs/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>math</title>
       <link>https://solvable.group/tags/math/</link>
@@ -22,24 +40,6 @@
       <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
       
       <guid>https://solvable.group/tags/polynomials/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>cryptography</title>
-      <link>https://solvable.group/tags/cryptography/</link>
-      <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://solvable.group/tags/cryptography/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>zero-knowledge proofs</title>
-      <link>https://solvable.group/tags/zero-knowledge-proofs/</link>
-      <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://solvable.group/tags/zero-knowledge-proofs/</guid>
       <description></description>
     </item>
     

@@ -2,31 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://solvable.group/tags/cryptography/</loc>
+    <lastmod>2023-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/posts/grand-product-arguments/</loc>
+    <lastmod>2023-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/posts/</loc>
+    <lastmod>2023-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/tags/</loc>
+    <lastmod>2023-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/</loc>
+    <lastmod>2023-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://solvable.group/tags/zero-knowledge-proofs/</loc>
+    <lastmod>2023-08-28T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://solvable.group/tags/math/</loc>
     <lastmod>2023-06-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://solvable.group/tags/polynomials/</loc>
     <lastmod>2023-06-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://solvable.group/posts/</loc>
-    <lastmod>2023-06-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://solvable.group/tags/</loc>
-    <lastmod>2023-06-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://solvable.group/posts/walshhadamard-transform/</loc>
     <lastmod>2023-06-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://solvable.group/</loc>
-    <lastmod>2023-06-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://solvable.group/posts/super-air/</loc>
-    <lastmod>2023-06-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://solvable.group/tags/cryptography/</loc>
-    <lastmod>2023-06-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://solvable.group/tags/zero-knowledge-proofs/</loc>
     <lastmod>2023-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://solvable.group/posts/riemann-roch-crypto/</loc>

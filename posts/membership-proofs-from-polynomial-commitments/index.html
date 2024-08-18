@@ -159,7 +159,7 @@ The polynomial $g(X)$ is of degree $|S|$ and can be computed either by direct ca
 <ul>
 <li>$f(X)$ should be <em>randomly chosen</em> with the property that $f(0)=z$. Indeed, if $f(X)$ was easily guessable, e.g. $f(X)=X + z$, knowing $f(\alpha)$ would reveal $z$.</li>
 <li>The protocol is sound since by the properties of the KZG commitments and the Schwartz-Zippel lemma,  except with negligible probability, there exists polynomials $f(X), h(X)$ with $\prod_{r\in S}(f(X)-r) = h(X)X$ which implies that $f(0)\in S$, i.e., $\com_f$ is a commitment to a value in $z$. QED.</li>
-<li>As is, the protocol has a proof length of 3 group element: $\com_h$, $\text{open}(f(\alpha))$, $\text{open}(h(\alpha))$, and 2 field elements $f(\alpha), h(\alpha)$. The proving time is dominated by the computation of $g(X)$, and the verifier time is dominated by the product over $S$. There is maybe a way to batch the two openings to reduce the number of group elements by one.</li>
+<li>As is, the protocol has a proof length of 3 group element: $\com_h$, $\text{open}(f(\alpha))$, $\text{open}(h(\alpha))$, and 2 field elements $f(\alpha), h(\alpha)$. The proving time is dominated by the computation of $g(X)$, and the verifier time is dominated by the product over $S$. There are ways to batch the two openings to reduce the number of group elements by one.</li>
 </ul>
 <h1 id="the-derived-range-proof-protocol">The derived range proof protocol</h1>
 <p>Let $z=\sum_{i=0}^{l-1}z_i2^i\in [0, 2^l)$ with $z_i\in [0,2)$ for all $i$. Using the membership proof protocol above, we get the following protocol:</p>

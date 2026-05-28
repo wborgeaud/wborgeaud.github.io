@@ -9,23 +9,29 @@
     <meta name="description" content="William Borgeaud&#39;s personal website">
     <meta name="keywords" content="blog,personal">
 
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="ECFFT on the BN254 base field in Rust"/>
-<meta name="twitter:description" content="$$ \def\F{\mathbb{F}} $$
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ECFFT on the BN254 base field in Rust">
+  <meta name="twitter:description" content="$$ \def\F{\mathbb{F}} $$
 tl;dr: A Rust implementation of the ECFFT here: https://github.com/wborgeaud/ecfft-bn254.
 The last post was about the ECFFT algorithm by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. At the end of the post, I mentioned that it would be fairly straightforward to implement the ECFFT algorithms in low-level languages like Rust by doing all the mathematical precomputations in Sage.
-Well I have done exactly that and implemented the EXTEND and ENTER operations in Rust for the base field of the BN254 curve."/>
+Well I have done exactly that and implemented the EXTEND and ENTER operations in Rust for the base field of the BN254 curve. This field has order">
 
-    <meta property="og:title" content="ECFFT on the BN254 base field in Rust" />
-<meta property="og:description" content="$$ \def\F{\mathbb{F}} $$
+    <meta property="og:url" content="https://solvable.group/posts/ecfft-bn254/">
+  <meta property="og:site_name" content="wborgeaud">
+  <meta property="og:title" content="ECFFT on the BN254 base field in Rust">
+  <meta property="og:description" content="$$ \def\F{\mathbb{F}} $$
 tl;dr: A Rust implementation of the ECFFT here: https://github.com/wborgeaud/ecfft-bn254.
 The last post was about the ECFFT algorithm by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. At the end of the post, I mentioned that it would be fairly straightforward to implement the ECFFT algorithms in low-level languages like Rust by doing all the mathematical precomputations in Sage.
-Well I have done exactly that and implemented the EXTEND and ENTER operations in Rust for the base field of the BN254 curve." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://solvable.group/posts/ecfft-bn254/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-10-16T00:57:25-07:00" />
-<meta property="article:modified_time" content="2021-10-16T00:57:25-07:00" />
-
+Well I have done exactly that and implemented the EXTEND and ENTER operations in Rust for the base field of the BN254 curve. This field has order">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-10-16T00:57:25-07:00">
+    <meta property="article:modified_time" content="2021-10-16T00:57:25-07:00">
+    <meta property="article:tag" content="Math">
+    <meta property="article:tag" content="Algorithms">
+    <meta property="article:tag" content="Rust">
 
 
     
@@ -64,7 +70,7 @@ Well I have done exactly that and implemented the EXTEND and ENTER operations in
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
 
-    <meta name="generator" content="Hugo 0.92.2" />
+    <meta name="generator" content="Hugo 0.155.0">
   </head>
 
   
@@ -167,14 +173,14 @@ $$</p>
 <li>the ECFFT ENTER algorithm in $O(n\log^2{n})$.
 <img src="https://solvable.group/images/benchmarks/ecfft-bench.svg" alt="Challenge description"></li>
 </ul>
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p>I initially wanted to work in the base field of the Secp256k1 curve as in the last post, but this field is currently not supported in arkworks (see <a href="https://github.com/arkworks-rs/curves/issues/36">this issue</a>). Once it is, it will be straightforward to implement the ECFFT on this field.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
       </div>
 

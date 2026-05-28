@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="William Borgeaud">
+    <meta name="description" content="William Borgeaud&#39;s personal website">
+    <meta name="keywords" content="blog,personal">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="A quick look at PropAMMs and Solana">
+  <meta name="twitter:description" content="PropAMMs are a somewhat new type of automated market maker (AMM) that have become extremely popular in the Solana ecosystem. According to this Dune dashboard, they now amount for up to 75% of trading volume on Solana.
+The idea behind them is simple, unlike traditional AMMs like Uniswap or onchain CLOB, the price discovery mechanics and liquidity provisions are abstracted away and taken care off by a proprietary operator. This operator updates the price onchain through frequent cheap transactions to make the price efficient and avoid toxic flow.">
+
+    <meta property="og:url" content="http://localhost:1313/posts/prop-amm-solana/">
+  <meta property="og:site_name" content="wborgeaud">
+  <meta property="og:title" content="A quick look at PropAMMs and Solana">
+  <meta property="og:description" content="PropAMMs are a somewhat new type of automated market maker (AMM) that have become extremely popular in the Solana ecosystem. According to this Dune dashboard, they now amount for up to 75% of trading volume on Solana.
+The idea behind them is simple, unlike traditional AMMs like Uniswap or onchain CLOB, the price discovery mechanics and liquidity provisions are abstracted away and taken care off by a proprietary operator. This operator updates the price onchain through frequent cheap transactions to make the price efficient and avoid toxic flow.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-28T00:00:00+00:00">
+    <meta property="article:tag" content="Cryptography">
+    <meta property="article:tag" content="Zero-Knowledge Proofs">
+
+
+    
+      <base href="http://localhost:1313/posts/prop-amm-solana/">
+    
+    <title>
+  A quick look at PropAMMs and Solana · wborgeaud
+</title>
+
+    
+      <link rel="canonical" href="http://localhost:1313/posts/prop-amm-solana/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="http://localhost:1313/css/coder.css" media="screen">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.155.0">
+  </head>
+
+  
+  
+  <body class="colorscheme-light">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="http://localhost:1313/">
+      wborgeaud
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://localhost:1313/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://localhost:1313/about/">About</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="http://localhost:1313/contact/">Contact</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">A quick look at PropAMMs and Solana</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2023-08-28T00:00:00Z'>
+                August 28, 2023
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="http://localhost:1313/tags/cryptography/">cryptography</a>
+      <span class="separator">•</span>
+    <a href="http://localhost:1313/tags/zero-knowledge-proofs/">zero-knowledge proofs</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>PropAMMs are a somewhat new type of automated market maker (AMM) that have become extremely popular in the Solana ecosystem. According to this <a href="https://dune.com/the_defi_report/prop-amms">Dune dashboard</a>, they now amount for up to 75% of trading volume on Solana.</p>
+<p>The idea behind them is simple, unlike traditional AMMs like Uniswap or onchain CLOB, the price discovery mechanics and liquidity provisions are abstracted away and taken care off by a proprietary operator. This operator updates the price onchain through frequent cheap transactions to make the price efficient and avoid toxic flow.</p>
+<p>That&rsquo;s the theory, but how does it work in practice?</p>
+<h2 id="case-study-bisonfi">Case study: BisonFi</h2>
+<p>According to the Dune dashboard, the two most successful PropAMMs as of January 2026 are HumidiFi and BisonFi. There are already good analyses of HumidiFi available, so let&rsquo;s look at BisonFi.</p>
+<p>The BisonFi program (=smart contract in EVMland) is at address <a href="https://solscan.io/account/BiSoNHVpsVZW2F7rx2eQ59yQwKxzU5NvBcmKshCSUypi">BiSoNHVpsVZW2F7rx2eQ59yQwKxzU5NvBcmKshCSUypi</a>. On Solana, program accounts dont&rsquo;t hold any state, only compiled code. For each trading pair, there is a market account that holds the state of the pool. We will look at <code>WSOL-USDC</code> and for this pair, the market account is <a href="https://solscan.io/account/51FQwjrvo8J8zXUaKyAznJ5NYpoiTCuqAqCu3HAMB9NZ">51FQwjrvo8J8zXUaKyAznJ5NYpoiTCuqAqCu3HAMB9NZ</a>.</p>
+<p>So how can we trade this pair? Here is a typical swap
+<img src="http://localhost:1313/images/propamm/bison-swap.png" alt="Swap">
+Solscan is nice enough to label all the input accounts (that is all the accounts that can be read/modified in the transaction). The instruction data has a pretty standard form:</p>
+<pre tabindex="0"><code>discriminator (1 byte) + input amount (8 bytes) +
+ minimum output amount (8 bytes) + direction (1 byte)
+</code></pre><p>The discriminator is the equivalent to the selector in EVM contracts, i.e., it routes the transaction to a function in the program. So here we can guess that the swap function has discriminator <code>2</code>. The minimum amount is <code>0x0065cd1d = 500000000 (LE)</code>, which corresponds to <code>500 USDC</code> since <code>USDC</code> uses 6 decimals. The minimum amount here is just zero, and the direction is <code>1</code> meaning the swap is from Token B <code>WSOL</code> to Token A <code>USDC</code>.</p>
+<p>This looks easy enough, but how do we know at what price the swap is executed? And how does this price depend on the swap size? And what is the spread?</p>
+<p>To answer these questions, we can download the compiled code for the BisonFi program and simulate transactions locally using <a href="https://github.com/LiteSVM/litesvm">LiteSVM</a>.
+To simulate a swap, we also need to carefully set the slot of the simulated transaction. Indeed, BisonFi dismisses swaps with <code>swap_slot &gt; stored_slot + 20</code>, where <code>stored_slot</code> is the slot of the latest price update. This makes sense, since they certainly don&rsquo;t want people being able to trade at stale prices.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+
+    
+
+  </body>
+
+</html>

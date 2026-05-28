@@ -9,19 +9,24 @@
     <meta name="description" content="William Borgeaud&#39;s personal website">
     <meta name="keywords" content="blog,personal">
 
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="The Walsh–Hadamard transform"/>
-<meta name="twitter:description" content="In the ZKP world, we often use the Fast Fourier Transform (FFT) to go from univariate polynomials to their evaluations on a subgroup. The FFT has a less notorious analogue for multilinear polynomials: the Walsh–Hadamard transform (WHT). In this post, I&rsquo;ll describe the WHT and explore its applications.
-Univariate polynomials Let $\mathbb{F}$ be a finite field and let $H&lt;\mathbb{F}^*$ be a multiplicative subgroup of size $n=2^v$. Given a polynomial $f\in \mathbb{F}[X]^{&lt;n}$ of degree less than $n$, we can use the FFT to compute its evaluation on $H$:"/>
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Walsh–Hadamard transform">
+  <meta name="twitter:description" content="In the ZKP world, we often use the Fast Fourier Transform (FFT) to go from univariate polynomials to their evaluations on a subgroup. The FFT has a less notorious analogue for multilinear polynomials: the Walsh–Hadamard transform (WHT). In this post, I’ll describe the WHT and explore its applications.
+Univariate polynomials Let $\mathbb{F}$ be a finite field and let $H&lt;\mathbb{F}^*$ be a multiplicative subgroup of size $n=2^v$. Given a polynomial $f\in \mathbb{F}[X]^{&lt;n}$ of degree less than $n$, we can use the FFT to compute its evaluation on $H$:">
 
-    <meta property="og:title" content="The Walsh–Hadamard transform" />
-<meta property="og:description" content="In the ZKP world, we often use the Fast Fourier Transform (FFT) to go from univariate polynomials to their evaluations on a subgroup. The FFT has a less notorious analogue for multilinear polynomials: the Walsh–Hadamard transform (WHT). In this post, I&rsquo;ll describe the WHT and explore its applications.
-Univariate polynomials Let $\mathbb{F}$ be a finite field and let $H&lt;\mathbb{F}^*$ be a multiplicative subgroup of size $n=2^v$. Given a polynomial $f\in \mathbb{F}[X]^{&lt;n}$ of degree less than $n$, we can use the FFT to compute its evaluation on $H$:" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://solvable.group/posts/walshhadamard-transform/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-06-27T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-06-27T00:00:00+00:00" />
-
+    <meta property="og:url" content="https://solvable.group/posts/walshhadamard-transform/">
+  <meta property="og:site_name" content="wborgeaud">
+  <meta property="og:title" content="The Walsh–Hadamard transform">
+  <meta property="og:description" content="In the ZKP world, we often use the Fast Fourier Transform (FFT) to go from univariate polynomials to their evaluations on a subgroup. The FFT has a less notorious analogue for multilinear polynomials: the Walsh–Hadamard transform (WHT). In this post, I’ll describe the WHT and explore its applications.
+Univariate polynomials Let $\mathbb{F}$ be a finite field and let $H&lt;\mathbb{F}^*$ be a multiplicative subgroup of size $n=2^v$. Given a polynomial $f\in \mathbb{F}[X]^{&lt;n}$ of degree less than $n$, we can use the FFT to compute its evaluation on $H$:">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-06-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-06-27T00:00:00+00:00">
+    <meta property="article:tag" content="Math">
+    <meta property="article:tag" content="Polynomials">
 
 
     
@@ -60,7 +65,7 @@ Univariate polynomials Let $\mathbb{F}$ be a finite field and let $H&lt;\mathbb{
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
 
-    <meta name="generator" content="Hugo 0.92.2" />
+    <meta name="generator" content="Hugo 0.155.0">
   </head>
 
   
@@ -241,49 +246,49 @@ $$</p>
 Compute $\sum_{n=0}^{10^5} S(n)$.</p>
 </blockquote>
 <p>And here is a solution in Sage</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">N <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">^</span><span style="color:#ae81ff">5</span>
-N_next_pow2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span>int(N)<span style="color:#f92672">.</span>bit_length()
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">WHT</span>(f):
-    n <span style="color:#f92672">=</span> len(f)
-    <span style="color:#66d9ef">if</span> n<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
-        <span style="color:#66d9ef">return</span> f
-    <span style="color:#66d9ef">else</span>:
-        f0 <span style="color:#f92672">=</span> f[:n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>]
-        f1 <span style="color:#f92672">=</span> f[n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>:]
-        s <span style="color:#f92672">=</span> [x<span style="color:#f92672">+</span>y <span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> zip(f0,f1)]
-        <span style="color:#66d9ef">return</span> WHT(f0) <span style="color:#f92672">+</span> WHT(s)
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">IWHT</span>(f):
-    n <span style="color:#f92672">=</span> len(f)
-    <span style="color:#66d9ef">if</span> n<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
-        <span style="color:#66d9ef">return</span> f
-    <span style="color:#66d9ef">else</span>:
-        f0 <span style="color:#f92672">=</span> f[:n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>]
-        f1 <span style="color:#f92672">=</span> f[n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>:]
-        s <span style="color:#f92672">=</span> [y<span style="color:#f92672">-</span>x <span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> zip(f0,f1)]
-        <span style="color:#66d9ef">return</span> IWHT(f0) <span style="color:#f92672">+</span> IWHT(s)
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">or_convolution</span>(f, g):
-    <span style="color:#66d9ef">return</span> IWHT([x<span style="color:#f92672">*</span>y <span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> zip(WHT(f), WHT(g))])
-
-f <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N_next_pow2)]
-<span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> primes(N_next_pow2):
-    f[p] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-
-F <span style="color:#f92672">=</span> f[:]
-<span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">9</span>):
-    F <span style="color:#f92672">=</span> or_convolution(F, f)
-
-print(sum(F[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)))
-</code></pre></div><section class="footnotes" role="doc-endnotes">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>N <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">^</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>N_next_pow2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">^</span>int(N)<span style="color:#f92672">.</span>bit_length()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">WHT</span>(f):
+</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> len(f)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> f
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        f0 <span style="color:#f92672">=</span> f[:n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>        f1 <span style="color:#f92672">=</span> f[n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>:]
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">=</span> [x<span style="color:#f92672">+</span>y <span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> zip(f0,f1)]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> WHT(f0) <span style="color:#f92672">+</span> WHT(s)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">IWHT</span>(f):
+</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> len(f)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> n<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> f
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        f0 <span style="color:#f92672">=</span> f[:n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>        f1 <span style="color:#f92672">=</span> f[n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>:]
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">=</span> [y<span style="color:#f92672">-</span>x <span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> zip(f0,f1)]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> IWHT(f0) <span style="color:#f92672">+</span> IWHT(s)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">or_convolution</span>(f, g):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> IWHT([x<span style="color:#f92672">*</span>y <span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> zip(WHT(f), WHT(g))])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N_next_pow2)]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> primes(N_next_pow2):
+</span></span><span style="display:flex;"><span>    f[p] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>F <span style="color:#f92672">=</span> f[:]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">9</span>):
+</span></span><span style="display:flex;"><span>    F <span style="color:#f92672">=</span> or_convolution(F, f)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(sum(F[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)))
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p>Not to be confused with the group algebra $\mathbb{F}[H]$.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
       </div>
 

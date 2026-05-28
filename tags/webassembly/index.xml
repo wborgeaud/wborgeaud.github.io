@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>webassembly on wborgeaud</title>
+    <title>Webassembly on wborgeaud</title>
     <link>https://solvable.group/tags/webassembly/</link>
-    <description>Recent content in webassembly on wborgeaud</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Webassembly on wborgeaud</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 14 Nov 2019 13:57:25 -0700</lastBuildDate><atom:link href="https://solvable.group/tags/webassembly/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Nov 2019 13:57:25 -0700</lastBuildDate>
+    <atom:link href="https://solvable.group/tags/webassembly/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Use Rust in React Native through WebAssembly</title>
       <link>https://solvable.group/posts/rust-wasm-react-native/</link>
       <pubDate>Thu, 14 Nov 2019 13:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/rust-wasm-react-native/</guid>
-      <description>This post shows how to use Rust functions in a React Native project through WebAssembly. I struggled quite a bit to find an easy way to make it work, so I thought I&amp;rsquo;d share my findings. You can find the code for this post here.
-Here&amp;rsquo;s the TLDR:
- Create a wasm-pack project exposing the Rust functions you want to export. Serve a web page exposing these functions through message events.</description>
+      <description>&lt;p&gt;This post shows how to use Rust functions in a React Native project through WebAssembly. I struggled quite a bit to find an easy way to make it work, so I thought I&amp;rsquo;d share my findings. You can find the code for this post &lt;a href=&#34;https://github.com/wborgeaud/rust-wasm-react-native&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Here&amp;rsquo;s the TLDR:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Create a &lt;code&gt;wasm-pack&lt;/code&gt; project exposing the Rust functions you want to export.&lt;/li&gt;&#xA;&lt;li&gt;Serve a web page exposing these functions through &lt;code&gt;message&lt;/code&gt; events.&lt;/li&gt;&#xA;&lt;li&gt;Use a React Native &lt;code&gt;WebView&lt;/code&gt; of this web page.&lt;/li&gt;&#xA;&lt;li&gt;Call Rust functions by sending messages to the &lt;code&gt;WebView&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;pros-and-cons&#34;&gt;Pros and Cons&lt;/h2&gt;&#xA;&lt;h3 id=&#34;pros&#34;&gt;Pros&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;One alternative is to use native modules but it is a pain to setup with Rust and React Native, and requires lots of different configurations for Android and iOS.&lt;/li&gt;&#xA;&lt;li&gt;Another alternative is to serve &lt;code&gt;wasm&lt;/code&gt;  files locally on the app and use them in a &lt;code&gt;WebView&lt;/code&gt;.  This is also a pain to setup since local files need to be put in different places in Android and iOS, and you will get a bunch of permission errors along the way.&lt;/li&gt;&#xA;&lt;li&gt;The solution shown here is very easy to setup, works out of the box, and allows for a clear separation between the Rust and React Native development.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;cons&#34;&gt;Cons&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;The device needs an Internet connection to download the web page.&lt;/li&gt;&#xA;&lt;li&gt;Mild privacy issue since one can track requests to the web server. But all computations using WebAssembly are done locally on the device. In particular, the parameters to the Rust functions will not be sent to the server.&lt;/li&gt;&#xA;&lt;li&gt;Probably quite slower than using the native modules.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;prototype&#34;&gt;Prototype&lt;/h2&gt;&#xA;&lt;p&gt;This gives an example of this structure with a simple Rust function that adds two numbers.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

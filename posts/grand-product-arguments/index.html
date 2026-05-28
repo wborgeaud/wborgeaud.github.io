@@ -9,23 +9,28 @@
     <meta name="description" content="William Borgeaud&#39;s personal website">
     <meta name="keywords" content="blog,personal">
 
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Grand product arguments"/>
-<meta name="twitter:description" content="$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Grand product arguments">
+  <meta name="twitter:description" content="$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
 HackMD version here.
 Grand product arguments Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$. Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.
-In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso."/>
+In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso.">
 
-    <meta property="og:title" content="Grand product arguments" />
-<meta property="og:description" content="$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
+    <meta property="og:url" content="https://solvable.group/posts/grand-product-arguments/">
+  <meta property="og:site_name" content="wborgeaud">
+  <meta property="og:title" content="Grand product arguments">
+  <meta property="og:description" content="$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
 HackMD version here.
 Grand product arguments Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$. Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.
-In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://solvable.group/posts/grand-product-arguments/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-08-28T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-08-28T00:00:00+00:00" />
-
+In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-28T00:00:00+00:00">
+    <meta property="article:tag" content="Cryptography">
+    <meta property="article:tag" content="Zero-Knowledge Proofs">
 
 
     
@@ -64,7 +69,7 @@ In this note, I will describe different approaches to this problem using univari
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
 
-    <meta name="generator" content="Hugo 0.92.2" />
+    <meta name="generator" content="Hugo 0.155.0">
   </head>
 
   
@@ -223,7 +228,7 @@ Therefore, the product $\prod f = y$ can be proved by commiting to $\tilde{g}$ a
 </ul>
 <p>Note that compared to GKR, the verifier cost and proof size go from quadratic in $v$ to linear in $v$, at the cost of more and larger evaluation proofs.</p>
 <h2 id="hybrid-approach">Hybrid approach</h2>
-<p>This is the approach of [SL20, Section 6]<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, also used in Lasso<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
+<p>This is the approach of [SL20, Section 6]<sup id="fnref1:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, also used in Lasso<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
 <p>We can get the best of both approaches by combining them. Fix a number $1\leq \ell \leq v$, we use the Quarks approach for the first $\ell+1$ layers $\{g _k\} _{k=0}^{\ell}$ and the GKR approach for the last $v-l$ layers $\{g _k\} _{k=\ell+1}^{v}$. Concretely, this means that in the Quarks protocol, we instead have $g(0,x)=g _{\ell}(x)$ for all $x\in \{0,1\}^{\ell}$, which we check by evalutating at a random value $\gamma$, $\tilde{g}(0,\gamma)=\tilde{g} _{\ell}(\gamma)$.</p>
 <p>The evaluation $\tilde{g} _{\ell}(\gamma)$ is computed using the GKR protocol, by reducing it to a sumcheck argument and an evaluation of $\tilde{g} _{\ell +1}$, and so on until an evaluation of $\tilde{g} _v = \tilde{f}$.</p>
 <h3 id="costs-2">Costs</h3>
@@ -233,23 +238,23 @@ Therefore, the product $\prod f = y$ can be proved by commiting to $\tilde{g}$ a
 <li><strong>Proof size</strong>: Similarly to the verifier costs, $O(\ell + (v-\ell)\cdot v)$ in total, plus size of evaluation proofs.</li>
 </ul>
 <p>For example, setting $\ell = v - 3\log v$, the proof size is $O(v - 3\log v +3v \log v) = O(3v \log v)$ which is better than the proof size of $O(v^2)$ when using only GKR for large enough $v$. This comes at the cost of commiting to $g$ of size $2^{v - 3\log v + 1} = \frac{2n}{v^3}$, which is much smaller than $2n$, the corresponding size of $g$ when using only Quarks.</p>
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p><a href="https://eprint.iacr.org/2019/953">https://eprint.iacr.org/2019/953</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:2" role="doc-endnote">
+<li id="fn:2">
 <p><a href="https://eprint.iacr.org/2013/351">https://eprint.iacr.org/2013/351</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:3" role="doc-endnote">
-<p><a href="https://eprint.iacr.org/2020/1275">https://eprint.iacr.org/2020/1275</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<li id="fn:3">
+<p><a href="https://eprint.iacr.org/2020/1275">https://eprint.iacr.org/2020/1275</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:4" role="doc-endnote">
+<li id="fn:4">
 <p><a href="https://eprint.iacr.org/2023/1216">https://eprint.iacr.org/2023/1216</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
       </div>
 

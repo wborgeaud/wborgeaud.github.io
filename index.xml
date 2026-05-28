@@ -4,217 +4,156 @@
     <title>wborgeaud</title>
     <link>https://solvable.group/</link>
     <description>Recent content on wborgeaud</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 May 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://solvable.group/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>You could have invented garbled circuits</title>
+      <link>https://solvable.group/posts/garbled-circuits/</link>
+      <pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
+      <guid>https://solvable.group/posts/garbled-circuits/</guid>
+      <description>&lt;p&gt;Garbled circuit is a cool protocol that solves the two-party secure computation problem, but like many cryptographic protocols, its description can look a bit mysterious.&lt;/p&gt;&#xA;&lt;p&gt;In this post, I&amp;rsquo;ll show how one can stumble upon the construction of garbled circuits from first principles.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-problem&#34;&gt;The problem&lt;/h2&gt;&#xA;&lt;p&gt;Alice has a private $a\in X$ and Bob has a private $b \in Y$. They want to evaluate a public function $f\colon X \times Y \to Z$ on their inputs $(a,b) \in X\times Y$, without Bob (resp. Alice) learning anything about $a$ (resp. $b$) except the result $f(a,b)$.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>SuiCTF platform</title>
+      <link>https://solvable.group/posts/suictf/</link>
+      <pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://solvable.group/posts/suictf/</guid>
+      <description>&lt;p&gt;As a way to learn more about Sui, Move, and vibe coding, I made this CTF platform with Sui Move challenges: &lt;a href=&#34;https://suictf.com/&#34;&gt;https://suictf.com/&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Most challenges are still fairly easy, but I feel like they give a good way to get started in Move and the Sui tools. Note that all challenges were hand-written&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;, LLMs were only used for the UI. Check it out!&lt;/p&gt;&#xA;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;&#xA;&lt;hr&gt;&#xA;&lt;ol&gt;&#xA;&lt;li id=&#34;fn:1&#34;&gt;&#xA;&lt;p&gt;Current models seem to do a terrible job at designing fun CTF challenges.&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Grand product arguments</title>
       <link>https://solvable.group/posts/grand-product-arguments/</link>
       <pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/grand-product-arguments/</guid>
-      <description>$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
-HackMD version here.
-Grand product arguments Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$. Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.
-In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso.</description>
+      <description>&lt;p&gt;$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;HackMD version &lt;a href=&#34;https://hackmd.io/@wborgeaud/rk-gp0222&#34;&gt;here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;grand-product-arguments&#34;&gt;Grand product arguments&lt;/h1&gt;&#xA;&lt;p&gt;Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$.&#xA;Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.&lt;/p&gt;&#xA;&lt;p&gt;In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>The Walsh–Hadamard transform</title>
       <link>https://solvable.group/posts/walshhadamard-transform/</link>
       <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/walshhadamard-transform/</guid>
-      <description>In the ZKP world, we often use the Fast Fourier Transform (FFT) to go from univariate polynomials to their evaluations on a subgroup. The FFT has a less notorious analogue for multilinear polynomials: the Walsh–Hadamard transform (WHT). In this post, I&amp;rsquo;ll describe the WHT and explore its applications.
-Univariate polynomials Let $\mathbb{F}$ be a finite field and let $H&amp;lt;\mathbb{F}^*$ be a multiplicative subgroup of size $n=2^v$. Given a polynomial $f\in \mathbb{F}[X]^{&amp;lt;n}$ of degree less than $n$, we can use the FFT to compute its evaluation on $H$:</description>
+      <description>&lt;p&gt;In the ZKP world, we often use the Fast Fourier Transform (FFT) to go from univariate polynomials to their evaluations on a subgroup. The FFT has a less notorious analogue for multilinear polynomials: the Walsh–Hadamard transform (WHT). In this post, I&amp;rsquo;ll describe the WHT and explore its applications.&lt;/p&gt;&#xA;&lt;h2 id=&#34;univariate-polynomials&#34;&gt;Univariate polynomials&lt;/h2&gt;&#xA;&lt;p&gt;Let $\mathbb{F}$ be a finite field and let $H&amp;lt;\mathbb{F}^*$ be a multiplicative subgroup of size $n=2^v$. Given a polynomial $f\in \mathbb{F}[X]^{&amp;lt;n}$ of degree less than $n$, we can use the FFT to compute its evaluation on $H$:&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>A simple multivariate AIR argument inspired by SuperSpartan</title>
       <link>https://solvable.group/posts/super-air/</link>
       <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/super-air/</guid>
-      <description>PDF version here and HackMD here.
-We will consider the following basic version of AIR. Let $\mathbb{F}$ be a finite field and let $F \in \mathbb{F}[X_0,\dots,X_{2C-1}]$ be a constraint polynomial. An AIR witness for this instance is a table of $C$ columns $z_0,\dots,z_{C-1}$ of size $n=2^v$ such that for all $i=0,\dots,n-2$, $$ F(z_0[i],\dots,z_{C-1}[i],z_0[i+1],\dots,z_{C-1}[i+1])=0. $$
-Multi-columns CCS (MCCCS) CCS is a constraint system introduced in [STW23]1 that generalizes common constraint systems such as R1CS, AIR, and Plonk.</description>
+      <description>&lt;p&gt;&lt;em&gt;PDF version &lt;a href=&#34;https://github.com/wborgeaud/superair-note/blob/main/SuperAIR.pdf&#34;&gt;here&lt;/a&gt; and HackMD &lt;a href=&#34;https://hackmd.io/@wborgeaud/HyQ-fUuPn&#34;&gt;here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;We will consider the following basic version of AIR. Let $\mathbb{F}$ be a finite field and let $F \in \mathbb{F}[X_0,\dots,X_{2C-1}]$ be a constraint polynomial. An AIR witness for this instance is a table of $C$ columns $z_0,\dots,z_{C-1}$ of size $n=2^v$ such that for all $i=0,\dots,n-2$,&#xA;$$&#xA;F(z_0[i],\dots,z_{C-1}[i],z_0[i+1],\dots,z_{C-1}[i+1])=0.&#xA;$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;multi-columns-ccs-mcccs&#34;&gt;Multi-columns CCS (MCCCS)&lt;/h2&gt;&#xA;&lt;p&gt;CCS is a constraint system introduced in [STW23]&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; that generalizes common constraint systems such as R1CS, AIR, and Plonk. A CCS structure is given by&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Applications of Riemann-Roch in cryptography</title>
       <link>https://solvable.group/posts/riemann-roch-crypto/</link>
       <pubDate>Wed, 15 Feb 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/riemann-roch-crypto/</guid>
-      <description>$$ \def\F{\mathbb{F}} \def\L{\mathcal{L}} \def\C{\mathcal{C}} $$
-The Riemann-Roch theorem is a fundamental result in the study of curves. In this post, I&amp;rsquo;ll go through some of its applications in cryptography.
-Divisors and the Riemann-Roch theorem Let $C$ be an algebraic curve, i.e., a smooth projective variety of dimension one over a field $K$1. The group of divisors $Div(C)$ is the free abelian group generated by points of $C$, i.e., elements of $Div(C)$ look like $D = \sum_{P\in C} n_P P$ where $n_P\in \mathbb{Z}$ is non-zero for only finitely many $P\in C$.</description>
+      <description>&lt;p&gt;$$&#xA;\def\F{\mathbb{F}}&#xA;\def\L{\mathcal{L}}&#xA;\def\C{\mathcal{C}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;The &lt;em&gt;Riemann-Roch theorem&lt;/em&gt; is a fundamental result in the study of curves. In this post, I&amp;rsquo;ll go through some of its applications in cryptography.&lt;/p&gt;&#xA;&lt;h2 id=&#34;divisors-and-the-riemann-roch-theorem&#34;&gt;Divisors and the Riemann-Roch theorem&lt;/h2&gt;&#xA;&lt;p&gt;Let $C$ be an algebraic curve, i.e., a smooth projective variety of dimension one over a field $K$&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;. The group of &lt;em&gt;divisors&lt;/em&gt; $Div(C)$ is the free abelian group generated by points of $C$, i.e., elements of $Div(C)$ look like $D = \sum_{P\in C} n_P P$ where $n_P\in \mathbb{Z}$ is non-zero for only finitely many $P\in C$.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Proving AIRs with multivariate sumchecks</title>
       <link>https://solvable.group/posts/air-multivariate-sumcheck/</link>
       <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/air-multivariate-sumcheck/</guid>
-      <description>Algebraic Intermediate Representation (AIR) is a powerful arithmetization that can be extended to Randomized Air with Preprocessing (RAP), which includes popular systems like PLONK. See this great note by Ariel Gabizon for descriptions of these arithmetizations.
-Another popular arithmetization is given by R1CS. Two categories of proving systems based on R1CS are those using multivariate techniques (e.g. Spartan) and those using univariate techniques (e.g. Marlin).
-To the best of my knowledge, every current AIR-based proving system uses univariate techniques.</description>
+      <description>&lt;p&gt;&lt;em&gt;Algebraic Intermediate Representation&lt;/em&gt; (AIR) is a powerful arithmetization that can be extended to &lt;em&gt;Randomized Air with Preprocessing&lt;/em&gt; (RAP), which includes popular systems like PLONK. See &lt;a href=&#34;https://hackmd.io/@aztec-network/plonk-arithmetiization-air&#34;&gt;this great note&lt;/a&gt; by Ariel Gabizon for descriptions of these arithmetizations.&lt;/p&gt;&#xA;&lt;p&gt;Another popular arithmetization is given by R1CS. Two categories of proving systems based on R1CS are those using multivariate techniques (e.g. &lt;a href=&#34;https://eprint.iacr.org/2019/550&#34;&gt;Spartan&lt;/a&gt;) and those using univariate techniques (e.g. &lt;a href=&#34;https://eprint.iacr.org/2019/1047&#34;&gt;Marlin&lt;/a&gt;).&lt;/p&gt;&#xA;&lt;p&gt;To the best of my knowledge, every current AIR-based proving system uses univariate techniques. In this note, I&amp;rsquo;ll discuss what a multivariate AIR-based proving system could look like.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>The case for centralized rollups</title>
       <link>https://solvable.group/posts/centralized-rollups/</link>
       <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/centralized-rollups/</guid>
-      <description>Conventional wisdom is that rollups should be decentralized. In fact, most rollups have decentralization of sequencers/validators/provers on their roadmaps. In this post, I argue that fully centralized rollups are viable and secure.
-What does a centralized rollup look like? In a centralized rollup, a single actor controls sequencing and block production. Users send transactions directly to this actor, i.e, there is no public mempool. This actor then constructs a block with some of the transactions it has received and pushes them to L1, along with a state transition validity proof in the case of a zk-rollup.</description>
+      <description>&lt;p&gt;Conventional wisdom is that rollups should be decentralized. In fact, most rollups have decentralization of sequencers/validators/provers on their roadmaps. In this post, I argue that fully centralized rollups are viable and secure.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-does-a-centralized-rollup-look-like&#34;&gt;What does a centralized rollup look like?&lt;/h2&gt;&#xA;&lt;p&gt;In a centralized rollup, a single actor controls sequencing and block production. Users send transactions directly to this actor, i.e, there is no public mempool. This actor then constructs a block with some of the transactions it has received and pushes them to L1, along with a state transition validity proof in the case of a zk-rollup.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>ECFFT on the BN254 base field in Rust</title>
       <link>https://solvable.group/posts/ecfft-bn254/</link>
       <pubDate>Sat, 16 Oct 2021 00:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/ecfft-bn254/</guid>
-      <description>$$ \def\F{\mathbb{F}} $$
-tl;dr: A Rust implementation of the ECFFT here: https://github.com/wborgeaud/ecfft-bn254.
-The last post was about the ECFFT algorithm by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. At the end of the post, I mentioned that it would be fairly straightforward to implement the ECFFT algorithms in low-level languages like Rust by doing all the mathematical precomputations in Sage.
-Well I have done exactly that and implemented the EXTEND and ENTER operations in Rust for the base field of the BN254 curve.</description>
+      <description>&lt;p&gt;$$&#xA;\def\F{\mathbb{F}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;tl;dr:&lt;/strong&gt; A Rust implementation of the ECFFT here: &lt;a href=&#34;https://github.com/wborgeaud/ecfft-bn254&#34;&gt;https://github.com/wborgeaud/ecfft-bn254&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;The &lt;a href=&#34;https://solvable.group/posts/ecfft/&#34;&gt;last post&lt;/a&gt; was about the ECFFT algorithm by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. At the end of the post, I mentioned that it would be fairly straightforward to implement the ECFFT algorithms in low-level languages like Rust by doing all the mathematical precomputations in Sage.&lt;/p&gt;&#xA;&lt;p&gt;Well I have done exactly that and implemented the EXTEND and ENTER operations in Rust for the base field of the BN254 curve. This field has order&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>The ECFFT algorithm</title>
       <link>https://solvable.group/posts/ecfft/</link>
       <pubDate>Sat, 07 Aug 2021 00:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/ecfft/</guid>
-      <description>$$ \def\F{\mathbb{F}} $$
-This post is about a recent paper by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.
-The classic FFT algorithm Let $p$ be a prime number, $n=2^k$ with $n \mid p-1$, $\langle w \rangle = H &amp;lt; \F_p^*$ a subgroup of size $n$.</description>
+      <description>&lt;p&gt;$$&#xA;\def\F{\mathbb{F}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;This post is about &lt;a href=&#34;https://arxiv.org/abs/2107.08473&#34;&gt;a recent paper&lt;/a&gt; by Eli Ben-Sasson, Dan Carmon, Swastik Kopparty and David Levit. In this paper the authors present an amazing new generalization of the classic FFT algorithm that works in all finite fields. This post will give an overview of the algorithm and a simple implementation in Sage. I highly recommend reading the paper for more details and background.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-classic-fft-algorithm&#34;&gt;The classic FFT algorithm&lt;/h2&gt;&#xA;&lt;p&gt;Let $p$ be a prime number, $n=2^k$ with $n \mid p-1$, $\langle w \rangle = H &amp;lt; \F_p^*$ a subgroup of size $n$. The classic FFT algorithm can be used to evaluate a polynomial $P(X)=\sum_{i=0}^n a_i X^i$ of degree $&amp;lt;n$ on $H$ in $O(n\log n)$. Note that the naive algorithm of evaluating $P$ at every point of $H$ takes $O(n^2)$ operations.&lt;br&gt;&#xA;The FFT works by writing $P$ as&#xA;$$P(X) = P_0(X^2) + XP_1(X^2)$$&#xA;where $P_0, P_1$ are the polynomials of degree $&amp;lt; n/2$ of even and odd coefficients of $P$. &lt;br&gt;&#xA;Thus, given the evaluation of $P_0$ and $P_1$ on $H^2$, we can recover the evaluation of $P$ on $H$ with $O(n)$ operations.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Cairo Games Vol 2: Writeup</title>
       <link>https://solvable.group/posts/cairo-games-vol2/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/cairo-games-vol2/</guid>
-      <description>Here are my solutions to the second edition of the Cairo Games.
- Nu (Easy) Pakhet (Easy) Seth (Medium) Montu (Medium) Amun (Hard)  Nu This problem was pretty straightforward. We have to find to integers x,y&amp;lt;2^128 such that x*y=17 in the prime field used by Cairo. We can easily get such a pair as follows:
-from sympy import divisors P = 2**251 + 17 * 2**192 + 1 BOUND = 2**128 target = P + 17 for d in divisors(target): n = target // d if n &amp;lt; BOUND and d &amp;lt; BOUND: break ids.</description>
+      <description>&lt;p&gt;Here are my solutions to the second edition of the &lt;a href=&#34;https://www.cairo-lang.org/the-cairo-games/&#34;&gt;Cairo Games&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#nu&#34;&gt;Nu (Easy)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#pakhet&#34;&gt;Pakhet (Easy)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#seth&#34;&gt;Seth (Medium)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#montu&#34;&gt;Montu (Medium)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#amun&#34;&gt;Amun (Hard)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;nu&#34;&gt;Nu&lt;/h1&gt;&#xA;&lt;p&gt;This problem was pretty straightforward. We have to find to integers &lt;code&gt;x,y&amp;lt;2^128&lt;/code&gt; such that &lt;code&gt;x*y=17&lt;/code&gt; in the prime field used by Cairo. We can easily get such a pair as follows:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sympy &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; divisors&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    P &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;**&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;251&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;17&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;**&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;192&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    BOUND &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;**&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;128&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    target &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; P &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;17&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; divisors(target):&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; target &lt;span style=&#34;color:#f92672&#34;&gt;//&lt;/span&gt; d&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; BOUND &lt;span style=&#34;color:#f92672&#34;&gt;and&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; BOUND:&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ids&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ids&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; d&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;pakhet&#34;&gt;Pakhet&lt;/h1&gt;&#xA;&lt;p&gt;We get a graph on 18 vertices as an adjacency matrix. We then have to find a path of length 18 &lt;code&gt;path&lt;/code&gt; in this graph such that&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Donjon CTF Writeup: Secret RNG</title>
       <link>https://solvable.group/posts/secret-rng/</link>
       <pubDate>Sat, 31 Oct 2020 03:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/secret-rng/</guid>
-      <description>TLDR This was a very nice challenge in the Donjon CTF. The goal was to reverse engineer the state of the PRNG math/rand in the Go standard library to guess the private key of a signature scheme and sign a given message. I solved this challenge by using the SMT solver Z3 to automagically recover the RNG state.
-Description Connecting to nc ots-sig.donjon-ctf.io 4001, we get:
-Public key: djX6vqVMj0fTZGIhJFgN1VHLgGgaBxWEhvxp1MzB09s= Enter signature: test You failed!</description>
+      <description>&lt;h1 id=&#34;tldr&#34;&gt;TLDR&lt;/h1&gt;&#xA;&lt;p&gt;This was a very nice challenge in the &lt;a href=&#34;https://donjon-ctf.io/&#34;&gt;Donjon CTF&lt;/a&gt;. The goal was to reverse engineer the state of the PRNG &lt;code&gt;math/rand&lt;/code&gt; in the Go standard library to guess the private key of a signature scheme and sign a given message. I solved this challenge by using the SMT solver &lt;a href=&#34;https://github.com/Z3Prover/z3&#34;&gt;Z3&lt;/a&gt; to automagically recover the RNG state.&lt;/p&gt;&#xA;&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://solvable.group/images/ctf-challs/srng.png&#34; alt=&#34;Challenge description&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Connecting to &lt;code&gt;nc ots-sig.donjon-ctf.io 4001&lt;/code&gt;, we get:&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Public key: djX6vqVMj0fTZGIhJFgN1VHLgGgaBxWEhvxp1MzB09s=&#xA;Enter signature: test&#xA;You failed! Private key was: 8GB6ClgHLz0nGU40Zwj8eKcH/CPl6sDKQEQX5cbiy1TPVf8ccI2yjr8HiOQwpwCj4VSQmS36+bIWBgkM3HO4Ny7pBvE0yGtJY9v3sVuaYeUU5h/rqYBpMjUAXBj5jfljRnVAXl50AKQvD5IYzU5IP6F5mJV/ZgT7MQ912/j/Q0+ug8Bj9q/+T6iO8tQfsui857XR/KIw85+EP5gRhUJi09Jjl36iFC2jyvqNQdjTpdJ4cQN8PO8RIAXCJlPT7upvD5uhQ0CiL+1KQRUPgWPK77SvNwUD++IboU4SBwP1DDFDrnqOZ7GmEncgT0VkLlQW9kWdfxM1HqQvSQmNqiUwK6Xps12qXi8ib07rnYkcV4eJ0QVGho6uuk8aGXhfJoArf2fGUzqhaNZIQGjsXBaoAfG7mka+SSlM4cGzvn5xA59yZ2H9H8C72ADiTtfF5cUSniT7QsMXWUjJrrsupUbOyapRH40DJ1fTeLgDZ1ly3CzN8dXKjItxcyuNONDCd5MvfdPIBsrApCY6Uu25rbG1q91C8t5YLVM0l90GoLdpJlJLfF/02jHNmkoYsc/Jyg8PyRuwBXj47mtbD/AViomNbkX2th9gUXfEVeMPzP1QqDJ6CC7sdkmdBspuyQtF6nX/pM5pXNDAOvFYuBdwfCPvCEAonXQqKUYXkqyZ82YACNhtmXgkBjkhO4b6RiOGKHVNQDqtCUmvSuk0VNebMGHrWmBSdjrM7FXVVI+f6Z7tik8ctxHYrJyU1XFervwlmAmbvhx1FOP8OwutpS9EViIne2HxN6dNaJTvVWfyPAOrdA9su7FKAh+HyrQfvlTwPEJEYW5Md9aX5jT1f2f76IiLyIG1S/gy8G/zb+WDsVVzspLV0aLw3Ce9jgJeBaMhGvZ93b+90xt86oKSDwueAM7JTjxgeNJOL0B3pr7QzlRhMRCxDl6veUfQ7o5q9YzOr1RI7cMINeyW7oQhqkyaoXa8Am4BH6LiWzmLOjMY4SiE5QPO4RVj95EhRVYFAtrrnUDMwZAftSjqhBq3qLXGNnLXm4QSwmgjaGOJ0wXqdH6BryXKALFB/hhUAFdW0YMdZzAOd27adHH2YDvDDeGvimJpAVmHDNDG1pLDHjlgXXc4QQP8TpmvhcSqJx7wgY8v/qcj00VREI+uI3F6CJScW2N8Bsa9mSzHpiyclCYkQyM4G8MEXGdfMm0CoLzeyZLf6P2sRtRjnGdbkdp3QP7frlDVOjUAe+8gsBu2K+PhyoZ6Rn+oNOMVWuftIEsy68KkEPwgy1AIwtWAEQKD3T+yRSNmRK1rznLr2HFTQJK0RI4OuBWDvmrlf4pSqC3Ri9uDcki/DOcTpVzwejOSSTrn1zYafTmeVN9JLzTHfIkdjQxSRJiOrgFxE0Rd/9iDeioj8VFBlvFkM5WX2Op2WKZefQVCuTs4ccnHt56V49yxukM0CeA=&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We also get a single Go script:&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Isogeny-based crypto Part 1: The SIDH protocol</title>
       <link>https://solvable.group/posts/isobeg/</link>
       <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/isobeg/</guid>
-      <description>This is the first post in a series on isogeny-based crypto. Instead of writing yet another introduction, I redirect you instead to the great introduction to SIDH by Craig Costello: Supersingular isogeny key exchange for beginners.
-Today&amp;rsquo;s post will then be in the form of a Sage notebook walking through the examples in the paper. This also gives a good intro to how isogenies work in Sage.
-The notebook source is available here: github.</description>
+      <description>&lt;p&gt;This is the first post in a series on isogeny-based crypto. Instead of writing yet another introduction, I redirect you instead to the great introduction to SIDH by Craig Costello: &lt;a href=&#34;https://eprint.iacr.org/2019/1321.pdf&#34;&gt;Supersingular isogeny key exchange for beginners&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Today&amp;rsquo;s post will then be in the form of a Sage notebook walking through the examples in the paper. This also gives a good intro to how isogenies work in Sage.&lt;/p&gt;&#xA;&lt;p&gt;The notebook source is available here: &lt;a href=&#34;https://github.com/wborgeaud/isobeg&#34;&gt;github.com/wborgeaud/isobeg&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Anomalous Curves Part 3: Formal groups</title>
       <link>https://solvable.group/posts/anomalous-curves-3/</link>
       <pubDate>Wed, 29 Apr 2020 08:57:07 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/anomalous-curves-3/</guid>
-      <description>$$ \def\F{\mathbb{F}} $$
-$$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} \def\M{\mathcal{M}} \def\G{\hat{\mathbb{G}}} \def\O{\mathcal{O}} $$
-This is part three of the series on anomalous curves. Go here for part one and here for part two.
-Today, I&amp;rsquo;ll prove the two missing results from the last post:
- Theorem (VII.2.2 in Silverman): There is a group structure on $p\Z_p$ (that we denote $\hat{E}(p\Z_p)$) such that the map $$ E_1(\Q_p) \to \hat{E}(p\Z_p): [x:y:1] \mapsto -\frac x y $$ is a group isomorphism, that also induces isomorphisms $E_n(\Q_p)\to \hat{E}(p^n\Z_p)$.</description>
+      <description>&lt;p&gt;$$&#xA;\def\F{\mathbb{F}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;$$&#xA;\def\Q{\mathbb{Q}}&#xA;\def\F{\mathbb{F}}&#xA;\def\Z{\mathbb{Z}}&#xA;\def\M{\mathcal{M}}&#xA;\def\G{\hat{\mathbb{G}}}&#xA;\def\O{\mathcal{O}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;This is part three of the series on anomalous curves. Go &lt;a href=&#34;https://solvable.group/posts/anomalous-curves-1/&#34;&gt;here&lt;/a&gt; for part one and &lt;a href=&#34;https://solvable.group/posts/anomalous-curves-2/&#34;&gt;here&lt;/a&gt; for part two.&lt;/p&gt;&#xA;&lt;p&gt;Today, I&amp;rsquo;ll prove the two missing results from the last post:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Theorem (VII.2.2 in Silverman):&lt;/strong&gt; There is a group structure on $p\Z_p$ (that we denote $\hat{E}(p\Z_p)$) such that the map&#xA;$$&#xA;E_1(\Q_p) \to \hat{E}(p\Z_p): [x:y:1] \mapsto -\frac x y&#xA;$$&#xA;is a group isomorphism, that also induces isomorphisms $E_n(\Q_p)\to \hat{E}(p^n\Z_p)$.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Anomalous Curves Part 2: p-adic niceties</title>
       <link>https://solvable.group/posts/anomalous-curves-2/</link>
       <pubDate>Wed, 22 Apr 2020 13:57:07 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/anomalous-curves-2/</guid>
-      <description>$$ \def\F{\mathbb{F}} $$
-$$ \def\Q{\mathbb{Q}} \def\F{\mathbb{F}} \def\Z{\mathbb{Z}} $$
-This is part two of the series on anomalous curves. Go here for part one.
-Today, I&amp;rsquo;ll give a sketch of the construction of Smart&amp;rsquo;s attack. This attack combines two elliptic curve tools:
- The reduction map of an elliptic curve over a local field. The formal group of an elliptic curve.  I will focus on the first one, and leave the details of the second for another post.</description>
+      <description>&lt;p&gt;$$&#xA;\def\F{\mathbb{F}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;$$&#xA;\def\Q{\mathbb{Q}}&#xA;\def\F{\mathbb{F}}&#xA;\def\Z{\mathbb{Z}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;This is part two of the series on anomalous curves. Go &lt;a href=&#34;https://solvable.group/posts/anomalous-curves-1/&#34;&gt;here&lt;/a&gt; for part one.&lt;/p&gt;&#xA;&lt;p&gt;Today, I&amp;rsquo;ll give a sketch of the construction of Smart&amp;rsquo;s attack. This attack combines two elliptic curve tools:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;The &lt;strong&gt;reduction map&lt;/strong&gt; of an elliptic curve over a local field.&lt;/li&gt;&#xA;&lt;li&gt;The &lt;strong&gt;formal group&lt;/strong&gt; of an elliptic curve.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;I will focus on the first one, and leave the details of the second for another post.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Anomalous Curves Part 1: Don&#39;t be clever with your elliptic curve order</title>
       <link>https://solvable.group/posts/anomalous-curves-1/</link>
       <pubDate>Tue, 21 Apr 2020 13:57:07 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/anomalous-curves-1/</guid>
-      <description>$$ \def\F{\mathbb{F}} $$
-Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the exact opposite notation, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&amp;hellip;
-What if I told you there are curves where $p=q=r$?</description>
+      <description>&lt;p&gt;$$&#xA;\def\F{\mathbb{F}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;Have you ever been confused by the numbers $p,q,r$ in a paper dealing with elliptic curves? Some paper use $q$ for the order of the elliptic curve over a field of order $p$. Conveniently, other papers use the &lt;strong&gt;exact opposite notation&lt;/strong&gt;, while some get original and use $r$ for the field size, or the order of a subgroup of the curve, or something else&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;What if I told you there are curves where $p=q=r$? We could decide to only use these curves and never have to go back on page 2 of a paper to see what are $p,q$ or $r$!&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Membership proofs from polynomial commitments</title>
       <link>https://solvable.group/posts/membership-proofs-from-polynomial-commitments/</link>
       <pubDate>Thu, 16 Apr 2020 13:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/membership-proofs-from-polynomial-commitments/</guid>
-      <description>$$ \def\com{\mathbf{com}} $$
-Recently, Dan Boneh, Ben Fisch, Ariel Gabizon, and Zac Williamson (BFGW) published a writeup showing how to create range proofs from polynomial commitments. As a mental exercise, I wanted to see how to use polynomial commitments to create membership proofs instead. Membership proofs can be seen as a generalization of range proofs, if certain homomorphic properties hold (that&amp;rsquo;s something I learned first from this article). For example for Pedersen commitments, we have:</description>
+      <description>&lt;p&gt;$$&#xA;\def\com{\mathbf{com}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;Recently, Dan Boneh, Ben Fisch, Ariel Gabizon, and Zac Williamson (BFGW) published a &lt;a href=&#34;https://hackmd.io/@dabo/B1U4kx8XI&#34;&gt;writeup&lt;/a&gt; showing how to create &lt;strong&gt;range proofs&lt;/strong&gt; from polynomial commitments. As a mental exercise, I wanted to see how to use polynomial commitments to create &lt;strong&gt;membership proofs&lt;/strong&gt; instead. Membership proofs can be seen as a generalization of range proofs, if certain homomorphic properties hold (that&amp;rsquo;s something I learned first from &lt;a href=&#34;https://link.springer.com/chapter/10.1007/978-3-540-89255-7_15&#34;&gt;this&lt;/a&gt; article). For example for Pedersen commitments, we have:&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Understanding Verifiable Delay Functions (with a Rust implementation)</title>
       <link>https://solvable.group/posts/understanding-vdfs/</link>
       <pubDate>Sat, 30 Nov 2019 13:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/understanding-vdfs/</guid>
-      <description>I have been reading about Verifiable Delay Functions (VDF) recently and wanted to write a short post explaining what they are and what they can be used for. This post relies mainly on the papers: Efficient verifiable delay functions, Wesolowski and A Survey of Two Verifiable Delay Functions, Boneh et al. I also recommend this podcast with Joseph Bonneau.
-Definition A VDF is a function $f_T: \mathcal{X} \to \mathcal{Y}$ that takes a long time to compute but is fast to verify.</description>
+      <description>&lt;p&gt;I have been reading about Verifiable Delay Functions (VDF) recently and wanted to write a short post explaining what they are and what they can be used for. This post relies mainly on the papers: &lt;a href=&#34;https://eprint.iacr.org/2018/623.pdf&#34;&gt;Efficient verifiable delay functions, Wesolowski&lt;/a&gt; and &lt;a href=&#34;https://crypto.stanford.edu/~dabo/pubs/papers/VDFsurvey.pdf&#34;&gt;A Survey of Two Verifiable Delay Functions, Boneh et al&lt;/a&gt;. I also recommend &lt;a href=&#34;https://www.zeroknowledge.fm/103&#34;&gt;this podcast&lt;/a&gt; with Joseph Bonneau.&lt;/p&gt;&#xA;&lt;h2 id=&#34;definition&#34;&gt;Definition&lt;/h2&gt;&#xA;&lt;p&gt;A VDF is a function $f_T: \mathcal{X} \to \mathcal{Y}$ that takes a long time to compute but is fast to verify. Concretely, this means that $f_T$ takes $T$ steps to compute &lt;strong&gt;regardless of the number of parallel processors&lt;/strong&gt;, and having computed $f(x)=y$, a prover can produce a proof $\pi$, such that a verifier can quickly check (say in time $O(\log T)$) that $f(x)=y$ using $\pi$.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Use Rust in React Native through WebAssembly</title>
       <link>https://solvable.group/posts/rust-wasm-react-native/</link>
       <pubDate>Thu, 14 Nov 2019 13:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/rust-wasm-react-native/</guid>
-      <description>This post shows how to use Rust functions in a React Native project through WebAssembly. I struggled quite a bit to find an easy way to make it work, so I thought I&amp;rsquo;d share my findings. You can find the code for this post here.
-Here&amp;rsquo;s the TLDR:
- Create a wasm-pack project exposing the Rust functions you want to export. Serve a web page exposing these functions through message events.</description>
+      <description>&lt;p&gt;This post shows how to use Rust functions in a React Native project through WebAssembly. I struggled quite a bit to find an easy way to make it work, so I thought I&amp;rsquo;d share my findings. You can find the code for this post &lt;a href=&#34;https://github.com/wborgeaud/rust-wasm-react-native&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Here&amp;rsquo;s the TLDR:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Create a &lt;code&gt;wasm-pack&lt;/code&gt; project exposing the Rust functions you want to export.&lt;/li&gt;&#xA;&lt;li&gt;Serve a web page exposing these functions through &lt;code&gt;message&lt;/code&gt; events.&lt;/li&gt;&#xA;&lt;li&gt;Use a React Native &lt;code&gt;WebView&lt;/code&gt; of this web page.&lt;/li&gt;&#xA;&lt;li&gt;Call Rust functions by sending messages to the &lt;code&gt;WebView&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;pros-and-cons&#34;&gt;Pros and Cons&lt;/h2&gt;&#xA;&lt;h3 id=&#34;pros&#34;&gt;Pros&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;One alternative is to use native modules but it is a pain to setup with Rust and React Native, and requires lots of different configurations for Android and iOS.&lt;/li&gt;&#xA;&lt;li&gt;Another alternative is to serve &lt;code&gt;wasm&lt;/code&gt;  files locally on the app and use them in a &lt;code&gt;WebView&lt;/code&gt;.  This is also a pain to setup since local files need to be put in different places in Android and iOS, and you will get a bunch of permission errors along the way.&lt;/li&gt;&#xA;&lt;li&gt;The solution shown here is very easy to setup, works out of the box, and allows for a clear separation between the Rust and React Native development.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;cons&#34;&gt;Cons&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;The device needs an Internet connection to download the web page.&lt;/li&gt;&#xA;&lt;li&gt;Mild privacy issue since one can track requests to the web server. But all computations using WebAssembly are done locally on the device. In particular, the parameters to the Rust functions will not be sent to the server.&lt;/li&gt;&#xA;&lt;li&gt;Probably quite slower than using the native modules.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;prototype&#34;&gt;Prototype&lt;/h2&gt;&#xA;&lt;p&gt;This gives an example of this structure with a simple Rust function that adds two numbers.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>About</title>
       <link>https://solvable.group/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/about/</guid>
-      <description>Interested in mathematics and cryptography.</description>
+      <description>&lt;p&gt;Interested in mathematics and cryptography.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Contact</title>
       <link>https://solvable.group/contact/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/contact/</guid>
-      <description>Mail: williamborgeaud@gmail.com
-Twitter: @williamborgeaud
-Github: @wborgeaud</description>
+      <description>&lt;p&gt;&lt;strong&gt;Mail&lt;/strong&gt;: &lt;a href=&#34;mailto:williamborgeaud@gmail.com&#34;&gt;williamborgeaud@gmail.com&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Twitter&lt;/strong&gt;: &lt;a href=&#34;https://twitter.com/williamborgeaud&#34;&gt;@williamborgeaud&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Github&lt;/strong&gt;: &lt;a href=&#34;https://github.com/wborgeaud&#34;&gt;@wborgeaud&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

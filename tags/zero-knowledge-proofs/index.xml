@@ -1,55 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>zero-knowledge proofs on wborgeaud</title>
+    <title>Zero-Knowledge Proofs on wborgeaud</title>
     <link>https://solvable.group/tags/zero-knowledge-proofs/</link>
-    <description>Recent content in zero-knowledge proofs on wborgeaud</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Zero-Knowledge Proofs on wborgeaud</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/zero-knowledge-proofs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://solvable.group/tags/zero-knowledge-proofs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Grand product arguments</title>
       <link>https://solvable.group/posts/grand-product-arguments/</link>
       <pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/grand-product-arguments/</guid>
-      <description>$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$
-HackMD version here.
-Grand product arguments Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$. Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.
-In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso.</description>
+      <description>&lt;p&gt;$\newcommand{\F}{\mathbb{F}}$ $\newcommand{\c}{\text{comm}}$ $\newcommand{\i}{\mathbf{i}}$ $\newcommand{\z}{\mathbf{z}}$ $\newcommand{\r}{\mathbf{r}}$ $\newcommand{\eq}{\widetilde{\text{eq}}}$&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;HackMD version &lt;a href=&#34;https://hackmd.io/@wborgeaud/rk-gp0222&#34;&gt;here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;grand-product-arguments&#34;&gt;Grand product arguments&lt;/h1&gt;&#xA;&lt;p&gt;Let $\F$ be a finite field and consider a vector $f = (f_0,\dots,f_{n-1})\in \F^n$, where $n=2^v$.&#xA;Given some kind of commitment $\c_f$ to $f$ and a value $y\in\F$, we want to convince a verifier that the product of the elements of $f$ is $y$, $\prod f_i = y$.&lt;/p&gt;&#xA;&lt;p&gt;In this note, I will describe different approaches to this problem using univariate polynomials as in Plonk or multivariate polynomials as in Quarks and Lasso.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>A simple multivariate AIR argument inspired by SuperSpartan</title>
       <link>https://solvable.group/posts/super-air/</link>
       <pubDate>Thu, 22 Jun 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/super-air/</guid>
-      <description>PDF version here and HackMD here.
-We will consider the following basic version of AIR. Let $\mathbb{F}$ be a finite field and let $F \in \mathbb{F}[X_0,\dots,X_{2C-1}]$ be a constraint polynomial. An AIR witness for this instance is a table of $C$ columns $z_0,\dots,z_{C-1}$ of size $n=2^v$ such that for all $i=0,\dots,n-2$, $$ F(z_0[i],\dots,z_{C-1}[i],z_0[i+1],\dots,z_{C-1}[i+1])=0. $$
-Multi-columns CCS (MCCCS) CCS is a constraint system introduced in [STW23]1 that generalizes common constraint systems such as R1CS, AIR, and Plonk.</description>
+      <description>&lt;p&gt;&lt;em&gt;PDF version &lt;a href=&#34;https://github.com/wborgeaud/superair-note/blob/main/SuperAIR.pdf&#34;&gt;here&lt;/a&gt; and HackMD &lt;a href=&#34;https://hackmd.io/@wborgeaud/HyQ-fUuPn&#34;&gt;here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;We will consider the following basic version of AIR. Let $\mathbb{F}$ be a finite field and let $F \in \mathbb{F}[X_0,\dots,X_{2C-1}]$ be a constraint polynomial. An AIR witness for this instance is a table of $C$ columns $z_0,\dots,z_{C-1}$ of size $n=2^v$ such that for all $i=0,\dots,n-2$,&#xA;$$&#xA;F(z_0[i],\dots,z_{C-1}[i],z_0[i+1],\dots,z_{C-1}[i+1])=0.&#xA;$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;multi-columns-ccs-mcccs&#34;&gt;Multi-columns CCS (MCCCS)&lt;/h2&gt;&#xA;&lt;p&gt;CCS is a constraint system introduced in [STW23]&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; that generalizes common constraint systems such as R1CS, AIR, and Plonk. A CCS structure is given by&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Proving AIRs with multivariate sumchecks</title>
       <link>https://solvable.group/posts/air-multivariate-sumcheck/</link>
       <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/posts/air-multivariate-sumcheck/</guid>
-      <description>Algebraic Intermediate Representation (AIR) is a powerful arithmetization that can be extended to Randomized Air with Preprocessing (RAP), which includes popular systems like PLONK. See this great note by Ariel Gabizon for descriptions of these arithmetizations.
-Another popular arithmetization is given by R1CS. Two categories of proving systems based on R1CS are those using multivariate techniques (e.g. Spartan) and those using univariate techniques (e.g. Marlin).
-To the best of my knowledge, every current AIR-based proving system uses univariate techniques.</description>
+      <description>&lt;p&gt;&lt;em&gt;Algebraic Intermediate Representation&lt;/em&gt; (AIR) is a powerful arithmetization that can be extended to &lt;em&gt;Randomized Air with Preprocessing&lt;/em&gt; (RAP), which includes popular systems like PLONK. See &lt;a href=&#34;https://hackmd.io/@aztec-network/plonk-arithmetiization-air&#34;&gt;this great note&lt;/a&gt; by Ariel Gabizon for descriptions of these arithmetizations.&lt;/p&gt;&#xA;&lt;p&gt;Another popular arithmetization is given by R1CS. Two categories of proving systems based on R1CS are those using multivariate techniques (e.g. &lt;a href=&#34;https://eprint.iacr.org/2019/550&#34;&gt;Spartan&lt;/a&gt;) and those using univariate techniques (e.g. &lt;a href=&#34;https://eprint.iacr.org/2019/1047&#34;&gt;Marlin&lt;/a&gt;).&lt;/p&gt;&#xA;&lt;p&gt;To the best of my knowledge, every current AIR-based proving system uses univariate techniques. In this note, I&amp;rsquo;ll discuss what a multivariate AIR-based proving system could look like.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Membership proofs from polynomial commitments</title>
       <link>https://solvable.group/posts/membership-proofs-from-polynomial-commitments/</link>
       <pubDate>Thu, 16 Apr 2020 13:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/membership-proofs-from-polynomial-commitments/</guid>
-      <description>$$ \def\com{\mathbf{com}} $$
-Recently, Dan Boneh, Ben Fisch, Ariel Gabizon, and Zac Williamson (BFGW) published a writeup showing how to create range proofs from polynomial commitments. As a mental exercise, I wanted to see how to use polynomial commitments to create membership proofs instead. Membership proofs can be seen as a generalization of range proofs, if certain homomorphic properties hold (that&amp;rsquo;s something I learned first from this article). For example for Pedersen commitments, we have:</description>
+      <description>&lt;p&gt;$$&#xA;\def\com{\mathbf{com}}&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;Recently, Dan Boneh, Ben Fisch, Ariel Gabizon, and Zac Williamson (BFGW) published a &lt;a href=&#34;https://hackmd.io/@dabo/B1U4kx8XI&#34;&gt;writeup&lt;/a&gt; showing how to create &lt;strong&gt;range proofs&lt;/strong&gt; from polynomial commitments. As a mental exercise, I wanted to see how to use polynomial commitments to create &lt;strong&gt;membership proofs&lt;/strong&gt; instead. Membership proofs can be seen as a generalization of range proofs, if certain homomorphic properties hold (that&amp;rsquo;s something I learned first from &lt;a href=&#34;https://link.springer.com/chapter/10.1007/978-3-540-89255-7_15&#34;&gt;this&lt;/a&gt; article). For example for Pedersen commitments, we have:&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

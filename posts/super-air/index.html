@@ -9,21 +9,26 @@
     <meta name="description" content="William Borgeaud&#39;s personal website">
     <meta name="keywords" content="blog,personal">
 
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="A simple multivariate AIR argument inspired by SuperSpartan"/>
-<meta name="twitter:description" content="PDF version here and HackMD here.
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="A simple multivariate AIR argument inspired by SuperSpartan">
+  <meta name="twitter:description" content="PDF version here and HackMD here.
 We will consider the following basic version of AIR. Let $\mathbb{F}$ be a finite field and let $F \in \mathbb{F}[X_0,\dots,X_{2C-1}]$ be a constraint polynomial. An AIR witness for this instance is a table of $C$ columns $z_0,\dots,z_{C-1}$ of size $n=2^v$ such that for all $i=0,\dots,n-2$, $$ F(z_0[i],\dots,z_{C-1}[i],z_0[i&#43;1],\dots,z_{C-1}[i&#43;1])=0. $$
-Multi-columns CCS (MCCCS) CCS is a constraint system introduced in [STW23]1 that generalizes common constraint systems such as R1CS, AIR, and Plonk."/>
+Multi-columns CCS (MCCCS) CCS is a constraint system introduced in [STW23]1 that generalizes common constraint systems such as R1CS, AIR, and Plonk. A CCS structure is given by">
 
-    <meta property="og:title" content="A simple multivariate AIR argument inspired by SuperSpartan" />
-<meta property="og:description" content="PDF version here and HackMD here.
+    <meta property="og:url" content="https://solvable.group/posts/super-air/">
+  <meta property="og:site_name" content="wborgeaud">
+  <meta property="og:title" content="A simple multivariate AIR argument inspired by SuperSpartan">
+  <meta property="og:description" content="PDF version here and HackMD here.
 We will consider the following basic version of AIR. Let $\mathbb{F}$ be a finite field and let $F \in \mathbb{F}[X_0,\dots,X_{2C-1}]$ be a constraint polynomial. An AIR witness for this instance is a table of $C$ columns $z_0,\dots,z_{C-1}$ of size $n=2^v$ such that for all $i=0,\dots,n-2$, $$ F(z_0[i],\dots,z_{C-1}[i],z_0[i&#43;1],\dots,z_{C-1}[i&#43;1])=0. $$
-Multi-columns CCS (MCCCS) CCS is a constraint system introduced in [STW23]1 that generalizes common constraint systems such as R1CS, AIR, and Plonk." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://solvable.group/posts/super-air/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-06-22T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-06-22T00:00:00+00:00" />
-
+Multi-columns CCS (MCCCS) CCS is a constraint system introduced in [STW23]1 that generalizes common constraint systems such as R1CS, AIR, and Plonk. A CCS structure is given by">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-06-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-06-22T00:00:00+00:00">
+    <meta property="article:tag" content="Cryptography">
+    <meta property="article:tag" content="Zero-Knowledge Proofs">
 
 
     
@@ -62,7 +67,7 @@ Multi-columns CCS (MCCCS) CCS is a constraint system introduced in [STW23]1 that
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://solvable.group/img/favicon-16x16.png" sizes="16x16">
 
-    <meta name="generator" content="Hugo 0.92.2" />
+    <meta name="generator" content="Hugo 0.155.0">
   </head>
 
   
@@ -230,8 +235,8 @@ $$\widetilde{A_1}(x,y) = \widetilde{\text{next}}(x,y) + \widetilde{\text{eq}}(x,
 <h2 id="handling-public-inputs">Handling public inputs</h2>
 <p>AIR is often used to arithmetize an execution trace. For example, zkVMs often have the structure of an AIR where the first row contains the input of the program and the last row contains the output. Each other row represents a cycle in the zkVM.</p>
 <p>For this reason, we might want (parts of) the first and last rows to be public inputs in the proving system. This can be achieved in the proving system for MCCCS as follows.</p>
-<p>Say we want the first element of column $z_i$ to be public. Instead of committing to the MLE of the full column, the prover commits to the MLE of $z'_i = (0 \ z_i[1..])$, the same column with the first element set to 0. Then, the verifier can compute the value $\widetilde{Z}_i(r_y)$ using the relation
-$$\widetilde{Z}_i(r_y) = \widetilde{Z'}_i(r_y) + z_i[0]\cdot \chi_0(r_y),$$
+<p>Say we want the first element of column $z_i$ to be public. Instead of committing to the MLE of the full column, the prover commits to the MLE of $z&rsquo;_i = (0 \ z_i[1..])$, the same column with the first element set to 0. Then, the verifier can compute the value $\widetilde{Z}_i(r_y)$ using the relation
+$$\widetilde{Z}_i(r_y) = \widetilde{Z&rsquo;}_i(r_y) + z_i[0]\cdot \chi_0(r_y),$$
 where $\chi_0$ is the 0-th Lagrange basis multilinear polynomial, which can be evaluated in $O(v)$.</p>
 <p>A similar modification can be used to make the last row public.</p>
 <h2 id="when-the-constraint-is-an-arithmetic-circuit">When the constraint is an arithmetic circuit</h2>
@@ -269,20 +274,20 @@ $$
 \widetilde{\text{next}} _s (x,y)=\widetilde{\text{eq}}(x _{0},y _{0})\cdots \widetilde{\text{eq}}(x _{e-1},y _{e-1})\ \widetilde{\text{next}}(x _e,\dots,x _{v-1},y _e,\dots,y _{v-1}),
 $$
 which can also be computed in time $O(v)$.</p>
-<section class="footnotes" role="doc-endnotes">
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
+<li id="fn:1">
 <p><em>Customizable constraint systems for succinct arguments</em>, Srinath Setty and Justin Thaler and Riad Wahby, eprint.iacr.org/2023/552.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:2" role="doc-endnote">
+<li id="fn:2">
 <p>Disregarding public inputs for now.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:3" role="doc-endnote">
+<li id="fn:3">
 <p>Here we consider usual arithmetic circuits over the field $\mathbb{F}$ with binary addition and multiplication gates, as well as unary gates for multiplication by a constant: ${g_c}_{c\in \mathbb{F}}$ with $g_c(x) = cx$.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 
       </div>
 

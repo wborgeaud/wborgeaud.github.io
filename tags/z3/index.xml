@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>z3 on wborgeaud</title>
+    <title>Z3 on wborgeaud</title>
     <link>https://solvable.group/tags/z3/</link>
-    <description>Recent content in z3 on wborgeaud</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Z3 on wborgeaud</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 31 Oct 2020 03:57:25 -0700</lastBuildDate><atom:link href="https://solvable.group/tags/z3/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 31 Oct 2020 03:57:25 -0700</lastBuildDate>
+    <atom:link href="https://solvable.group/tags/z3/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Donjon CTF Writeup: Secret RNG</title>
       <link>https://solvable.group/posts/secret-rng/</link>
       <pubDate>Sat, 31 Oct 2020 03:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/posts/secret-rng/</guid>
-      <description>TLDR This was a very nice challenge in the Donjon CTF. The goal was to reverse engineer the state of the PRNG math/rand in the Go standard library to guess the private key of a signature scheme and sign a given message. I solved this challenge by using the SMT solver Z3 to automagically recover the RNG state.
-Description Connecting to nc ots-sig.donjon-ctf.io 4001, we get:
-Public key: djX6vqVMj0fTZGIhJFgN1VHLgGgaBxWEhvxp1MzB09s= Enter signature: test You failed!</description>
+      <description>&lt;h1 id=&#34;tldr&#34;&gt;TLDR&lt;/h1&gt;&#xA;&lt;p&gt;This was a very nice challenge in the &lt;a href=&#34;https://donjon-ctf.io/&#34;&gt;Donjon CTF&lt;/a&gt;. The goal was to reverse engineer the state of the PRNG &lt;code&gt;math/rand&lt;/code&gt; in the Go standard library to guess the private key of a signature scheme and sign a given message. I solved this challenge by using the SMT solver &lt;a href=&#34;https://github.com/Z3Prover/z3&#34;&gt;Z3&lt;/a&gt; to automagically recover the RNG state.&lt;/p&gt;&#xA;&lt;h1 id=&#34;description&#34;&gt;Description&lt;/h1&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://solvable.group/images/ctf-challs/srng.png&#34; alt=&#34;Challenge description&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Connecting to &lt;code&gt;nc ots-sig.donjon-ctf.io 4001&lt;/code&gt;, we get:&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Public key: djX6vqVMj0fTZGIhJFgN1VHLgGgaBxWEhvxp1MzB09s=&#xA;Enter signature: test&#xA;You failed! Private key was: 8GB6ClgHLz0nGU40Zwj8eKcH/CPl6sDKQEQX5cbiy1TPVf8ccI2yjr8HiOQwpwCj4VSQmS36+bIWBgkM3HO4Ny7pBvE0yGtJY9v3sVuaYeUU5h/rqYBpMjUAXBj5jfljRnVAXl50AKQvD5IYzU5IP6F5mJV/ZgT7MQ912/j/Q0+ug8Bj9q/+T6iO8tQfsui857XR/KIw85+EP5gRhUJi09Jjl36iFC2jyvqNQdjTpdJ4cQN8PO8RIAXCJlPT7upvD5uhQ0CiL+1KQRUPgWPK77SvNwUD++IboU4SBwP1DDFDrnqOZ7GmEncgT0VkLlQW9kWdfxM1HqQvSQmNqiUwK6Xps12qXi8ib07rnYkcV4eJ0QVGho6uuk8aGXhfJoArf2fGUzqhaNZIQGjsXBaoAfG7mka+SSlM4cGzvn5xA59yZ2H9H8C72ADiTtfF5cUSniT7QsMXWUjJrrsupUbOyapRH40DJ1fTeLgDZ1ly3CzN8dXKjItxcyuNONDCd5MvfdPIBsrApCY6Uu25rbG1q91C8t5YLVM0l90GoLdpJlJLfF/02jHNmkoYsc/Jyg8PyRuwBXj47mtbD/AViomNbkX2th9gUXfEVeMPzP1QqDJ6CC7sdkmdBspuyQtF6nX/pM5pXNDAOvFYuBdwfCPvCEAonXQqKUYXkqyZ82YACNhtmXgkBjkhO4b6RiOGKHVNQDqtCUmvSuk0VNebMGHrWmBSdjrM7FXVVI+f6Z7tik8ctxHYrJyU1XFervwlmAmbvhx1FOP8OwutpS9EViIne2HxN6dNaJTvVWfyPAOrdA9su7FKAh+HyrQfvlTwPEJEYW5Md9aX5jT1f2f76IiLyIG1S/gy8G/zb+WDsVVzspLV0aLw3Ce9jgJeBaMhGvZ93b+90xt86oKSDwueAM7JTjxgeNJOL0B3pr7QzlRhMRCxDl6veUfQ7o5q9YzOr1RI7cMINeyW7oQhqkyaoXa8Am4BH6LiWzmLOjMY4SiE5QPO4RVj95EhRVYFAtrrnUDMwZAftSjqhBq3qLXGNnLXm4QSwmgjaGOJ0wXqdH6BryXKALFB/hhUAFdW0YMdZzAOd27adHH2YDvDDeGvimJpAVmHDNDG1pLDHjlgXXc4QQP8TpmvhcSqJx7wgY8v/qcj00VREI+uI3F6CJScW2N8Bsa9mSzHpiyclCYkQyM4G8MEXGdfMm0CoLzeyZLf6P2sRtRjnGdbkdp3QP7frlDVOjUAe+8gsBu2K+PhyoZ6Rn+oNOMVWuftIEsy68KkEPwgy1AIwtWAEQKD3T+yRSNmRK1rznLr2HFTQJK0RI4OuBWDvmrlf4pSqC3Ri9uDcki/DOcTpVzwejOSSTrn1zYafTmeVN9JLzTHfIkdjQxSRJiOrgFxE0Rd/9iDeioj8VFBlvFkM5WX2Op2WKZefQVCuTs4ccnHt56V49yxukM0CeA=&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We also get a single Go script:&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

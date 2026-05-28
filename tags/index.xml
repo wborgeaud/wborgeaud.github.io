@@ -4,143 +4,128 @@
     <title>Tags on wborgeaud</title>
     <link>https://solvable.group/tags/</link>
     <description>Recent content in Tags on wborgeaud</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 28 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 May 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://solvable.group/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>cryptography</title>
+      <title>Cryptography</title>
       <link>https://solvable.group/tags/cryptography/</link>
-      <pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate>
-      
+      <pubDate>Wed, 27 May 2026 00:00:00 +0000</pubDate>
       <guid>https://solvable.group/tags/cryptography/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>zero-knowledge proofs</title>
+      <title>CTF</title>
+      <link>https://solvable.group/tags/ctf/</link>
+      <pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://solvable.group/tags/ctf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sui</title>
+      <link>https://solvable.group/tags/sui/</link>
+      <pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://solvable.group/tags/sui/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zero-Knowledge Proofs</title>
       <link>https://solvable.group/tags/zero-knowledge-proofs/</link>
       <pubDate>Mon, 28 Aug 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/tags/zero-knowledge-proofs/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>math</title>
+      <title>Math</title>
       <link>https://solvable.group/tags/math/</link>
       <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/tags/math/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>polynomials</title>
+      <title>Polynomials</title>
       <link>https://solvable.group/tags/polynomials/</link>
       <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/tags/polynomials/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>elliptic curves</title>
+      <title>Elliptic Curves</title>
       <link>https://solvable.group/tags/elliptic-curves/</link>
       <pubDate>Wed, 15 Feb 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/tags/elliptic-curves/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>rollups</title>
+      <title>Rollups</title>
       <link>https://solvable.group/tags/rollups/</link>
       <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/tags/rollups/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>algorithms</title>
+      <title>Algorithms</title>
       <link>https://solvable.group/tags/algorithms/</link>
       <pubDate>Sat, 16 Oct 2021 00:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/tags/algorithms/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>rust</title>
+      <title>Rust</title>
       <link>https://solvable.group/tags/rust/</link>
       <pubDate>Sat, 16 Oct 2021 00:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/tags/rust/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>ctf-writeup</title>
+      <title>Ctf-Writeup</title>
       <link>https://solvable.group/tags/ctf-writeup/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/tags/ctf-writeup/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>stark</title>
+      <title>Stark</title>
       <link>https://solvable.group/tags/stark/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://solvable.group/tags/stark/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>z3</title>
+      <title>Z3</title>
       <link>https://solvable.group/tags/z3/</link>
       <pubDate>Sat, 31 Oct 2020 03:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/tags/z3/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>isogeny</title>
+      <title>Isogeny</title>
       <link>https://solvable.group/tags/isogeny/</link>
       <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/tags/isogeny/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>post-quantum</title>
+      <title>Post-Quantum</title>
       <link>https://solvable.group/tags/post-quantum/</link>
       <pubDate>Sat, 10 Oct 2020 03:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/tags/post-quantum/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>react-native</title>
+      <title>React-Native</title>
       <link>https://solvable.group/tags/react-native/</link>
       <pubDate>Thu, 14 Nov 2019 13:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/tags/react-native/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>webassembly</title>
+      <title>Webassembly</title>
       <link>https://solvable.group/tags/webassembly/</link>
       <pubDate>Thu, 14 Nov 2019 13:57:25 -0700</pubDate>
-      
       <guid>https://solvable.group/tags/webassembly/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>
